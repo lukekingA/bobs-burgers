@@ -2,7 +2,12 @@ var express = require('express')
 var bp = require('body-parser')
 var server = express()
 var cors = require('cors')
-var port = 3000
+
+
+//Sets the port to Heroku's, and the files to the built project 
+var port = process.env.PORT || 3000
+server.use(express.static(__dirname + '/../client/dist'))
+
 
 var whitelist = ['http://localhost:8080'];
 var corsOptions = {
@@ -15,7 +20,7 @@ var corsOptions = {
 server.use(cors(corsOptions))
 
 //Fire up database connection
-require('./db/gearhost-config')
+require('./server-assets/db/gearhost-config')
 
 
 //REGISTER MIDDLEWEAR
@@ -25,20 +30,21 @@ server.use(bp.urlencoded({
 }))
 
 //REGISTER YOUR AUTH ROUTES BEFORE YOUR GATEKEEPER, OTHERWISE YOU WILL NEVER GET LOGGED IN
-let auth = require('./auth/routes')
+let auth = require('./server-assets/auth/routes')
 server.use(auth.session)
 server.use(auth.router)
 
 
-
-//Catch all
-server.use('*', (req, res, next) => {
-  res.status(404).send({
-    error: 'No matching routes'
-  })
+//Gate Keeper Must login to access any route below this code
+server.use((req, res, next) => {
+  if (!req.session.uid) {
+    return res.status(401).send({
+      error: 'please login to continue'
+    })
+  }
+  next()
 })
 
-
-server.listen(port, () => {
-  console.log('server running on port', port)
-})
+//YOUR ROUTES HERE!!!!!!
+let boardRoutes = require('./server-assets/routes/board')
+server.use('/api/boards', boardRoutes)

@@ -9,6 +9,11 @@ let schema = new Schema({
     type: Number,
     required: true
   },
+  employeeId: {
+    type: ObjectId,
+    ref: 'User',
+    required: true
+  },
   entrees: [{
     type: ObjectId,
     ref: 'OrderId'

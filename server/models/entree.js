@@ -12,7 +12,10 @@ let schema = new Schema({
   comments: {
     type: String
   },
-  type: {}
+  mealType: {
+    type: ObjectId,
+    ref:
+  }
 })
 
 module.exports = mongoose.model(schemaName, schema)

@@ -21,7 +21,7 @@ router.post('/auth/register', (req, res) => {
       //REMOVE THE PASSWORD BEFORE RETURNING
       delete user._doc.hash
       //SET THE SESSION UID (SHORT FOR USERID)
-      req.session.uid = user._id
+      req.session.uid = user.id
       res.status(201).send(user)
     })
     .catch(err => {
@@ -93,6 +93,14 @@ router.get('/auth/all', (req, res) => {
       res.send('no data')
     }
     res.send(data)
+  })
+})
+
+router.delete('/auth/:id', (req, res) => {
+  Users.findByIdAndRemove({
+    _id: req.params.id
+  }).then(res => {
+    console.log(res)
   })
 })
 

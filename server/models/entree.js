@@ -19,25 +19,25 @@ let component = new Schema({
 })
 
 let entree = new Schema({
-  orderId: {
-    type: ObjectId,
-    ref: 'Order',
-    required: true
-  },
+  // orderId: {
+  //   type: ObjectId,
+  //   ref: 'Order',                will be _id created in each instance
+  //   required: true
+  // },
   price: {
     type: Number,
     required: true
   },
-  managerId: {
-    type: ObjectId,
-    ref: 'User',
-    required: true
-  },
-  employeeId: {
-    type: ObjectId,
-    ref: 'User',
-    required: true
-  },
+  // managerId: {
+  //   type: ObjectId,
+  //   ref: 'User',
+  //   required: true
+  // },
+  // employeeId: {
+  //   type: ObjectId,
+  //   ref: 'User',
+  //   required: true
+  // },
   comment: {
     type: String
   },
@@ -45,7 +45,7 @@ let entree = new Schema({
     type: String,
     required: true
   },
-  components: [component]
+  //components: [component]
 })
 
 

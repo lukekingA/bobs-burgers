@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <!-- <div>
       <nav v-if="!user._id" class="navbar ">
         <a class="navbar-brand"><i class="fas fa-hamburger"></i>BOBS BURGERS</a>
           <div class="btn-group">
@@ -17,11 +17,9 @@
                 <button class="btn my-2 my-sm-0" type="submit">GO!</button>
               </form>
           </div>
-        </nav>
+        </nav> -->
       <div id="app">
-      <!-- <admin></admin> -->
-      <!-- <router-view /> -->
-      <!-- <login></login> -->
+        <login></login>
       </div>
   </div>
 </template>

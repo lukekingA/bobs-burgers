@@ -20,7 +20,7 @@ var corsOptions = {
 server.use(cors(corsOptions))
 
 //Fire up database connection
-require('./server-assets/db/gearhost-config')
+require('./db/gearhost-config')
 
 
 //REGISTER MIDDLEWEAR
@@ -30,7 +30,7 @@ server.use(bp.urlencoded({
 }))
 
 //REGISTER YOUR AUTH ROUTES BEFORE YOUR GATEKEEPER, OTHERWISE YOU WILL NEVER GET LOGGED IN
-let auth = require('./server-assets/auth/routes')
+let auth = require('./auth/routes')
 server.use(auth.session)
 server.use(auth.router)
 
@@ -46,5 +46,5 @@ server.use((req, res, next) => {
 })
 
 //YOUR ROUTES HERE!!!!!!
-let boardRoutes = require('./server-assets/routes/board')
-server.use('/api/boards', boardRoutes)
+let orderRoutes = require('./routes/order')
+server.use('/orders', orderRoutes)

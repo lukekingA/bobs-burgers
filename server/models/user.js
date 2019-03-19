@@ -21,7 +21,7 @@ let schema = new Schema({
   manager: {
     type: String,
     required: true,
-    default: "staff"
+    default: false
   },
   hash: {
     type: String,

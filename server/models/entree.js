@@ -11,10 +11,6 @@ let component = new Schema({
   cost: {
     type: Number,
     required: true
-  },
-  quantity: {
-    type: Number,
-    required: true
   }
 })
 

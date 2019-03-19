@@ -59,9 +59,11 @@
       },
       loginUser() {
         this.$store.dispatch("login", this.creds);
+        this.creds = {}
       },
       loginAdmin() {
         this.$store.dispatch("login", this.adminCreds);
+        this.adminCreds = {}
       }
     }
   };

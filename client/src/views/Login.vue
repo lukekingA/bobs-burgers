@@ -54,6 +54,8 @@
         data.manager = true
         this.$store.dispatch("register", this.newAdmin);
         this.newAdmin = {}
+        this.showAdminLogin = false
+        this.loginForm = true
       },
       loginUser() {
         this.$store.dispatch("login", this.creds);

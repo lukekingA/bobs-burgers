@@ -1,9 +1,12 @@
 <template>
-  <div class="Home">
+  <div class="Order">
     <div class="container-fluid">
       <div class="row">
-        <div class="col">
-          CASHIER View
+        <div class="col d-flex flex-column justify-content-around giveMeSpace">
+            <button class="square">COMBO</button>
+            <button class="square">SANDWICH</button>
+            <button class="square">SIDES</button>
+            <button class="square">DRINKS</button>
         </div>
       </div>
     </div>
@@ -12,7 +15,7 @@
 
 <script>
 export default {
-  name: "Home",
+  name: "Order",
   props: [],
   data() {
     return {};
@@ -22,3 +25,18 @@ export default {
   components: {}
 };
 </script>
+
+<style>
+  .Order{
+    background-color:#008080;
+    
+  }
+  .square {
+  height: 20vh;
+  width: 20vh;
+  background-color: #FA8072;
+}
+  .giveMeSpace{
+    height: 100vh;
+  }
+</style>

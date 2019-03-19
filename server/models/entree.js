@@ -38,9 +38,6 @@ let entree = new Schema({
     ref: 'User',
     required: true
   },
-  comment: {
-    type: String
-  },
   name: {
     type: String,
     required: true

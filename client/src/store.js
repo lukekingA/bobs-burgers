@@ -22,10 +22,37 @@ export default new Vuex.Store({
     user: {}
   },
   mutations: {
+    setUser(state , data){
+      state.user = data
+    }
     
   },
   actions: {
 
+    //USER
+    login({commit , dispatch} , creds){
+      auth.post('/login' , creds)
+        .then(res => {
+          console.log(res)
+          commit('setUser' , creds)
+        })
+
+    },
+    logout(){
+      auth.delete({commit , dipatch})
+        .then(res => {
+          console.log(res)
+          commit('setUser' , {})
+        })
+    },
+
+    register({commit , dispatch} , newAdminCreds){
+      auth.post('/register' , newAdminCreds)
+        .then(res => {
+          console.log(res)
+        })
+      
+    }
   }
 
 })

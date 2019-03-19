@@ -43,24 +43,17 @@
       return {
         showAdminLogin: false,
         loginForm: true,
-        creds: {
-          email: "",
-          password: ""
-        },
-        adminCreds: {
-          email: '',
-          password: ''
-        },
-        newAdmin: {
-          email: "",
-          password: "",
-          name: ""
-        }
+        creds: {},
+        adminCreds: {},
+        newAdmin: {}
       };
     },
     methods: {
       register() {
+        let data = this.newAdmin
+        data.manager = true
         this.$store.dispatch("register", this.newAdmin);
+        this.newAdmin = {}
       },
       loginUser() {
         this.$store.dispatch("login", this.creds);

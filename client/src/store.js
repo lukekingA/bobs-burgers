@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 let auth = Axios.create({
   baseURL: "//localhost:3000/auth/",
-  timeout: 3000,
+  // timeout: 3000,
   withCredentials: true
 })
 
@@ -19,39 +19,53 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    user: {},
+    admin: {}
   },
   mutations: {
-    setUser(state , data){
+    setUser(state, data) {
       state.user = data
+    },
+    setAdmin(state, data) {
+      state.admin = data
     }
-    
+
   },
   actions: {
 
     //USER
-    login({commit , dispatch} , creds){
-      auth.post('/login' , creds)
+    login({
+      commit,
+      dispatch
+    }, creds) {
+      auth.post('login', creds)
         .then(res => {
           console.log(res)
-          commit('setUser' , creds)
+          commit('setUser', creds)
         })
 
     },
-    logout(){
-      auth.delete({commit , dipatch})
+    logout({
+      commit,
+      dipatch
+    }) {
+      auth.delete('logout')
         .then(res => {
           console.log(res)
-          commit('setUser' , {})
+          commit('setUser', {})
         })
     },
 
-    register({commit , dispatch} , newAdminCreds){
-      auth.post('/register' , newAdminCreds)
+    register({
+      commit,
+      dispatch
+    }, newAdminCreds) {
+      auth.post('register', newAdminCreds)
         .then(res => {
           console.log(res)
+          commit('setAdmin', res.data)
         })
-      
+
     }
   }
 

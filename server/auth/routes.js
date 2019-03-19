@@ -32,8 +32,8 @@ router.post('/auth/register', (req, res) => {
 router.post('/auth/login', (req, res) => {
   //FIND A USER BASED ON PROVIDED EMAIL
   Users.findOne({
-    email: req.body.email
-  })
+      email: req.body.email
+    })
     .then(user => {
       if (!user) {
         return res.status(400).send(loginError)
@@ -41,17 +41,17 @@ router.post('/auth/login', (req, res) => {
       //CHECK THE PASSWORD
       user.validatePassword(req.body.password)
         .then(valid => {
-          if(!valid){
+          if (!valid) {
             return res.status(400).send(loginError)
           }
-        
-        
-      
-      //ALWAYS REMOVE THE PASSWORD FROM THE USER OBJECT
-      delete user._doc.hash
-      req.session.uid = user._id
-      res.send(user)
-    })
+
+
+
+          //ALWAYS REMOVE THE PASSWORD FROM THE USER OBJECT
+          delete user._doc.hash
+          req.session.uid = user._id
+          res.send(user)
+        })
     }).catch(err => {
       res.status(400).send(loginError)
     })
@@ -86,6 +86,15 @@ router.get('/auth/authenticate', (req, res) => {
     })
 })
 
+router.get('/auth/all', (req, res) => {
+  Users.find({}).then(data => {
+    console.log(data)
+    if (!data) {
+      res.send('no data')
+    }
+    res.send(data)
+  })
+})
 
 module.exports = {
   router,

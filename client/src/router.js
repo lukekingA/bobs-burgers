@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import Home from './views/Home.vue'
+import Router from 'vue-router'
+import Order from './views/Order.vue'
 import Kitchen from './views/Kitchen.vue'
 import webApp from './views/Web-App.vue'
 import Login from './views/Login.vue'
@@ -7,22 +8,21 @@ import Login from './views/Login.vue'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/kitchen',
       name: 'kitchen',
       component: Kitchen
     },
     {
       path: '/',
-      name: 'home',
+      name: 'login',
       props: true,
-      component: Home
+      component: Login
     },
     {
-      path: '/login',
-      name: 'login',
-      component: Login
+      path: '/order',
+      name: 'order',
+      component: Order
     },
     {
       path: '/Web-App',

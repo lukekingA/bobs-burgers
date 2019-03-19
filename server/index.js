@@ -2,7 +2,12 @@ var express = require('express')
 var bp = require('body-parser')
 var server = express()
 var cors = require('cors')
-var port = 3000
+
+
+//Sets the port to Heroku's, and the files to the built project 
+var port = process.env.PORT || 3000
+server.use(express.static(__dirname + '/../client/dist'))
+
 
 var whitelist = ['http://localhost:8080'];
 var corsOptions = {
@@ -29,6 +34,22 @@ let auth = require('./auth/routes')
 server.use(auth.session)
 server.use(auth.router)
 
+
+//Gate Keeper Must login to access any route below this code
+server.use((req, res, next) => {
+  if (!req.session.uid) {
+    return res.status(401).send({
+      error: 'please login to continue'
+    })
+  }
+  next()
+})
+
+//YOUR ROUTES HERE!!!!!!
+let orderRoutes = require('./routes/order-routes')
+let userRoutes = require('./routes/user-routes')
+server.use('/orders', orderRoutes)
+server.use('/users', userRoutes)
 
 
 //Catch all

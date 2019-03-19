@@ -59,10 +59,13 @@
     },
     methods: {
       register() {
-        this.$store.dispatch("register", this.newUser);
+        this.$store.dispatch("register", this.newAdmin);
       },
       loginUser() {
         this.$store.dispatch("login", this.creds);
+      },
+      loginAdmin() {
+        this.$store.dispatch("login", this.adminCreds);
       }
     }
   };

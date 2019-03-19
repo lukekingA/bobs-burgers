@@ -49,4 +49,17 @@ server.use((req, res, next) => {
 let orderRoutes = require('./routes/order-routes')
 let userRoutes = require('./routed/user-routes')
 server.use('/orders', orderRoutes)
-server.use('/users' , userRoutes)
+server.use('/users', userRoutes)
+
+
+//Catch all
+server.use('*', (req, res, next) => {
+  res.status(404).send({
+    error: 'No matching routes'
+  })
+})
+
+
+server.listen(port, () => {
+  console.log('server running on port', port)
+})

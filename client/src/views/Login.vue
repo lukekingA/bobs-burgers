@@ -1,4 +1,4 @@
-<template>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <template>
   <div class="login container-fluid">
     <div class="row">
       <div class="col">
@@ -11,7 +11,10 @@
     </div>
     <div class="row">
       <div class="col">
-        <button class="btn btn-sm bg-dark text-light" @click="showAdminLogin = !showAdminLogin">Admin Login</button>
+        <button
+          class="btn btn-sm bg-dark text-light"
+          @click="showAdminLogin = !showAdminLogin"
+        >Admin Login</button>
         <div v-show="showAdminLogin">
           <form v-if="loginForm" @submit.prevent="adminLogin">
             <input type="email" v-model="adminCreds.email">
@@ -31,42 +34,40 @@
         </div>
       </div>
     </div>
-
-
   </div>
 </template>
 
 <script>
-  export default {
-    name: "login",
-    data() {
-      return {
-        showAdminLogin: false,
-        loginForm: true,
-        creds: {},
-        adminCreds: {},
-        newAdmin: {}
-      };
+export default {
+  name: "login",
+  data() {
+    return {
+      showAdminLogin: false,
+      loginForm: true,
+      creds: {},
+      adminCreds: {},
+      newAdmin: {}
+    };
+  },
+  methods: {
+    register() {
+      let data = this.newAdmin;
+      data.manager = true;
+      this.$store.dispatch("register", this.newAdmin);
+      this.newAdmin = {};
     },
-    methods: {
-      register() {
-        let data = this.newAdmin
-        data.manager = true
-        this.$store.dispatch("register", this.newAdmin);
-        this.newAdmin = {}
-      },
-      loginUser() {
-        this.$store.dispatch("login", this.creds);
-      },
-      loginAdmin() {
-        this.$store.dispatch("login", this.adminCreds);
-      }
+    loginUser() {
+      this.$store.dispatch("login", this.creds);
+    },
+    loginAdmin() {
+      this.$store.dispatch("login", this.adminCreds);
     }
-  };
+  }
+};
 </script>
 
 <style>
-  .action {
-    cursor: pointer;
-  }
+.action {
+  cursor: pointer;
+}
 </style>

@@ -47,9 +47,7 @@ server.use((req, res, next) => {
 
 //YOUR ROUTES HERE!!!!!!
 let orderRoutes = require('./routes/order-routes')
-let userRoutes = require('./routes/user-routes')
 server.use('/orders', orderRoutes)
-server.use('/users', userRoutes)
 
 
 //Catch all

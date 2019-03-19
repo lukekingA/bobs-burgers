@@ -1,24 +1,9 @@
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema
 let ObjectId = Schema.Types.ObjectId
-let schemaName = 'Entree'
+let schemaName = 'Side'
 
-let component = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  cost: {
-    type: Number,
-    required: true
-  },
-  quantity: {
-    type: Number,
-    required: true
-  }
-})
-
-let entree = new Schema({
+let schema = new Schema({
   orderId: {
     type: ObjectId,
     ref: 'Order',
@@ -34,15 +19,21 @@ let entree = new Schema({
     ref: 'User',
     required: true
   },
-  comment: {
-    type: String
-  },
   name: {
     type: String,
     required: true
   },
-  components: [component]
+  // size is either -1,0,1
+  size: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  cost: {
+    type: Number,
+    required: true
+  },
+
 })
 
-
-module.exports = mongoose.model(schemaName, entree)
+module.exports = mongoose.model(schemaName, schema)

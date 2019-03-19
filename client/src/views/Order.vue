@@ -1,7 +1,11 @@
 <template>
   <div class="Home">
     <div class="container-fluid">
-      <div class="row"></div>
+      <div class="row">
+        <div class="col">
+          CASHIER View
+        </div>
+      </div>
     </div>
   </div>
 </template>

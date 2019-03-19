@@ -5,8 +5,25 @@ let schemaName = 'List'
 
 
 let schema = new Schema({
-  price: { type: String, required: true },
-}, { timestamps: true })
+  price: {
+    type: Number,
+    required: true
+  },
+  entrees: [{
+    type: ObjectId,
+    ref: 'OrderId'
+  }],
+  drinks: [{
+    type: ObjectId,
+    ref: 'OrderId'
+  }],
+  sides: [{
+    type: ObjectId,
+    ref: "OrderId"
+  }]
+}, {
+  timestamps: true
+})
 
 //CASCADE ON DELETE
 

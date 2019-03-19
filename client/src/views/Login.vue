@@ -59,8 +59,21 @@ export default {
     loginUser() {
       this.$store.dispatch("login", this.creds);
     },
-    loginAdmin() {
-      this.$store.dispatch("login", this.adminCreds);
+    methods: {
+      register() {
+        let data = this.newAdmin;
+        data.manager = true;
+        this.$store.dispatch("register", this.newAdmin);
+        this.newAdmin = {};
+        this.showAdminLogin = false;
+        this.loginForm = true;
+      },
+      loginUser() {
+        this.$store.dispatch("login", this.creds);
+      },
+      loginAdmin() {
+        this.$store.dispatch("login", this.adminCreds);
+      }
     }
   }
 };

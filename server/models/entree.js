@@ -24,6 +24,10 @@ let entree = new Schema({
     ref: 'Order',
     required: true
   },
+  price: {
+    type: Number,
+    required: true
+  },
   managerId: {
     type: ObjectId,
     ref: 'User',

@@ -4,20 +4,21 @@ import Order from './views/Order.vue'
 import Kitchen from './views/Kitchen.vue'
 import webApp from './views/Web-App.vue'
 import Login from './views/Login.vue'
+import Admin from './views/Admin.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [{
-      path: '/kitchen',
+      path: '/kitchen', 
       name: 'kitchen',
       component: Kitchen
     },
     {
       path: '/',
-      name: 'login',
+      name: 'order',
       props: true,
-      component: Login
+      component: Order
     },
     {
       path: '/order',

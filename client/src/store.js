@@ -21,6 +21,7 @@ export default new Vuex.Store({
   state: {
     user: {},
     admin: {}
+   
   },
   mutations: {
     setUser(state, data) {
@@ -28,7 +29,8 @@ export default new Vuex.Store({
     },
     setAdmin(state, data) {
       state.admin = data
-    }
+    },
+  
 
   },
   actions: {
@@ -38,13 +40,10 @@ export default new Vuex.Store({
     login({ commit, dispatch }, creds) {
       auth.post('login', creds)
         .then(res => {
-          console.log(res)
           commit('setUser', res.data)
-          if (res.data.manager) {
-            router.push({ name: 'admin' })
-          } else {
-            router.push({ name: 'order' })
-          }
+        })
+        .catch(err => {
+          console.error(err)
         })
     },
     logout({ commit, dispatch }) {
@@ -62,6 +61,9 @@ export default new Vuex.Store({
           console.log(res)
           commit('setAdmin', res.data)
         })
+    },
+    closeLoginModal({commit , dispatch}){
+      commit('closeLoginModal')
     },
     //#endregion
 

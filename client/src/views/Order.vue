@@ -28,13 +28,13 @@ export default {
 
 <style>
   .Order{
-    background-color:#008080;
+    background-color:lightskyblue;;
     
   }
   .square {
   height: 20vh;
   width: 20vh;
-  background-color: #FA8072;
+  background-color: darkcyan
 }
   .giveMeSpace{
     height: 100vh;

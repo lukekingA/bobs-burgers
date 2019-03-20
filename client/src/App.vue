@@ -1,27 +1,26 @@
 <template>
     <div>
-      <nav v-if="!user._id" class="navbar ">
+      <nav class="navbar ">
         <a class="navbar-brand"><i class="fas fa-hamburger"></i>BOBS BURGERS</a>
           <div class="btn-group">
-            <button v-if="!showRegister" @click="showLogin = !showLogin" class="btn my-2 my-sm-0"><i class="fas fa-door-open"></i></i></button>
-              <form v-if="showLogin" class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button clas  s="btn my-2 my-sm-0" type="submit">GO!</button>
+            <button @click="logout" v-if="user._id" class="btn my-2 my-sm-0"><i class="fas fa-door-open"></i></i></button>
+            <button v-if="!user._id" @click="showLogin = !showLogin" class="btn my-2 my-sm-0"><i class="fas fa-door-closed"></i></i></i></button>
+              <form v-if="showLogin" class="form-inline" @submit.prevent="login">
+                <input v-model="creds.email" class="form-control mr-sm-2" type="search" placeholder="Email" aria-label="Search">
+                <input v-model="creds.password" class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search">
+                <button class="btn my-2 my-sm-0" type="submit">GO!</button>
               </form>
-            <button v-if="!showLogin"  @click="showRegister = !showRegister" class="btn my-2 my-sm-0"><i class="fas fa-user-plus"></i></i></button>
-              <form v-if="showRegister" class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="username" aria-label="Search">
-                <input class="form-control mr-sm-2" type="search" placeholder="email" aria-label="Search">
-                <input class="form-control mr-sm-2" type="search" placeholder="password" aria-label="Search">
+            <button v-if="!user._id"  @click="showRegister = !showRegister" class="btn my-2 my-sm-0"><i class="fas fa-user-plus"></i></i></button>
+              <form v-if="showRegister" class="form-inline"  @submit.prevent="register"> 
+                <input v-model="newAccount.email" class="form-control mr-sm-2" type="search" placeholder="Email" aria-label="Search">
+                <input v-model="newAccount.name" class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search">
+                <input v-model="newAccount.password" class="form-control mr-sm-2" type="search" placeholder="Password" aria-label="Search">
                 <button class="btn my-2 my-sm-0" type="submit">GO!</button>
               </form>
           </div>
         </nav>
       <div id="app">
-      <!-- <admin></admin> -->
-      <!-- <router-view /> -->
-      <!-- <login></login> -->
+        <router-view></router-view>
       </div>
   </div>
 </template>
@@ -36,22 +35,35 @@
     name: 'app',
     data() {
       return {
+        showAdminLogin: false,
+        loginForm: true,
+        creds: {},
         showLogin: false,
-        showRegister: false
-      }
+        showRegister: false,
+        newAccount: {}
+      };
     },
     computed: {
       user(){
         return this.$store.state.user
       }
-
     },
-    
-    components: {
-      Login,
-      Admin
-
-    },
+    methods: {
+      register() {
+        let data = this.newAccount
+        data.manager = false
+        this.$store.dispatch("register", this.newAccount);
+        this.newAdmin = {}
+      },
+      login() {
+        this.showLogin = false
+        this.$store.dispatch("login", this.creds);
+        this.creds = {}
+      },
+      logout(){
+        this.$store.dispatch('logout')
+      }
+    }
   }
 </script>
 

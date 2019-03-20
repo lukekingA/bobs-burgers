@@ -1,5 +1,6 @@
-<template>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <template>
   <div class="login container-fluid">
+<<<<<<< HEAD
     <div class="row">
       <div class="col">
         <form @submit.prevent="loginUser">
@@ -11,7 +12,10 @@
     </div>
     <div class="row">
       <div class="col">
-        <button class="btn btn-sm bg-dark text-light" @click="showAdminLogin = !showAdminLogin">Admin Login</button>
+        <button
+          class="btn btn-sm bg-dark text-light"
+          @click="showAdminLogin = !showAdminLogin"
+        >Admin Login</button>
         <div v-show="showAdminLogin">
           <form v-if="loginForm" @submit.prevent="adminLogin">
             <input type="email" v-model="adminCreds.email">
@@ -31,44 +35,66 @@
         </div>
       </div>
     </div>
+=======
 
-
+    <!-- BACKDOOR TO ADD ACCOUNTS -->
+    <!-- <form @submit.prevent="register">
+      <input type="text" v-model="newAdmin.name" placeholder="name">
+      <input type="text" v-model="newAdmin.email" placeholder="email">
+      <input type="text" v-model="newAdmin.password" placeholder="password">
+      <button type="submit">Create Account</button>
+    </form> -->
+        
+>>>>>>> e7373561d4c264db8cea452102a94eebb8671e0a
   </div>
 </template>
 
 <script>
-  export default {
-    name: "login",
-    data() {
-      return {
-        showAdminLogin: false,
-        loginForm: true,
-        creds: {},
-        adminCreds: {},
-        newAdmin: {}
-      };
+export default {
+  name: "login",
+  data() {
+    return {
+      showAdminLogin: false,
+      loginForm: true,
+      creds: {},
+      adminCreds: {},
+      newAdmin: {}
+    };
+  },
+  methods: {
+    register() {
+      let data = this.newAdmin;
+      data.manager = true;
+      this.$store.dispatch("register", this.newAdmin);
+      this.newAdmin = {};
+    },
+    loginUser() {
+      this.$store.dispatch("login", this.creds);
     },
     methods: {
       register() {
-        let data = this.newAdmin
-        data.manager = true
+        let data = this.newAdmin;
+        data.manager = true;
         this.$store.dispatch("register", this.newAdmin);
-        this.newAdmin = {}
-        this.showAdminLogin = false
-        this.loginForm = true
+        this.newAdmin = {};
+        this.showAdminLogin = false;
+        this.loginForm = true;
       },
       loginUser() {
         this.$store.dispatch("login", this.creds);
+        this.creds = {}
       },
       loginAdmin() {
         this.$store.dispatch("login", this.adminCreds);
+        this.adminCreds = {}
       }
     }
-  };
+  }
+};
 </script>
 
 <style>
-  .action {
-    cursor: pointer;
-  }
+.action {
+  cursor: pointer;
+}
 </style>

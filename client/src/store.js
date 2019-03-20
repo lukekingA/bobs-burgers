@@ -34,25 +34,24 @@ export default new Vuex.Store({
   actions: {
 
     //USER
-    login({
-      commit,
-      dispatch
-    }, creds) {
+    login({ commit, dispatch }, creds) {
       auth.post('login', creds)
         .then(res => {
           console.log(res)
-          commit('setUser', creds)
+          commit('setUser', res.data)
+          if(res.data.manager = false){
+            router.push({name:'order'})
+          } else {
+            router.push({name: 'admin'})
+          }
         })
-
     },
-    logout({
-      commit,
-      dipatch
-    }) {
+    logout({ commit , dipatch}) {
       auth.delete('logout')
         .then(res => {
           console.log(res)
           commit('setUser', {})
+          router.push({name: 'login'})
         })
     },
 

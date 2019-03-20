@@ -9,21 +9,27 @@ import Admin from './views/Admin.vue'
 Vue.use(Router)
 
 export default new Router({
-  routes: [{
+  routes: [
+    {
+      path: '/admin', 
+      name: 'admin',
+      component: Admin
+    },
+    {
       path: '/kitchen', 
       name: 'kitchen',
       component: Kitchen
     },
     {
-      path: '/',
+      path: '/order',
       name: 'order',
       props: true,
       component: Order
     },
     {
-      path: '/order',
-      name: 'order',
-      component: Order
+      path: '/',
+      name: 'login',
+      component: Login
     },
     {
       path: '/Web-App',

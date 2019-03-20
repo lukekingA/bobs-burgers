@@ -1,12 +1,12 @@
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema
 let ObjectId = Schema.Types.ObjectId
-let schemaName = 'Order'
-
+let schemaName = 'SideM'
 
 let schema = new Schema({
-  price: {
-    type: Number,
+  orderId: {
+    type: ObjectId,
+    ref: 'Order',
     required: true
   },
   managerId: {
@@ -19,16 +19,21 @@ let schema = new Schema({
     ref: 'User',
     required: true
   },
-  meals: [{
-    type: ObjectId,
-    ref: 'OrderId'
-  }]
-}, {
-  timestamps: true
+  name: {
+    type: String,
+    required: true
+  },
+  // size is either -1,0,1
+  size: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  cost: {
+    type: Number,
+    required: true
+  },
+
 })
-
-//CASCADE ON DELETE
-
-
 
 module.exports = mongoose.model(schemaName, schema)

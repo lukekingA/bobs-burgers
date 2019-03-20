@@ -5,8 +5,6 @@ import Kitchen from './views/Kitchen.vue'
 import webApp from './views/Web-App.vue'
 import Login from './views/Login.vue'
 import Admin from './views/Admin.vue'
-import Store from './store'
-import store from './store';
 
 Vue.use(Router)
 
@@ -16,12 +14,6 @@ export default new Router({
       path: '/admin',
       name: 'admin',
       component: Admin,
-      beforeEnter(to, from, next) {
-        if (store.state.user.manager) {
-          return next()
-        }
-        next('/order')
-      }
     },
     {
       path: '/kitchen',

@@ -63,33 +63,20 @@
     methods: {
       register() {
         let data = this.newAccount;
-        data.manager = true;
-        this.$store.dispatch("register", data);
-        this.newAccount = {};
+        data.manager = false;
+        this.$store.dispatch("register", this.newAccount);
+        this.newAdmin = {};
       },
-      computed: {
-        user() {
-          return this.$store.state.user;
-        }
+      login() {
+        this.showLogin = false;
+        this.$store.dispatch("login", this.creds);
+        this.creds = {};
       },
-      methods: {
-        register() {
-          let data = this.newAccount;
-          data.manager = false;
-          this.$store.dispatch("register", this.newAccount);
-          this.newAdmin = {};
-        },
-        login() {
-          this.showLogin = false;
-          this.$store.dispatch("login", this.creds);
-          this.creds = {};
-        },
-        logout() {
-          this.$store.dispatch("logout");
-        }
+      logout() {
+        this.$store.dispatch("logout");
       }
     }
-  }
+  };
 </script>
 
 <style>

@@ -57,11 +57,7 @@
         </form>
       </div>
     </nav>
-<<<<<<< HEAD
     <div id="app">
-=======
-    <div id="app" class="container-fluid">
->>>>>>> 2b392d57be8b5becfea7fe24716b21ad30729c33
       <router-view></router-view>
     </div>
   </div>
@@ -71,42 +67,6 @@
 
 
 <script>
-<<<<<<< HEAD
-import Login from "@/views/Login.vue";
-import Admin from "@/views/Admin.vue";
-export default {
-  name: "app",
-  data() {
-    return {
-      showAdminLogin: false,
-      loginForm: true,
-      creds: {},
-      showLogin: false,
-      showRegister: false,
-      newAccount: {}
-    };
-  },
-  computed: {
-    user() {
-      return this.$store.state.user;
-    }
-  },
-  methods: {
-    register() {
-      let data = this.newAccount;
-      data.manager = false;
-      this.$store.dispatch("register", this.newAccount);
-      this.newAdmin = {};
-    },
-    login() {
-      this.showLogin = false;
-      this.$store.dispatch("login", this.creds);
-      this.creds = {};
-    },
-    logout() {
-      this.$store.dispatch("logout");
-    }
-=======
   import Admin from '@/views/Admin.vue'
   export default {
     name: 'app',
@@ -142,28 +102,17 @@ export default {
       }
     },
 
->>>>>>> 2b392d57be8b5becfea7fe24716b21ad30729c33
   }
 };
 </script>
 
 <style>
-<<<<<<< HEAD
 .navbar {
-  background-color: rgb(0, 198, 215);
+  background-color: darkcyan;
 }
+
 #app {
-  background-color: rgb(255, 90, 23);
+  background-color: lightskyblue;
   height: 100vh;
 }
-=======
-  .navbar {
-    background-color: darkcyan
-  }
-
-  #app {
-    background-color: lightskyblue;
-    height: 100vh
-  }
->>>>>>> 2b392d57be8b5becfea7fe24716b21ad30729c33
 </style>

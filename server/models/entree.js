@@ -24,16 +24,6 @@ let entree = new Schema({
     type: Number,
     required: true
   },
-  managerId: {
-    type: ObjectId,
-    ref: 'User',
-    required: true
-  },
-  employeeId: {
-    type: ObjectId,
-    ref: 'User',
-    required: true
-  },
   name: {
     type: String,
     required: true

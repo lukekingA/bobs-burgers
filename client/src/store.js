@@ -39,7 +39,11 @@ export default new Vuex.Store({
         .then(res => {
           console.log(res)
           commit('setUser', res.data)
-          router.push({name:'order'})
+          if(res.data.manager = false){
+            router.push({name:'order'})
+          } else {
+            router.push({name: 'admin'})
+          }
         })
     },
     logout({ commit , dipatch}) {

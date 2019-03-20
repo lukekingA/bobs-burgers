@@ -38,7 +38,6 @@
         showAdminLogin: false,
         loginForm: true,
         creds: {},
-        // newAdmin: {},
         showLogin: false,
         showRegister: false,
         newAccount: {}

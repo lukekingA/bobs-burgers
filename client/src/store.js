@@ -39,17 +39,15 @@ export default new Vuex.Store({
         .then(res => {
           console.log(res)
           commit('setUser', res.data)
-          router.push({name: 'order' })
+          router.push({name:'order'})
         })
     },
-    logout({
-      commit,
-      dipatch
-    }) {
+    logout({ commit , dipatch}) {
       auth.delete('logout')
         .then(res => {
           console.log(res)
           commit('setUser', {})
+          router.push({name: 'login'})
         })
     },
 

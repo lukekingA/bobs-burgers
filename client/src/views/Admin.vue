@@ -96,18 +96,10 @@ export default {
   height: 5rem;
 }
 
-<<<<<<< HEAD
 .right-rounded {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
-=======
-  .right-rounded {
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    filter: drop-shadow(3px 5px 5px rgb(53, 52, 52))
-  }
->>>>>>> eb52116ad0aa5902cdf73ab84a9db79cecd8fef0
 </style>
 
 <!-- <form v-else @submit.prevent="register">

@@ -2,7 +2,7 @@
   <div class="admin row">
     <div class="col-1 d-flex flex-column">
       <button
-        class="mt-2 right-rounded bg-dark text-light border border-light tab-height"
+        class="mb-2 mt-2 right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('editMenu')"
       >
         <small>
@@ -11,7 +11,7 @@
         </small>
       </button>
       <button
-        class="right-rounded bg-dark text-light border border-light tab-height"
+        class="mb-2 right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('menuMaker')"
       >
         <small>
@@ -20,7 +20,7 @@
         </small>
       </button>
       <button
-        class="right-rounded bg-dark text-light border border-light tab-height"
+        class="mb-2 right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('menuBook')"
       >
         <small>
@@ -29,7 +29,7 @@
         </small>
       </button>
       <button
-        class="right-rounded bg-dark text-light border border-light tab-height"
+        class="mb-2 right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('ManageCreds')"
       >
         <small>
@@ -99,6 +99,7 @@ export default {
 .right-rounded {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+  filter: drop-shadow(3px 5px 5px rgb(53, 52, 52));
 }
 </style>
 

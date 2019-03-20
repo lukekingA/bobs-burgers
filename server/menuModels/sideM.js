@@ -14,7 +14,7 @@ let schema = new Schema({
     required: true,
     default: 0
   },
-  cost: {
+  price: {
     type: Number,
     required: true
   },

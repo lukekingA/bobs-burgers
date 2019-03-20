@@ -183,6 +183,9 @@ body {
 .navbar {
   background-color: rgb(0, 198, 215);
 }
+.fas{
+  font-size: 3vh
+}
 
 /* #app {
   background-color: lightskyblue;

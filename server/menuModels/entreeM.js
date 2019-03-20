@@ -15,11 +15,12 @@ let component = new Schema({
 })
 
 let entreeM = new Schema({
-  comment: {
-    type: String
-  },
   name: {
     type: String,
+    required: true
+  },
+  cost: {
+    type: Number,
     required: true
   },
   components: [component]

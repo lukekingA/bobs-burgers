@@ -2,7 +2,8 @@
   <div id="logo">
     <nav class="navbar">
       <a class="navbar-brand">
-        <i class="fas fa-hamburger"></i>BOBS BURGERS
+        <img src="./assets/bob_logo_sm.png" width="65" height="65" alt>
+        <!-- <i class="fas fa-hamburger"></i>BOBS BURGERS -->
       </a>
       <div class="btn-group">
         <button @click="logout" v-if="user._id" class="btn my-2 my-sm-0">
@@ -105,6 +106,12 @@ export default {
 </script>
 
 <style>
+img {
+  margin-top: -10;
+  margin-bottom: -30;
+  padding-top: -20;
+  padding-bottom: -20;
+}
 html,
 body {
   height: 100vh;

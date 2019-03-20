@@ -21,9 +21,9 @@ export default new Router({
       component: Order
     },
     {
-      path: '/order',
-      name: 'order',
-      component: Order
+      path: '/login',
+      name: 'login',
+      component: Login
     },
     {
       path: '/Web-App',

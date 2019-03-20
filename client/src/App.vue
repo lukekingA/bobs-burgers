@@ -21,7 +21,7 @@
       <div id="app">
         <login></login>
       </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 
@@ -48,7 +48,6 @@
     components: {
       Login,
       Admin
-
     },
   }
 </script>

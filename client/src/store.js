@@ -39,27 +39,24 @@ export default new Vuex.Store({
         .then(res => {
           console.log(res)
           commit('setUser', res.data)
-          if(res.data.manager = false){
-            router.push({name:'order'})
+          if (res.data.manager) {
+            router.push({ name: 'admin' })
           } else {
-            router.push({name: 'admin'})
+            router.push({ name: 'order' })
           }
         })
     },
-    logout({ commit , dipatch}) {
+    logout({ commit, dipatch }) {
       auth.delete('logout')
         .then(res => {
           console.log(res)
           commit('setUser', {})
-          router.push({name: 'login'})
+          router.push({ name: 'login' })
         })
     },
 
-    register({
-      commit,
-      dispatch
-    }, newAdminCreds) {
-      auth.post('register', newAdminCreds)
+    register({ commit, dispatch }, newCreds) {
+      auth.post('register', newCreds)
         .then(res => {
           console.log(res)
           commit('setAdmin', res.data)

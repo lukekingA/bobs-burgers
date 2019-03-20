@@ -89,8 +89,8 @@ export default {
     register() {
       let data = this.newAccount;
       data.manager = false;
-      this.$store.dispatch("register", this.newAccount);
-      this.newAdmin = {};
+      this.$store.dispatch("register", data);
+      this.newAccount = {};
     },
     login() {
       this.showLogin = false;

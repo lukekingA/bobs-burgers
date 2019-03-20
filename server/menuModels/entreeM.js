@@ -4,40 +4,17 @@ let ObjectId = Schema.Types.ObjectId
 let schemaName = 'EntreeM'
 
 let component = new Schema({
-    name: {
-      type: String,
-      required: true
-    },
-    cost: {
-      type: Number,
-      required: true
-    },
-    quantity: {
-      type: Number,
-      required: true
-    }
-  })
-
-let entreeM = new Schema({
-  orderId: {
-    type: ObjectId,
-    ref: 'Order',
+  name: {
+    type: String,
     required: true
   },
-  price: {
+  cost: {
     type: Number,
     required: true
-  },
-  managerId: {
-    type: ObjectId,
-    ref: 'User',
-    required: true
-  },
-  employeeId: {
-    type: ObjectId,
-    ref: 'User',
-    required: true
-  },
+  }
+})
+
+let entreeM = new Schema({
   comment: {
     type: String
   },

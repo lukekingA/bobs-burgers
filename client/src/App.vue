@@ -88,7 +88,8 @@
           this.$store.dispatch("logout");
         }
       }
-    };
+    }
+  }
 </script>
 
 <style>

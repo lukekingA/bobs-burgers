@@ -107,16 +107,21 @@ export default {
 <style>
 html,
 body {
-  height: 100bh;
+  height: 100vh;
 }
 
 #logo {
   background: url("assets/bobs-backgroundArtboard 1-100.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  height: 100%;
+  width: auto;
+
+  top: 0;
+  left: 0;
 }
 .navbar {
-  background-color: darkcyan;
+  background-color: rgb(0, 198, 215);
 }
 
 /* #app {

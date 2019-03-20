@@ -1,6 +1,5 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <template>
   <div class="login container-fluid">
-<<<<<<< HEAD
     <div class="row">
       <div class="col">
         <form @submit.prevent="loginUser">
@@ -35,17 +34,6 @@
         </div>
       </div>
     </div>
-=======
-
-    <!-- BACKDOOR TO ADD ACCOUNTS -->
-    <!-- <form @submit.prevent="register">
-      <input type="text" v-model="newAdmin.name" placeholder="name">
-      <input type="text" v-model="newAdmin.email" placeholder="email">
-      <input type="text" v-model="newAdmin.password" placeholder="password">
-      <button type="submit">Create Account</button>
-    </form> -->
-        
->>>>>>> e7373561d4c264db8cea452102a94eebb8671e0a
   </div>
 </template>
 
@@ -82,11 +70,11 @@ export default {
       },
       loginUser() {
         this.$store.dispatch("login", this.creds);
-        this.creds = {}
+        this.creds = {};
       },
       loginAdmin() {
         this.$store.dispatch("login", this.adminCreds);
-        this.adminCreds = {}
+        this.adminCreds = {};
       }
     }
   }

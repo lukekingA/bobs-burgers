@@ -1,7 +1,9 @@
 <template>
   <div class="admin row">
     <div class="col-1 d-flex flex-column">
-      <button class=" mt-2 rounded-right bg-dark text-light border border-light tab-height" @click="switchView('editMenu')"><small>Edit
+      <button class=" mt-2 rounded-right bg-dark text-light border border-light tab-height" @click="switchView('addItem')"><small>Add
+          Item</small></button>
+      <button class="rounded-right bg-dark text-light border border-light tab-height" @click="switchView('editMenu')"><small>Edit
           Menu</small></button>
       <button class=" rounded-right bg-dark text-light border border-light tab-height" @click="switchView('menuMaker')"><small>Menu
           Maker</small></button>
@@ -28,7 +30,8 @@
     name: 'admin',
     data() {
       return {
-        editMenu: true,
+        addItem: true,
+        editMenu: false,
         menuMaker: false,
         menuBook: false,
         manageCreds: false,
@@ -39,6 +42,7 @@
     methods: {
       switchView(selection) {
         let shows = ['editMenu',
+          'addItem',
           'menuMaker',
           'menuBook',
           'manageCreds',

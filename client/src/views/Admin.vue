@@ -1,26 +1,28 @@
 <template>
   <div class="admin row">
     <div class="col-1 d-flex flex-column">
-      <button class="mt-2 right-rounded bg-dark text-light border border-light tab-height"
+      <button class="mb-2 mt-2 right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('editMenu')">
         <small>
           Edit
           Menu
         </small>
       </button>
-      <button class="right-rounded bg-dark text-light border border-light tab-height" @click="switchView('menuMaker')">
+      <button class="mb-2 right-rounded bg-dark text-light border border-light tab-height"
+        @click="switchView('menuMaker')">
         <small>
           Menu
           Maker
         </small>
       </button>
-      <button class="right-rounded bg-dark text-light border border-light tab-height" @click="switchView('menuBook')">
+      <button class="mb-2 right-rounded bg-dark text-light border border-light tab-height"
+        @click="switchView('menuBook')">
         <small>
           Menu
           Book
         </small>
       </button>
-      <button class="right-rounded bg-dark text-light border border-light tab-height"
+      <button class="mb-2 right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('ManageCreds')">
         <small>
           Manage

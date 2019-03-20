@@ -1,4 +1,4 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <template>
+<template>
   <div class="login container-fluid">
 
     <!-- BACKDOOR TO ADD ACCOUNTS -->
@@ -8,31 +8,25 @@
       <input type="text" v-model="newAdmin.password" placeholder="password">
       <button type="submit">Create Account</button>
     </form> -->
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 754bc57b45597a345e1f79f1aabe2e2df367a101
   </div>
 </template>
 
 <script>
-export default {
-  name: "login",
-  data() {
-    return {
-      showAdminLogin: false,
-      loginForm: true,
-      creds: {},
-      adminCreds: {},
-      newAdmin: {}
-    };
-  },
-  methods: {
-    register() {
-      let data = this.newAdmin;
-      data.manager = true;
-      this.$store.dispatch("register", this.newAdmin);
-      this.newAdmin = {};
-    },
-    loginUser() {
-      this.$store.dispatch("login", this.creds);
+  export default {
+    name: "login",
+    data() {
+      return {
+        showAdminLogin: false,
+        loginForm: true,
+        creds: {},
+        adminCreds: {},
+        newAdmin: {}
+      };
     },
     methods: {
       register() {
@@ -40,24 +34,34 @@ export default {
         data.manager = true;
         this.$store.dispatch("register", this.newAdmin);
         this.newAdmin = {};
-        this.showAdminLogin = false;
-        this.loginForm = true;
       },
       loginUser() {
         this.$store.dispatch("login", this.creds);
-        this.creds = {}
       },
-      loginAdmin() {
-        this.$store.dispatch("login", this.adminCreds);
-        this.adminCreds = {}
+      methods: {
+        register() {
+          let data = this.newAdmin;
+          data.manager = true;
+          this.$store.dispatch("register", this.newAdmin);
+          this.newAdmin = {};
+          this.showAdminLogin = false;
+          this.loginForm = true;
+        },
+        loginUser() {
+          this.$store.dispatch("login", this.creds);
+          this.creds = {}
+        },
+        loginAdmin() {
+          this.$store.dispatch("login", this.adminCreds);
+          this.adminCreds = {}
+        }
       }
     }
-  }
-};
+  };
 </script>
 
 <style>
-.action {
-  cursor: pointer;
-}
+  .action {
+    cursor: pointer;
+  }
 </style>

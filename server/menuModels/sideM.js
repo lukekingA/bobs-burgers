@@ -4,21 +4,6 @@ let ObjectId = Schema.Types.ObjectId
 let schemaName = 'SideM'
 
 let schema = new Schema({
-  orderId: {
-    type: ObjectId,
-    ref: 'Order',
-    required: true
-  },
-  managerId: {
-    type: ObjectId,
-    ref: 'User',
-    required: true
-  },
-  employeeId: {
-    type: ObjectId,
-    ref: 'User',
-    required: true
-  },
   name: {
     type: String,
     required: true

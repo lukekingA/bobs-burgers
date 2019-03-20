@@ -19,7 +19,7 @@ let schema = new Schema({
     unique: true
   },
   manager: {
-    type: String,
+    type: Boolean,
     required: true,
     default: false
   },
@@ -28,8 +28,8 @@ let schema = new Schema({
     required: true
   }
 }, {
-  timestamps: true
-})
+    timestamps: true
+  })
 
 
 //THESE TWO METHODS CAN BE COPIED FOR ALL USER SCHEMA'S

@@ -20,8 +20,8 @@ let api = Axios.create({
 export default new Vuex.Store({
   state: {
     user: {},
-    admin: {}
-   
+    admin: {},
+    entreeItems: []
   },
   mutations: {
     setUser(state, data) {
@@ -30,14 +30,19 @@ export default new Vuex.Store({
     setAdmin(state, data) {
       state.admin = data
     },
-  
+    setEntreeItems(state, data) {
+      state.entreeItems = data
+    }
 
   },
   actions: {
 
     //USER
     //#region --Login --
-    login({ commit, dispatch }, creds) {
+    login({
+      commit,
+      dispatch
+    }, creds) {
       auth.post('login', creds)
         .then(res => {
           commit('setUser', res.data)
@@ -46,16 +51,24 @@ export default new Vuex.Store({
           console.error(err)
         })
     },
-    logout({ commit, dispatch }) {
+    logout({
+      commit,
+      dispatch
+    }) {
       auth.delete('logout')
         .then(res => {
           console.log(res)
           commit('setUser', {})
-          router.push({ name: 'login' })
+          router.push({
+            name: 'login'
+          })
         })
     },
 
-    register({ commit, dispatch }, newCreds) {
+    register({
+      commit,
+      dispatch
+    }, newCreds) {
       auth.post('register', newCreds)
         .then(res => {
           console.log(res)
@@ -68,10 +81,23 @@ export default new Vuex.Store({
     //#endregion
 
     //#region --Menu --
+
+    getEntreeItems({
+      commit,
+      dispatch
+    }) {
+      api.get('/menu/items').then(res => {
+        commit('setEntreeItems')
+      })
+    },
+
     addEntreeItem({
-      commit, dispatch
+      commit,
+      dispatch
     }, data) {
-      api.post('')
+      api.post('/menu/item', data).then(res => {
+        dispatch('getEntreeItems')
+      })
     }
     //#endregion
 

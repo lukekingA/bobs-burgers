@@ -105,6 +105,11 @@ export default {
 </script>
 
 <style>
+html,
+body {
+  height: 100bh;
+}
+
 #logo {
   background: url("assets/bobs-backgroundArtboard 1-100.jpg");
   background-repeat: no-repeat;

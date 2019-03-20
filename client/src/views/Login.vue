@@ -8,11 +8,6 @@
       <input type="text" v-model="newAdmin.password" placeholder="password">
       <button type="submit">Create Account</button>
     </form> -->
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> 754bc57b45597a345e1f79f1aabe2e2df367a101
   </div>
 </template>
 

@@ -13,7 +13,9 @@
     </div>
     <div v-show="menuType == 'entree'" class="">
       <input class="rounded pl-1 mr-1" type="text" v-model="menuItemName" placeholder="name">
-      <input class="rounded pl-1" type="text" v-model="components" placeholder="components coma seperated">
+      <div class="" v-for="component in components">
+
+      </div>
     </div>
     <div v-show="menuType == 'drink'" class="">
       <input class="rounded pl-1 mb-1" type="text" v-model="menuItemName" placeholder="name">

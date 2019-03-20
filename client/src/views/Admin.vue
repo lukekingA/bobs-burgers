@@ -1,10 +1,8 @@
 <template>
   <div class="admin row">
     <div class="col-1 d-flex flex-column">
-      <button class=" mt-2 right-rounded bg-dark text-light border border-light tab-height"
-        @click="switchView('addEntreeItem')"><small>Add Entree
-          Item</small></button>
-      <button class="right-rounded bg-dark text-light border border-light tab-height"
+
+      <button class="mt-2 right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('editMenu')"><small>Edit
           Menu</small></button>
       <button class=" right-rounded bg-dark text-light border border-light tab-height"
@@ -25,9 +23,7 @@
     <div class="col mt-2" v-if="menuMaker">
       <menu-maker></menu-maker>
     </div>
-    <div class="col mt-2" v-if="addEntreeItem">
-      <add-component></add-component>
-    </div>
+
 
   </div>
 </template>
@@ -36,13 +32,11 @@
 <script>
   import MenuEditor from '@/components/MenuEditor.vue'
   import MenuMaker from '@/components/MenuMaker.vue'
-  import AddEntreeItem from '@/components/AddEntreeItem.vue'
   export default {
     name: 'admin',
     data() {
       return {
-        addEntreeItem: true,
-        editMenu: false,
+        editMenu: true,
         menuMaker: false,
         menuBook: false,
         manageCreds: false,
@@ -53,7 +47,6 @@
     methods: {
       switchView(selection) {
         let shows = ['editMenu',
-          'addEntreeItem',
           'menuMaker',
           'menuBook',
           'manageCreds',
@@ -66,8 +59,7 @@
     },
     components: {
       MenuEditor,
-      MenuMaker,
-      AddEntreeItem,
+      MenuMaker
     }
   }
 </script>

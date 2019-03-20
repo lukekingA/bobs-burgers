@@ -34,6 +34,7 @@ export default new Vuex.Store({
   actions: {
 
     //USER
+    //#region --Login --
     login({ commit, dispatch }, creds) {
       auth.post('login', creds)
         .then(res => {
@@ -61,8 +62,17 @@ export default new Vuex.Store({
           console.log(res)
           commit('setAdmin', res.data)
         })
+    },
+    //#endregion
 
+    //#region --Menu --
+    addEntreeItem({
+      commit, dispatch
+    }, data) {
+      api.post('')
     }
+    //#endregion
+
   }
 
 })

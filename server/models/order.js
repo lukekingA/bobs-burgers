@@ -19,17 +19,9 @@ let schema = new Schema({
     ref: 'User',
     required: true
   },
-  entrees: [{
+  meals: [{
     type: ObjectId,
     ref: 'OrderId'
-  }],
-  drinks: [{
-    type: ObjectId,
-    ref: 'OrderId'
-  }],
-  sides: [{
-    type: ObjectId,
-    ref: "OrderId"
   }]
 }, {
   timestamps: true

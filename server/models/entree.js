@@ -11,10 +11,6 @@ let component = new Schema({
   cost: {
     type: Number,
     required: true
-  },
-  quantity: {
-    type: Number,
-    required: true
   }
 })
 
@@ -28,6 +24,7 @@ let entree = new Schema({
     type: Number,
     required: true
   },
+<<<<<<< HEAD
   // managerId: {
   //   type: ObjectId,
   //   ref: 'User',
@@ -40,6 +37,17 @@ let entree = new Schema({
   // },
   comment: {
     type: String
+=======
+  managerId: {
+    type: ObjectId,
+    ref: 'User',
+    required: true
+  },
+  employeeId: {
+    type: ObjectId,
+    ref: 'User',
+    required: true
+>>>>>>> 35b568913bba8b2d754b9b1bbda403a1860d520b
   },
   name: {
     type: String,

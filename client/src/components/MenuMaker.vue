@@ -19,11 +19,12 @@
             <div v-for="(item, index) in entreeItems">
               <div class="d-flex align-items-baseline">
                 <input type="checkbox" :id="item.name" v-model="currentEntreeItems[index]" :value="item">
+                <div>
+                  <input class="rounded ml-3 pl-1" type="number" placeholder="0" min="1" v-model="currentEntreeItemsCount[index]">
+                </div>
                 <label class="ml-2 text-light" :for="item.name">{{item.name}}</label>
 
-                <div>
-                  <input class="rounded ml-3 pl-1" type="number" placeholder="0" v-model="currentEntreeItemsCount[index]">
-                </div>
+
               </div>
             </div>
             <input type="checkbox" id="activateItem" value="true" v-model="entreeItemActive">
@@ -144,17 +145,26 @@
         this.entreeItemCost = 0;
       },
       addEntree() {
-        let comp = this.entreeItems.filter((item, index) => {
+        let comp = []
+        this.entreeItems.forEach((item, index) => {
           if (this.currentEntreeItems[index]) {
-            return item;
+            let loop = this.currentEntreeItemsCount[index]
+            if (!loop) {
+              loop = 1
+            }
+            debugger
+            for (let i = 0; i < loop; i++) {
+              comp.push(item);
+            }
+
           }
         });
-        let component = [];
-        comp.forEach((item, index) => {
-          for (let i = 0; i < this.currentEntreeItemsCount[index]; i++) {
-            component.push(item);
-          }
-        });
+        // let component = [];
+        // comp.forEach((item, index) => {
+        //   for (let i = 0; i < this.currentEntreeItemsCount[index]; i++) {
+        //     component.push(item);
+        //   }
+        // });
         let data = {
           entree: {
             name: this.menuItemName,
@@ -162,7 +172,7 @@
             active: this.entreeItemActive
           },
           entreeItems: {
-            components: component
+            components: comp
           }
         };
         this.$store.dispatch("addEntree", data);

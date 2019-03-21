@@ -16,20 +16,9 @@
           <i class="fas fa-door-closed"></i>
         </button>
         <form v-if="showLogin" class="form-inline" @submit.prevent="login">
-          <input
-            v-model="creds.email"
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Email"
-            aria-label="Search"
-          >
-          <input
-            v-model="creds.password"
-            class="form-control mr-sm-2"
-            type="password"
-            placeholder="Password"
-            aria-label="Search"
-          >
+          <input v-model="creds.email" class="form-control mr-sm-2" type="search" placeholder="Email" aria-label="Search">
+          <input v-model="creds.password" class="form-control mr-sm-2" type="password" placeholder="Password"
+            aria-label="Search">
           <button class="btn my-2 my-sm-0" type="submit">GO!</button>
         </form>
 
@@ -40,27 +29,10 @@
           <i class="fas fa-user-plus"></i>
         </button>
         <form v-if="showRegister" class="form-inline" @submit.prevent="register">
-          <input
-            v-model="newAccount.email"
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Email"
-            aria-label="Search"
-          >
-          <input
-            v-model="newAccount.name"
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Username"
-            aria-label="Search"
-          >
-          <input
-            v-model="newAccount.password"
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Password"
-            aria-label="Search"
-          >
+          <input v-model="newAccount.email" class="form-control mr-sm-2" type="search" placeholder="Email" aria-label="Search">
+          <input v-model="newAccount.name" class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search">
+          <input v-model="newAccount.password" class="form-control mr-sm-2" type="search" placeholder="Password"
+            aria-label="Search">
           <button class="btn my-2 my-sm-0" type="submit">GO!</button>
         </form>
       </div>
@@ -69,7 +41,8 @@
       <router-view></router-view>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <!-- Content -->
         <div v-if="user._id" class="modal-content">
@@ -84,8 +57,9 @@
           </div>
           <div class="modal-footer d-flex justify-content-center">
             <button @click="$router.push({name: 'order'})" type="button" class="btn btn-primary"><i class="fas fa-cash-register"></i></button>
-            <button type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i></i></button>
-            <button @click="$router.push({name: 'admin'})" v-if="user.manager" type="button" class="btn btn-primary"><i class="fas fa-chart-bar"></i></button>
+            <button type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i></button>
+            <button @click="$router.push({name: 'admin'})" v-if="user.manager" type="button" class="btn btn-primary"><i
+                class="fas fa-chart-bar"></i></button>
           </div>
         </div>
         <!-- content 2 -->
@@ -97,10 +71,10 @@
             </button>
           </div>
           <div class="modal-body text-center">
-          00:00
+            00:00
           </div>
           <div class="modal-footer d-flex justify-content-center">
-            <button type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i></i></button>
+            <button type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i></button>
           </div>
         </div>
 
@@ -113,7 +87,6 @@
 
 
 <script>
-  import Admin from "@/views/Admin.vue";
   export default {
     name: "app",
     data() {
@@ -129,13 +102,13 @@
     computed: {
       user() {
         return this.$store.state.user;
-      } , 
-      loginModalComputed(){
+      },
+      loginModalComputed() {
         return this.$store.state.loginModal
-      } ,
+      },
     },
-    watch:{
-      user: function(val){
+    watch: {
+      user: function (val) {
         $('#loginModal').modal('show')
       }
     },
@@ -146,7 +119,7 @@
         this.$store.dispatch("register", this.newAccount);
         this.newAdmin = {};
       },
-     login() {
+      login() {
         this.showLogin = false;
         this.$store.dispatch("login", this.creds)
       },
@@ -155,39 +128,41 @@
       },
     }
   }
-
 </script>
 
 <style>
-img {
-  margin-top: -10;
-  margin-bottom: -30;
-  padding-top: -20;
-  padding-bottom: -20;
-}
-html,
-body {
-  height: 100vh;
-}
+  img {
+    margin-top: -10;
+    margin-bottom: -30;
+    padding-top: -20;
+    padding-bottom: -20;
+  }
 
-#logo {
-  background: url("assets/bobs-backgroundArtboard 1-100.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  width: auto;
+  html,
+  body {
+    height: 100vh;
+  }
 
-  top: 0;
-  left: 0;
-}
-.navbar {
-  background-color: rgb(0, 198, 215);
-}
-.fas{
-  font-size: 3vh
-}
+  #logo {
+    background: url("assets/bobs-backgroundArtboard 1-100.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: auto;
 
-/* #app {
+    top: 0;
+    left: 0;
+  }
+
+  .navbar {
+    background-color: rgb(0, 198, 215);
+  }
+
+  .fas {
+    font-size: 3vh
+  }
+
+  /* #app {
   background-color: lightskyblue;
   height: 100vh;
 } */

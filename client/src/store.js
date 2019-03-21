@@ -57,7 +57,6 @@ export default new Vuex.Store({
     }) {
       auth.delete('logout')
         .then(res => {
-          console.log(res)
           commit('setUser', {})
           router.push({
             name: 'login'
@@ -71,11 +70,13 @@ export default new Vuex.Store({
     }, newCreds) {
       auth.post('register', newCreds)
         .then(res => {
-          console.log(res)
           commit('setAdmin', res.data)
         })
     },
-    closeLoginModal({commit , dispatch}){
+    closeLoginModal({
+      commit,
+      dispatch
+    }) {
       commit('closeLoginModal')
     },
     //#endregion
@@ -104,7 +105,6 @@ export default new Vuex.Store({
       commit,
       dispatch
     }, data) {
-      debugger
       api.post('menu/entrees', data.entree).then(res => {
 
         api.put('menu/entrees/' + res.data._id, data.entreeItems).then(res => {

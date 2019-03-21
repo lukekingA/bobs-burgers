@@ -20,6 +20,7 @@ let api = Axios.create({
 export default new Vuex.Store({
   state: {
     user: {},
+    employees: [],
     admin: {},
     entreeItems: []
   },
@@ -27,11 +28,15 @@ export default new Vuex.Store({
     setUser(state, data) {
       state.user = data
     },
+
     setAdmin(state, data) {
       state.admin = data
     },
     setEntreeItems(state, data) {
       state.entreeItems = data
+    } ,
+    setAllEmployees(state , data){
+      state.employees = data
     }
 
   },
@@ -77,7 +82,8 @@ export default new Vuex.Store({
     }, newCreds) {
       auth.post('register', newCreds)
         .then(res => {
-          commit('setAdmin', res.data)
+          dispatch('getAllEmployees')
+          return res.data
         })
     },
     closeLoginModal({
@@ -86,14 +92,25 @@ export default new Vuex.Store({
     }) {
       commit('closeLoginModal')
     },
+
+    getAllEmployees({commit , dispatch}){
+      auth.get('all')
+        .then(res => {
+          console.log(res)
+          commit('setAllEmployees' , res.data)
+        })
+    },
+    fireEmployee({commit , dispatch} , employeeId){
+      auth.delete('/' + employeeId)
+        .then(res => {
+          dispatch('getAllEmployees')
+        })
+    },
     //#endregion
 
     //#region --Menu --
 
-    getEntreeItems({
-      commit,
-      dispatch
-    }) {
+    getEntreeItems({commit , dispatch}) {
       api.get('/menu/item').then(res => {
         commit('setEntreeItems', res.data)
       })

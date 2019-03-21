@@ -126,8 +126,10 @@ export default new Vuex.Store({
     //#region--drinks
 
     getDrinks({
-      commit, dispatch
+      commit,
+      dispatch
     }) {
+      debugger
       api.get('/menu/drinks').then(res => {
         commit('setDrinks', res.data)
       })

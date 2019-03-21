@@ -100,6 +100,9 @@
         newAccount: {},
       };
     },
+    mounted(){
+      this.$store.dispatch('authenticate')
+    },
     computed: {
       user() {
         return this.$store.state.user;

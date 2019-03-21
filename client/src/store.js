@@ -51,16 +51,23 @@ export default new Vuex.Store({
           console.error(err)
         })
     },
-    logout({
-      commit,
-      dispatch
-    }) {
+    logout({ commit, dispatch}) {
       auth.delete('logout')
         .then(res => {
           commit('setUser', {})
           router.push({
             name: 'login'
           })
+        })
+    },
+    authenticate({ commit, dispatch }) {
+      auth.get('authenticate')
+        .then(res => {
+          commit('setUser', res.data)
+          router.push({ name: 'boards' })
+        })
+        .catch(res => {
+          router.push({ name: 'login' })
         })
     },
 

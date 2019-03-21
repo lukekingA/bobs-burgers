@@ -21,7 +21,8 @@ export default new Vuex.Store({
   state: {
     user: {},
     admin: {},
-    entreeItems: []
+    entreeItems: [],
+    drinks: [],
   },
   mutations: {
     setUser(state, data) {
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     },
     setEntreeItems(state, data) {
       state.entreeItems = data
+    },
+    setDrinks(state, data) {
+      state.drinks = data
     }
 
   },
@@ -112,9 +116,30 @@ export default new Vuex.Store({
 
         })
       })
-    }
+    },
     //#endregion
 
+    //#region--drinks
+
+    getDrinks({
+      commit, dispatch
+    }) {
+      api.get('/menu/drinks').then(res => {
+        commit('setDrinks', res.data)
+      })
+    },
+
+    addDrink({
+      commit,
+      dispatch
+    }, data) {
+      api.post('/menu/drinks', data).then(res => {
+        dispatch('getDrinks')
+      })
+    }
+
+
+    //#endregion
   }
 
 })

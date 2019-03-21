@@ -1,13 +1,13 @@
 <template>
-  <div class="menu-editor">
-    <h1>Menu Editor</h1>
+  <div class="reports">
+    <h1>Reports</h1>
   </div>
 </template>
 
 
 <script>
   export default {
-    name: 'menu-editor',
+    name: 'reports',
     data() {
       return {}
     },

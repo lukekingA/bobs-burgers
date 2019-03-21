@@ -1,13 +1,13 @@
 <template>
-  <div class="menu-editor">
-    <h1>Menu Editor</h1>
+  <div class="menu-book">
+    <h1>MENu Book</h1>
   </div>
 </template>
 
 
 <script>
   export default {
-    name: 'menu-editor',
+    name: 'menu-book',
     data() {
       return {}
     },

@@ -12,6 +12,7 @@
             <span class="dropdown-item hover border-bottom " @click="menuType = 'drink'">Drink </span>
             <span class="dropdown-item hover" @click="menuType = 'side'">Side </span>
           </div>
+
         </div>
         <div v-show="menuType == 'entree'" class="row">
           <div class="col-6">
@@ -19,13 +20,19 @@
             <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
             <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
             <div v-for="(item, index) in entreeItems">
-              <div>
+              <div class="d-flex align-items-baseline">
                 <input type="checkbox" :id="item.name" v-model="currentEntreeItems[index]" :value="item">
                 <label class="ml-2 text-light" :for="item.name">{{item.name}}</label>
+
+                <div>
+                  <input class="rounded ml-3 pl-1" type="number" placeholder="0"
+                    v-model="currentEntreeItemsCount[index]">
+                </div>
               </div>
             </div>
             <input type="checkbox" id="activateItem" value=true v-model="entreeItemActive">
-            <label class="ml-2 px-2 rounded text-light border-top border-right" for="activateItem">Active Menu Item</label>
+            <label class="ml-2 px-2 rounded text-light border-top border-right" for="activateItem">Active Menu
+              Item</label>
             <button @click="addEntree" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
           </div>
 
@@ -104,6 +111,7 @@
         entreeItemCost: 0,
         entreeItemActive: false,
         currentEntreeItems: [],
+        currentEntreeItemsCount: [],
       }
     },
     computed: {
@@ -131,6 +139,12 @@
             return item
           }
         })
+        let component = []
+        comp.forEach((item, index) => {
+          for (let i = 0; i < this.currentEntreeItemsCount[index]; i++) {
+            component.push(item)
+          }
+        })
         let data = {
           entree: {
             name: this.menuItemName,
@@ -138,13 +152,14 @@
             active: this.entreeItemActive
           },
           entreeItems: {
-            components: comp
+            components: component
           }
         }
         this.$store.dispatch('addEntree', data)
         this.menuItemName = ''
         this.menuItemPrice = ''
         this.currentEntreeItems = []
+        this.currentEntreeItemsCount = []
         this.entreeItemActive = false
       }
     },
@@ -156,5 +171,12 @@
 <style scoped>
   .dropdown-item:hover {
     cursor: pointer;
+  }
+
+  input[type=number] {
+    width: 40px;
+    height: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 </style>

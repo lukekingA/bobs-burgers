@@ -120,20 +120,29 @@
               placeholder="price"
             >
             <div>
-              <input type="radio" id="sizeS" value="-1" v-model="picked">
+              <input type="radio" id="sizeS" value="-1" v-model="menuItemSize">
               <label class="ml-1" for="sizeS">Small</label>
             </div>
             <div>
-              <input type="radio" id="sizeM" value="0" v-model="picked">
+              <input type="radio" id="sizeM" value="0" v-model="menuItemSize">
               <label class="ml-1" for="sizeM">Medium</label>
             </div>
             <div>
-              <input type="radio" id="sizeL" value="1" v-model="picked">
+              <input type="radio" id="sizeL" value="1" v-model="menuItemSize">
               <label class="ml-1" for="sizeL">Large</label>
             </div>
-            <button class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
+            <input type="checkbox" id="activateSide" value="true" v-model="entreeItemActive">
+            <label class="ml-2 px-2 rounded text-light border-top border-right" for="activateSide">
+              Active Menu
+              Item
+            </label>
+            <button
+              @click="addSide"
+              class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1"
+            >Submit</button>
           </div>
         </div>
+        <!-- Sides Ends -->
       </div>
       <div class="col-6">
         <div class="add-entree-item row">
@@ -239,6 +248,19 @@ export default {
         active: this.entreeItemActive
       };
       this.$store.dispatch("addDrink", data);
+      this.menuItemName = "";
+      this.menuItemSize = "";
+      this.menuItemPrice = "";
+      this.entreeItemActive = false;
+    },
+    addSide() {
+      let data = {
+        name: this.menuItemName,
+        size: this.menuItemSize,
+        price: this.menuItemPrice,
+        active: this.entreeItemActive
+      };
+      this.$store.dispatch("addSide", data);
       this.menuItemName = "";
       this.menuItemSize = "";
       this.menuItemPrice = "";

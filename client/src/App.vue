@@ -16,7 +16,8 @@
           <i class="fas fa-door-closed"></i>
         </button>
         <form v-if="showLogin" class="form-inline" @submit.prevent="login">
-          <input v-model="creds.email" class="form-control mr-sm-2" type="search" placeholder="Email" aria-label="Search">
+          <input v-model="creds.email" class="form-control mr-sm-2" type="search" placeholder="Email"
+            aria-label="Search">
           <input v-model="creds.password" class="form-control mr-sm-2" type="password" placeholder="Password"
             aria-label="Search">
           <button class="btn my-2 my-sm-0" type="submit">GO!</button>
@@ -29,8 +30,10 @@
           <i class="fas fa-user-plus"></i>
         </button>
         <form v-if="showRegister" class="form-inline" @submit.prevent="register">
-          <input v-model="newAccount.email" class="form-control mr-sm-2" type="search" placeholder="Email" aria-label="Search">
-          <input v-model="newAccount.name" class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search">
+          <input v-model="newAccount.email" class="form-control mr-sm-2" type="search" placeholder="Email"
+            aria-label="Search">
+          <input v-model="newAccount.name" class="form-control mr-sm-2" type="search" placeholder="Username"
+            aria-label="Search">
           <input v-model="newAccount.password" class="form-control mr-sm-2" type="search" placeholder="Password"
             aria-label="Search">
           <button class="btn my-2 my-sm-0" type="submit">GO!</button>
@@ -56,7 +59,8 @@
             Where do you want to go?
           </div>
           <div class="modal-footer d-flex justify-content-center">
-            <button @click="$router.push({name: 'order'})" type="button" class="btn btn-primary"><i class="fas fa-cash-register"></i></button>
+            <button @click="$router.push({name: 'order'})" type="button" class="btn btn-primary"><i
+                class="fas fa-cash-register"></i></button>
             <button type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i></button>
             <button @click="$router.push({name: 'admin'})" v-if="user.manager" type="button" class="btn btn-primary"><i
                 class="fas fa-chart-bar"></i></button>
@@ -100,7 +104,7 @@
         newAccount: {},
       };
     },
-    mounted(){
+    mounted() {
       this.$store.dispatch('authenticate')
     },
     computed: {
@@ -164,6 +168,10 @@
 
   .fas {
     font-size: 3vh
+  }
+
+  .drop-shadow {
+    filter: drop-shadow(3px 5px 5px rgb(53, 52, 52));
   }
 
   /* #app {

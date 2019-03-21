@@ -27,16 +27,12 @@ export default {
 </script>
 
 <style>
-  .Order{
-    background-color:lightskyblue;;
-    
-  }
   .square {
   height: 20vh;
   width: 20vh;
-  background-color: darkcyan
+  background-color: rgb(0, 198, 215);
 }
   .giveMeSpace{
-    height: 100vh;
+    height: 90vh;
   }
 </style>

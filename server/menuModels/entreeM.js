@@ -23,6 +23,11 @@ let entreeM = new Schema({
     type: Number,
     required: true
   },
+  active: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   components: [component]
 })
 

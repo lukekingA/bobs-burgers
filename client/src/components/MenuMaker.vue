@@ -1,7 +1,7 @@
 <template>
   <div class="menu-maker">
     <div class="row">
-      <div class="col-4">
+      <div class="col-6">
         <div class="dropdown mb-3">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -17,14 +17,18 @@
           <div class="col-6">
             <H6 class="ml-2">Entrees</H6>
             <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
-            <input class="rounded pl-3 mr-1 mb-2" type="number" v-model="menuItemPrice" placeholder="price">
-
-            <div class="" v-for="component in components">
-
-              <!-- entree item list goes here -->
+            <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
+            <div v-for="(item, index) in entreeItems">
+              <div>
+                <input type="checkbox" :id="item.name" v-model="currentEntreeItems[index]" :value="item">
+                <label class="ml-2 text-light" :for="item.name">{{item.name}}</label>
+              </div>
             </div>
-            <button class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
+            <input type="checkbox" id="activateItem" value=true v-model="entreeItemActive">
+            <label class="ml-2 px-2 rounded text-light border-top border-right" for="activateItem">Active Menu Item</label>
+            <button @click="addEntree" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
           </div>
+
         </div>
         <div v-show="menuType == 'drink'" class="row">
           <div class="col-6">
@@ -67,14 +71,14 @@
           </div>
         </div>
       </div>
-      <div class="col-4">
+      <div class="col-6">
         <div class="add-entree-item row">
           <div class="col-6">
             <H6 class="ml-2">Add Entree Items</H6>
             <form class="" @submit.prevent="addEntreeItem">
               <input class="rounded pl-3 mb-2" type="text" placeholder="name" v-model="entreeItemName">
-              <input class="rounded pl-3 mb-2" type="number" placeholder="cost" v-model="entreeItemCost">
-              <button class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
+              <input class="rounded pl-3 mb-2" type="text" placeholder="cost" v-model="entreeItemCost">
+              <button type="submit" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
             </form>
           </div>
         </div>
@@ -93,23 +97,55 @@
         menuType: '',
         menuItemName: '',
         menuItemSize: '',
+        menuItemPrice: '',
         picked: '',
         components: '',
         entreeItemName: '',
-        entreeItemCost: 0
+        entreeItemCost: 0,
+        entreeItemActive: false,
+        currentEntreeItems: [],
       }
     },
-    computed: {},
+    computed: {
+      entreeItems() {
+        return this.$store.state.entreeItems
+      }
+    },
+    mounted() {
+      this.$store.dispatch('getEntreeItems')
+    },
     methods: {
       addEntreeItem() {
         let data = {
           name: this.entreeItemName,
-          cost: this.entreeItemCost
+          cost: this.entreeItemCost,
         }
         this.$store.dispatch('addEntreeItem', data)
 
         this.entreedItemName = ''
         this.entreeItemCost = 0
+      },
+      addEntree() {
+        let comp = this.entreeItems.filter((item, index) => {
+          if (this.currentEntreeItems[index]) {
+            return item
+          }
+        })
+        let data = {
+          entree: {
+            name: this.menuItemName,
+            price: this.menuItemPrice,
+            active: this.entreeItemActive
+          },
+          entreeItems: {
+            components: comp
+          }
+        }
+        this.$store.dispatch('addEntree', data)
+        this.menuItemName = ''
+        this.menuItemPrice = ''
+        this.currentEntreeItems = []
+        this.entreeItemActive = false
       }
     },
     components: {}

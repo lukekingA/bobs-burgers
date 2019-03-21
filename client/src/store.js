@@ -90,8 +90,8 @@ export default new Vuex.Store({
       commit,
       dispatch
     }) {
-      api.get('/menu/items').then(res => {
-        commit('setEntreeItems')
+      api.get('/menu/item').then(res => {
+        commit('setEntreeItems', res.data)
       })
     },
 
@@ -101,6 +101,20 @@ export default new Vuex.Store({
     }, data) {
       api.post('/menu/item', data).then(res => {
         dispatch('getEntreeItems')
+      })
+    },
+
+    addEntree({
+      commit,
+      dispatch
+    }, data) {
+      debugger
+      api.post('menu/entrees', data.entree).then(res => {
+
+        api.put('menu/entrees/' + res.data._id, data.entreeItems).then(res => {
+
+
+        })
       })
     }
     //#endregion

@@ -18,7 +18,11 @@ let schema = new Schema({
     type: Number,
     required: true
   },
-
+  active: {
+    type: Boolean,
+    required: true,
+    default: false
+  }
 })
 
 module.exports = mongoose.model(schemaName, schema)

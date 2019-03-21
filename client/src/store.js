@@ -129,7 +129,6 @@ export default new Vuex.Store({
       commit,
       dispatch
     }) {
-      debugger
       api.get('/menu/drinks').then(res => {
         commit('setDrinks', res.data)
       })
@@ -150,7 +149,8 @@ export default new Vuex.Store({
     //#region--sides
 
     getSides({
-      commit, dispatch
+      commit,
+      dispatch
     }) {
       api.get('/menu/sides').then(res => {
         commit('setSides', res.data)

@@ -59,7 +59,10 @@ export default new Vuex.Store({
           console.error(err)
         })
     },
-    logout({ commit, dispatch}) {
+    logout({
+      commit,
+      dispatch
+    }) {
       auth.delete('logout')
         .then(res => {
           commit('setUser', {})
@@ -68,14 +71,21 @@ export default new Vuex.Store({
           })
         })
     },
-    authenticate({ commit, dispatch }) {
+    authenticate({
+      commit,
+      dispatch
+    }) {
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
-          router.push({ name: 'boards' })
+          router.push({
+            name: 'boards'
+          })
         })
         .catch(res => {
-          router.push({ name: 'login' })
+          router.push({
+            name: 'login'
+          })
         })
     },
 
@@ -123,8 +133,7 @@ export default new Vuex.Store({
       api.post('menu/entrees', data.entree).then(res => {
 
         api.put('menu/entrees/' + res.data._id, data.entreeItems).then(res => {
-
-
+          debugger
         })
       })
     },

@@ -144,17 +144,19 @@ router.get('/sides/', (req, res, next) => {
 router.post('/sides/', (req, res, next) => {
     Sides.create(req.body)
         .then(data => {
-            res.send({ message: 'Successfully Created A Side', data: data })
-        }
-        )
+            res.send({
+                message: 'Successfully Created A Side',
+                data: data
+            })
+        })
 })
 
 router.delete('/sides/:id', (req, res, next) => {
     Sides.findByIdAndRemove({
-        _id: req.params.id
-    }).then(side => {
-        res.send('Side Successfully Deleted')
-    })
+            _id: req.params.id
+        }).then(side => {
+            res.send('Side Successfully Deleted')
+        })
         .catch(err => {
             res.status(400).send('ACCESS DENIED; Invalid Request')
         })

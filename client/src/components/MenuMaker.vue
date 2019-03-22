@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-6">
         <div class="dropdown mb-3">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">Add Menu Item</button>
+          <button class="btn btn-secondary drop-shadow dropdown-toggle border-light" type="button" id="dropdownMenu1"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Menu Item</button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
             <span class="dropdown-item hover border-bottom" @click="menuType = 'entree'">Entree</span>
             <span class="dropdown-item hover border-bottom" @click="menuType = 'drink'">Drink</span>
@@ -14,8 +14,10 @@
         <div v-show="menuType == 'entree'" class="row">
           <div class="col-6">
             <H6 class="ml-2">Entrees</H6>
-            <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
-            <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
+            <div class="d-flex flex-column">
+              <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
+              <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
+            </div>
             <div v-for="(item, index) in entreeItems">
               <div class="d-flex align-items-baseline">
                 <input type="checkbox" :id="item.name" v-model="currentEntreeItems[index]" :value="item">
@@ -93,12 +95,19 @@
       <div class="col-6">
         <div class="add-entree-item row">
           <div class="col-6">
-            <H6 class="ml-2">Add Entree Items</H6>
-            <form class @submit.prevent="addEntreeItem">
-              <input class="rounded pl-3 mb-2" type="text" placeholder="name" v-model="entreeItemName">
-              <input class="rounded pl-3 mb-2" type="text" placeholder="cost" v-model="entreeItemCost">
-              <button type="submit" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
-            </form>
+
+            <button @click="addIngredient = !addIngredient" class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-3">Add
+              Ingredient</button>
+            <div v-show="addIngredient">
+              <h6>Ingredients</h6>
+              <form class="mt-2" @submit.prevent="addEntreeItem">
+                <div class="d-flex flex-column">
+                  <input class="rounded pl-3 mb-2" type="text" placeholder="name" v-model="entreeItemName">
+                  <input class="rounded pl-3 mb-2" type="text" placeholder="cost" v-model="entreeItemCost">
+                </div>
+                <button type="submit" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -112,6 +121,7 @@
     name: "menu-maker",
     data() {
       return {
+        addIngredient: false,
         menuType: "",
         menuItemName: "",
         menuItemSize: "",
@@ -134,6 +144,11 @@
       this.$store.dispatch("getEntreeItems");
     },
     methods: {
+      fieldReset() {
+        this.menuType = ''
+        this.menuItemName = "";
+        this.menuItemPrice = "";
+      },
       addEntreeItem() {
         let data = {
           name: this.entreeItemName,
@@ -152,19 +167,13 @@
             if (!loop) {
               loop = 1
             }
-            debugger
             for (let i = 0; i < loop; i++) {
               comp.push(item);
             }
 
           }
         });
-        // let component = [];
-        // comp.forEach((item, index) => {
-        //   for (let i = 0; i < this.currentEntreeItemsCount[index]; i++) {
-        //     component.push(item);
-        //   }
-        // });
+
         let data = {
           entree: {
             name: this.menuItemName,
@@ -176,8 +185,7 @@
           }
         };
         this.$store.dispatch("addEntree", data);
-        this.menuItemName = "";
-        this.menuItemPrice = "";
+        this.fieldReset()
         this.currentEntreeItems = [];
         this.currentEntreeItemsCount = [];
         this.entreeItemActive = false;
@@ -190,9 +198,8 @@
           active: this.entreeItemActive
         };
         this.$store.dispatch("addDrink", data);
-        this.menuItemName = "";
+        this.fieldReset()
         this.menuItemSize = "";
-        this.menuItemPrice = "";
         this.entreeItemActive = false;
       },
       addSide() {
@@ -203,9 +210,8 @@
           active: this.entreeItemActive
         };
         this.$store.dispatch("addSide", data);
-        this.menuItemName = "";
+        this.fieldReset()
         this.menuItemSize = "";
-        this.menuItemPrice = "";
         this.entreeItemActive = false;
       }
     },

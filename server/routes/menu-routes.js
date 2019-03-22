@@ -27,8 +27,8 @@ router.post('/item', (req, res, next) => {
 
 router.delete('/item/:id', (req, res, next) => {
     EntreeItems.findByIdAndRemove({
-        _id: req.params.id
-    })
+            _id: req.params.id
+        })
         .then(entreeitem => {
             res.send("Entree item successfully Deleted")
         })
@@ -93,10 +93,10 @@ router.put('/entrees/:id', (req, res, next) => {
 
 router.delete('/entrees/:id', (req, res, next) => {
     Entrees.findByIdAndRemove({
-        _id: req.params.id
-    }).then(entree => {
-        res.send("Entree successfully Deleted")
-    })
+            _id: req.params.id
+        }).then(entree => {
+            res.send("Entree successfully Deleted")
+        })
         .catch(err => {
             res.status(400).send('ACCESS DENIED; Invalid Request')
         })
@@ -124,10 +124,10 @@ router.post('/drinks/', (req, res, next) => {
 
 router.delete('/drinks/:id', (req, res, next) => {
     Drinks.findByIdAndRemove({
-        _id: req.params.id
-    }).then(drink => {
-        res.send('Drink Successfully Deleted')
-    })
+            _id: req.params.id
+        }).then(drink => {
+            res.send('Drink Successfully Deleted')
+        })
         .catch(err => {
             res.status(400).send('ACCESS DENIED; Invalid Request')
         })
@@ -154,17 +154,17 @@ router.post('/sides/', (req, res, next) => {
 
 router.delete('/sides/:id', (req, res, next) => {
     Sides.findByIdAndRemove({
-        _id: req.params.id
-    }).then(side => {
-        res.send('Side Successfully Deleted')
-    })
+            _id: req.params.id
+        }).then(side => {
+            res.send('Side Successfully Deleted')
+        })
         .catch(err => {
             res.status(400).send('ACCESS DENIED; Invalid Request')
         })
 })
 //Commments!!!
 router.get('/comments/', (req, res, next) => {
-    Sides.find({}).then(comments => {
+    Comments.find({}).then(comments => {
         if (!comments) {
             res.status(400).send("Sides Not Found")
         }
@@ -183,10 +183,10 @@ router.post('/comments/', (req, res, next) => {
 })
 router.delete('/comments/:id', (req, res, next) => {
     Comments.findByIdAndRemove({
-        _id: req.params.id
-    }).then(comment => {
-        res.send('Comment Successfully Deleted')
-    })
+            _id: req.params.id
+        }).then(comment => {
+            res.send('Comment Successfully Deleted')
+        })
         .catch(err => {
             res.status(400).send('ACCESS DENIED; Invalid Request')
         })

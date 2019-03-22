@@ -38,8 +38,14 @@ export default new Vuex.Store({
     setEntreeItems(state, data) {
       state.entreeItems = data
     },
-    setAllEmployees(state, data) {
-      state.employees = data
+    setDrinks(state, data) {
+      state.drinks = data
+    },
+    setSides(state, data) {
+      state.sides = data
+    },
+    setEntrees(state, data) {
+      state.entrees = data
     }
 
   },

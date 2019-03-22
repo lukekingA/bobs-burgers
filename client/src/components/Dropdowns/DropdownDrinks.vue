@@ -25,7 +25,7 @@
       this.$store.dispatch("getDrinks");
     },
     computed: {
-      sandwiches() {
+      drinks() {
         return this.$store.state.drinks;
       }
     },

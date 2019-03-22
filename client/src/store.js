@@ -40,7 +40,7 @@ export default new Vuex.Store({
       state.drinks = data
     },
     setSides(state, data) {
-      state.admin = data
+      state.sides = data
     },
     setEntrees(state, data) {
       state.entrees = data

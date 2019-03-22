@@ -22,7 +22,7 @@ let schema = new Schema({
     type: Boolean,
     required: true,
     default: false
-  }
+  },
 })
 
 module.exports = mongoose.model(schemaName, schema)

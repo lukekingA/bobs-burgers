@@ -32,21 +32,26 @@ export default new Vuex.Store({
     setUser(state, data) {
       state.user = data
     },
-
     setAdmin(state, data) {
       state.admin = data
     },
     setEntreeItems(state, data) {
       state.entreeItems = data
     },
-    setDrinks(state, data) {
-      state.drinks = data
+    setAllEmployees(state, data) {
+      state.employees = data
+    },
+    setEntrees(state, data) {
+      state.entrees = data
+    },
+    setComments(state, data) {
+      state.comments = data
     },
     setSides(state, data) {
       state.sides = data
     },
-    setEntrees(state, data) {
-      state.entrees = data
+    setDrinks(state, data) {
+      state.drinks = data
     }
 
   },

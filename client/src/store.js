@@ -22,6 +22,7 @@ export default new Vuex.Store({
     user: {},
     admin: {},
     entreeItems: [],
+    entrees: [],
     drinks: [],
     sides: [],
   },
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     setSides(state, data) {
       state.admin = data
+    },
+    setEntrees(state, data) {
+      state.entrees = data
     }
 
   },
@@ -135,6 +139,15 @@ export default new Vuex.Store({
         api.put('menu/entrees/' + res.data._id, data.entreeItems).then(res => {
           debugger
         })
+      })
+    },
+
+    getEntrees({
+      commit,
+      dispatch
+    }) {
+      api.get('menu/entrees').then(res => {
+        commit('setEntrees', res.data)
       })
     },
     //#endregion

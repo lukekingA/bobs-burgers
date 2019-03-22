@@ -24,10 +24,10 @@
       </div>
       <div class="col-7">
         <dropdown-sandwiches v-show="sandwichDropdown"></dropdown-sandwiches>
-        <dropdown-size v-show="sizeDropdown"></dropdown-size>
-        <dropdown-side v-show="sideDropdown"></dropdown-side>
-        <dropdown-drink v-show="drinkDropdown"></dropdown-drink>
-        <dropdown-comment v-show="commentDropdown"></dropdown-comment>
+        <dropdown-sizes v-show="sizeDropdown"></dropdown-sizes>
+        <dropdown-sides v-show="sideDropdown"></dropdown-sides>
+        <dropdown-drinks v-show="drinkDropdown"></dropdown-drinks>
+        <dropdown-comments v-show="commentDropdown"></dropdown-comments>
       </div>
     </div>
   </div>
@@ -37,7 +37,7 @@
 import DropdownSandwiches from "@/components/Dropdowns/DropdownSandwiches.vue";
 import DropdownDrinks from "@/components/Dropdowns/DropdownDrinks.vue";
 import DropdownSides from "@/components/Dropdowns/DropdownSides.vue";
-import DropdownSize from "@/components/Dropdowns/DropdownSize.vue";
+import DropdownSizes from "@/components/Dropdowns/DropdownSizes.vue";
 import DropdownComments from "@/components/Dropdowns/DropdownComments.vue";
 export default {
   name: "comboDropDown",
@@ -67,7 +67,11 @@ export default {
     }
   },
   components: {
-    DropdownSandwiches
+    DropdownSandwiches,
+    DropdownSizes,
+    DropdownSides,
+    DropdownDrinks,
+    DropdownComments
   }
 };
 </script>

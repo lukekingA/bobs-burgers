@@ -4,7 +4,7 @@
       <div class="col-5">
         <div class="d-flex flex-column rounded bg-dark border-light pt-3 drop-shadow">
           <button class="btn-lg btn mb-3 mx-3 meal-buttons">Meal</button>
-          <button class="btn-lg btn mb-3 mx-3 meal-buttons">Add On Items</button>
+          <button class="btn-lg btn mb-3 mx-3 meal-buttons">Sides</button>
           <button class="btn-lg btn mb-3 mx-3 meal-buttons">Drink</button>
           <button class="btn-lg btn mb-3 mx-3 meal-buttons">Comments</button>
         </div>

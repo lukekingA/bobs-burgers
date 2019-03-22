@@ -22,6 +22,7 @@ export default new Vuex.Store({
     user: {},
     admin: {},
     entreeItems: [],
+    entrees: [],
     drinks: [],
     sides: [],
   },
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     setSides(state, data) {
       state.admin = data
+    },
+    setEntrees(state, data) {
+      state.entrees = data
     }
 
   },
@@ -59,7 +63,10 @@ export default new Vuex.Store({
           console.error(err)
         })
     },
-    logout({ commit, dispatch}) {
+    logout({
+      commit,
+      dispatch
+    }) {
       auth.delete('logout')
         .then(res => {
           commit('setUser', {})
@@ -68,14 +75,21 @@ export default new Vuex.Store({
           })
         })
     },
-    authenticate({ commit, dispatch }) {
+    authenticate({
+      commit,
+      dispatch
+    }) {
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
-          router.push({ name: 'boards' })
+          router.push({
+            name: 'boards'
+          })
         })
         .catch(res => {
-          router.push({ name: 'login' })
+          router.push({
+            name: 'login'
+          })
         })
     },
 
@@ -126,6 +140,15 @@ export default new Vuex.Store({
 
 
         })
+      })
+    },
+
+    getEntrees({
+      commit,
+      dispatch
+    }) {
+      api.get('menu/entrees').then(res => {
+        commit('setEntrees', res.data)
       })
     },
     //#endregion

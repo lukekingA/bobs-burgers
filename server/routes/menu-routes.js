@@ -72,7 +72,7 @@ router.post('/entrees', (req, res, next) => {
             res.send(data)
         })
 })
-
+//change to findByOneAndUpdate to return the doc with {new:true}
 router.put('/entrees/:id', (req, res, next) => {
     Entrees.findById({
         _id: req.params.id

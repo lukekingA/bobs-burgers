@@ -16,28 +16,31 @@
             class="dropdown-item border-bottom"
             v-for="side in sides"
             :key="side._id"
-          >{{side.name}}</span>
+          >{{comment.name}}</span>
         </div>
       </div>
+      <input type="text">
     </div>
   </div>
 </template>
 
+
+
 <script>
 export default {
-  name: "dropdownSides",
+  name: "dropdownComments",
   props: [],
   data() {
     return {
-      sideSelection: {}
+      commentSelection: {}
     };
   },
   mounted() {
-    this.$store.dispatch("getSides");
+    this.$store.dispatch("getComment");
   },
   computed: {
-    sides() {
-      return this.$store.state.sides;
+    comments() {
+      return this.$store.state.comments;
     }
   },
   methods: {},

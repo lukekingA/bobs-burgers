@@ -26,6 +26,7 @@ export default new Vuex.Store({
     entrees: [],
     drinks: [],
     sides: [],
+    comments: []
   },
   mutations: {
     setUser(state, data) {
@@ -215,6 +216,28 @@ export default new Vuex.Store({
     }, data) {
       api.post('/menu/sides', data).then(res => {
         dispatch('getSides')
+      })
+    },
+
+
+    //#endregion
+    //#region--COMMENTS
+
+    getComments({
+      commit,
+      dispatch
+    }) {
+      api.get('/menu/comments').then(res => {
+        commit('setComments', res.data)
+      })
+    },
+
+    addComment({
+      commit,
+      dispatch
+    }, data) {
+      api.post('/menu/comments', data).then(res => {
+        dispatch('getComments')
       })
     }
 

@@ -11,8 +11,12 @@
           aria-expanded="false"
         >Sandwiches</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <a class="dropdown-item" href="#!">Action</a>
-          <a class="dropdown-item" href="#!">Another action</a>
+          <span
+            @click="sandwichSelection = sandwich"
+            class="dropdown-item border-bottom"
+            v-for="sandwich in sandwiches"
+            :key="sandwich._id"
+          >{{sandwich.name}}</span>
         </div>
       </div>
     </div>
@@ -24,9 +28,18 @@ export default {
   name: "dropdownSandwiches",
   props: [],
   data() {
-    return {};
+    return {
+      sandwichSelection: {}
+    };
   },
-  computed: {},
+  mounted() {
+    this.$store.dispatch("getEntreeItems");
+  },
+  computed: {
+    sandwiches() {
+      return this.$store.state.entreeItems;
+    }
+  },
   methods: {},
   components: {}
 };

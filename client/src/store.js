@@ -22,21 +22,36 @@ export default new Vuex.Store({
     user: {},
     employees: [],
     admin: {},
-    entreeItems: []
+    entreeItems: [],
+    entrees: [],
+    drinks: [],
+    sides: [],
+    comments: []
   },
   mutations: {
     setUser(state, data) {
       state.user = data
     },
-
     setAdmin(state, data) {
       state.admin = data
     },
     setEntreeItems(state, data) {
       state.entreeItems = data
-    } ,
-    setAllEmployees(state , data){
+    },
+    setAllEmployees(state, data) {
       state.employees = data
+    },
+    setEntrees(state, data) {
+      state.entrees = data
+    },
+    setComments(state, data) {
+      state.comments = data
+    },
+    setSides(state, data) {
+      state.sides = data
+    },
+    setDrinks(state, data) {
+      state.drinks = data
     }
 
   },
@@ -53,7 +68,10 @@ export default new Vuex.Store({
           console.error(err)
         })
     },
-    logout({ commit, dispatch}) {
+    logout({
+      commit,
+      dispatch
+    }) {
       auth.delete('logout')
         .then(res => {
           commit('setUser', {})
@@ -62,14 +80,21 @@ export default new Vuex.Store({
           })
         })
     },
-    authenticate({ commit, dispatch }) {
+    authenticate({
+      commit,
+      dispatch
+    }) {
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
-          router.push({ name: 'boards' })
+          router.push({
+            name: 'boards'
+          })
         })
         .catch(res => {
-          router.push({ name: 'login' })
+          router.push({
+            name: 'login'
+          })
         })
     },
 
@@ -94,15 +119,20 @@ export default new Vuex.Store({
       commit('closeLoginModal')
     },
 
-    getAllEmployees({commit , dispatch}){
+    getAllEmployees({
+      commit,
+      dispatch
+    }) {
       auth.get('all')
         .then(res => {
           console.log(res)
-          commit('setAllEmployees' , res.data)
-          console.log(res.data)
+          commit('setAllEmployees', res.data)
         })
     },
-    fireEmployee({commit , dispatch} , employeeId){
+    fireEmployee({
+      commit,
+      dispatch
+    }, employeeId) {
       auth.delete('/' + employeeId)
       .then(res => {
         console.log(res)
@@ -125,7 +155,10 @@ export default new Vuex.Store({
 
     //#region --Menu --
 
-    getEntreeItems({commit , dispatch}) {
+    getEntreeItems({
+      commit,
+      dispatch
+    }) {
       api.get('/menu/item').then(res => {
         commit('setEntreeItems', res.data)
       })
@@ -147,13 +180,88 @@ export default new Vuex.Store({
       api.post('menu/entrees', data.entree).then(res => {
 
         api.put('menu/entrees/' + res.data._id, data.entreeItems).then(res => {
-
-
+          debugger
         })
       })
-    }
+    },
+
+    getEntrees({
+      commit,
+      dispatch
+    }) {
+      api.get('menu/entrees').then(res => {
+        commit('setEntrees', res.data)
+      })
+    },
     //#endregion
 
+    //#region--drinks
+
+    getDrinks({
+      commit,
+      dispatch
+    }) {
+      api.get('/menu/drinks').then(res => {
+        commit('setDrinks', res.data)
+      })
+    },
+
+    addDrink({
+      commit,
+      dispatch
+    }, data) {
+      api.post('/menu/drinks', data).then(res => {
+        dispatch('getDrinks')
+      })
+    },
+
+
+    //#endregion
+
+    //#region--sides
+
+    getSides({
+      commit,
+      dispatch
+    }) {
+      api.get('/menu/sides').then(res => {
+        commit('setSides', res.data)
+      })
+    },
+
+    addSide({
+      commit,
+      dispatch
+    }, data) {
+      api.post('/menu/sides', data).then(res => {
+        dispatch('getSides')
+      })
+    },
+
+
+    //#endregion
+    //#region--COMMENTS
+
+    getComments({
+      commit,
+      dispatch
+    }) {
+      api.get('/menu/comments').then(res => {
+        commit('setComments', res.data)
+      })
+    },
+
+    addComment({
+      commit,
+      dispatch
+    }, data) {
+      api.post('/menu/comments', data).then(res => {
+        dispatch('getComments')
+      })
+    }
+
+
+    //#endregion
   }
 
 })

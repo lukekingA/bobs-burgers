@@ -23,6 +23,7 @@ export default new Vuex.Store({
     admin: {},
     entreeItems: [],
     entrees: [],
+    newEntree: {},
     drinks: [],
     sides: [],
   },
@@ -44,8 +45,13 @@ export default new Vuex.Store({
     },
     setEntrees(state, data) {
       state.entrees = data
+    },
+    setNewEntree(state, data) {
+      state.newEntree = data
+    },
+    clearNewEntree(state) {
+      state.newEntree = {}
     }
-
   },
   actions: {
 
@@ -116,7 +122,7 @@ export default new Vuex.Store({
       commit,
       dispatch
     }) {
-      api.get('/menu/item').then(res => {
+      api.get('menu/item').then(res => {
         commit('setEntreeItems', res.data)
       })
     },
@@ -125,7 +131,7 @@ export default new Vuex.Store({
       commit,
       dispatch
     }, data) {
-      api.post('/menu/item', data).then(res => {
+      api.post('menu/item', data).then(res => {
         dispatch('getEntreeItems')
       })
     },
@@ -137,8 +143,7 @@ export default new Vuex.Store({
       api.post('menu/entrees', data.entree).then(res => {
 
         api.put('menu/entrees/' + res.data._id, data.entreeItems).then(res => {
-
-
+          commit('setNewEntree', res.data.data)
         })
       })
     },
@@ -150,6 +155,21 @@ export default new Vuex.Store({
       api.get('menu/entrees').then(res => {
         commit('setEntrees', res.data)
       })
+    },
+
+    deleteEntree({
+      commit,
+      dispatch
+    }, id) {
+      api.delete('menu/entrees/' + id).then(res => {
+        dispatch('clearNewEntree')
+      })
+    },
+
+    clearNewEntree({
+      commit
+    }) {
+      commit('clearNewEntree')
     },
     //#endregion
 

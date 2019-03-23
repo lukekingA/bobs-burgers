@@ -74,20 +74,30 @@ router.post('/entrees', (req, res, next) => {
 })
 
 router.put('/entrees/:id', (req, res, next) => {
-    Entrees.findById({
+    Entrees.findByIdAndUpdate({
         _id: req.params.id
-    }).then(entree => {
-        if (!entree) {
-            res.status(400).send('No entree with that Id')
-        }
-        entree.update(req.body, (err) => {
-            if (err) {
-                console.log(err)
-                res.status(400).send('Failed to update entree')
-            }
-            res.send('Successfully updated entree')
+    }, req.body, {
+        new: true
+    }, (err, doc) => {
+        res.send({
+            message: "Seccessfully updated entree",
+            data: doc
         })
     })
+    // Entrees.findById({
+    //     _id: req.params.id
+    // }).then(entree => {
+    //     if (!entree) {
+    //         res.status(400).send('No entree with that Id')
+    //     }
+    //     entree.update(req.body, (err) => {
+    //         if (err) {
+    //             console.log(err)
+    //             res.status(400).send('Failed to update entree')
+    //         }
+    //         res.send('Successfully updated entree')
+    //     })
+    // })
 })
 
 router.delete('/entrees/:id', (req, res, next) => {
@@ -144,17 +154,19 @@ router.get('/sides/', (req, res, next) => {
 router.post('/sides/', (req, res, next) => {
     Sides.create(req.body)
         .then(data => {
-            res.send({ message: 'Successfully Created A Side', data: data })
-        }
-        )
+            res.send({
+                message: 'Successfully Created A Side',
+                data: data
+            })
+        })
 })
 
 router.delete('/sides/:id', (req, res, next) => {
     Sides.findByIdAndRemove({
-        _id: req.params.id
-    }).then(side => {
-        res.send('Side Successfully Deleted')
-    })
+            _id: req.params.id
+        }).then(side => {
+            res.send('Side Successfully Deleted')
+        })
         .catch(err => {
             res.status(400).send('ACCESS DENIED; Invalid Request')
         })

@@ -197,7 +197,7 @@
                     <input
                       class="rounded pl-3 mb-2"
                       type="text"
-                      placeholder="name"
+                      placeholder="comment"
                       v-model="commentName"
                     >
                   </div>
@@ -244,10 +244,12 @@ export default {
   computed: {
     entreeItems() {
       return this.$store.state.entreeItems;
+      return this.$store.state.comments;
     }
   },
   mounted() {
     this.$store.dispatch("getEntreeItems");
+    this.$store.dispatch("getComments");
   },
 
   methods: {

@@ -57,7 +57,7 @@
               <h5 @click="editName = !editName" class="modal-title" id="exampleModalLongTitle">{{activeEmployee.name}}</h5>
               <form><input v-model="newCreds.name" v-if="editName" type="text" class="rounded pl-3 mr-1 mb-2"></form>
               
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button @click="resetForms" type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -76,7 +76,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button @click="resetForms" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button @click="changeCreds" type="button" class="btn btn-primary">Save changes</button>
             </div>
           </div>
@@ -135,6 +135,14 @@ import $ from 'jquery'
         this.$store.dispatch('editEmployee' , this.newCreds)
         this.newCreds = {}
         $('#editEmployeeModal').modal('hide')
+        this.resetForms()
+      },
+      resetForms(){
+        this.editEmail = false,
+        this.editManagerStatus = false,
+        this.editEmploymentStatus = false,
+        this.editName = false
+        this.disabledEdit = true
       }
     },
     components: {}

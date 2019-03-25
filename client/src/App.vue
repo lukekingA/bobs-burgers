@@ -3,14 +3,11 @@
     <nav class="navbar">
       <a class="navbar-brand">
         <img src="./assets/bob_logo_sm.png" width="65" height="65" alt>
-        <!-- <i class="fas fa-hamburger"></i>BOBS BURGERS -->
       </a>
       <div class="btn-group">
         <button @click="logout" v-if="user._id" class="btn my-2 my-sm-0">
           <i class="fas fa-door-open"></i>
         </button>
-
-
 
         <button v-if="!user._id" @click="showLogin = !showLogin" class="btn my-2 my-sm-0">
           <i class="fas fa-door-closed"></i>
@@ -23,15 +20,12 @@
           <button class="btn my-2 my-sm-0" type="submit">GO!</button>
         </form>
 
-
-
-
         <button v-if="!user._id" @click="showRegister = !showRegister" class="btn my-2 my-sm-0">
           <i class="fas fa-user-plus"></i>
         </button>
         <form v-if="showRegister" class="form-inline" @submit.prevent="register">
-          <input v-model="newAccount.email" class="form-control rounded pl-3 mr-1 mb-2" type="search" placeholder="Email"
-            aria-label="Search">
+          <input v-model="newAccount.email" class="form-control rounded pl-3 mr-1 mb-2" type="search"
+            placeholder="Email" aria-label="Search">
           <input v-model="newAccount.name" class="form-control mr-sm-2" type="search" placeholder="Username"
             aria-label="Search">
           <input v-model="newAccount.password" class="form-control mr-sm-2" type="search" placeholder="Password"
@@ -61,9 +55,10 @@
           <div class="modal-footer d-flex justify-content-center">
             <button data-dismiss="modal" @click="$router.push({name: 'order'})" type="button" class="btn btn-primary"><i
                 class="fas fa-cash-register"></i></button>
-            <button data-dismiss="modal" type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i></button>
-            <button data-dismiss="modal" @click="$router.push({name: 'admin'})" v-if="user.manager" type="button" class="btn btn-primary"><i
-                class="fas fa-chart-bar"></i></button>
+            <button data-dismiss="modal" type="button" class="btn btn-primary"><i
+                class="fas fa-calendar-alt"></i></button>
+            <button data-dismiss="modal" @click="$router.push({name: 'admin'})" v-if="user.manager" type="button"
+              class="btn btn-primary"><i class="fas fa-chart-bar"></i></button>
           </div>
         </div>
         <!-- content 2 -->

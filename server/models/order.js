@@ -15,8 +15,11 @@ let schema = new Schema({
     required: true
   },
   employeeId: {
-    type: ObjectId,
-    ref: 'User',
+    type: String,
+    required: true
+  },
+  orderIdentifer: {
+    type: String,
     required: true
   },
   meals: [{

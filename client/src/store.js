@@ -60,6 +60,10 @@ export default new Vuex.Store({
     },
     clearNewEntree(state) {
       state.newEntree = {}
+    },
+    addToOrder(state, data) {
+      if (Object.keys(state.curentOrder))
+        state.currentOrder
     }
   },
   actions: {
@@ -97,9 +101,9 @@ export default new Vuex.Store({
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
-          router.push({
-            name: 'boards'
-          })
+          // router.push({
+          //   name: 'boards'
+          // })
         })
         .catch(res => {
           router.push({
@@ -203,7 +207,7 @@ export default new Vuex.Store({
     },
     //#endregion
 
-    //#region--drinks
+    //#region --drinks--
 
     getDrinks({
       commit,
@@ -226,7 +230,7 @@ export default new Vuex.Store({
 
     //#endregion
 
-    //#region--sides
+    //#region --sides--
 
     getSides({
       commit,
@@ -248,7 +252,7 @@ export default new Vuex.Store({
 
 
     //#endregion
-    //#region--COMMENTS
+    //#region --COMMENTS--
 
     getComments({
       commit,
@@ -266,10 +270,20 @@ export default new Vuex.Store({
       api.post('/menu/comments', data).then(res => {
         dispatch('getComments')
       })
-    }
-
+    },
 
     //#endregion
+
+    //#region --Order--
+    addToOrder({
+      commit
+    }, data) {
+      commit('addToOrder', data)
+    }
+
+    //#endregion
+
+
   }
 
 })

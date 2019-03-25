@@ -40,7 +40,7 @@
         </form>
       </div>
     </nav>
-    <div id="app" class="container-fluid">
+    <div id="app" class="container-fluid h-100">
       <router-view></router-view>
     </div>
     <!-- Modal -->
@@ -151,6 +151,10 @@
     height: 100vh;
   }
 
+  li {
+    list-style: none;
+  }
+
   #logo {
     background: url("assets/bobs-backgroundArtboard 1-100.jpg");
     background-repeat: no-repeat;
@@ -172,6 +176,10 @@
 
   .drop-shadow {
     filter: drop-shadow(3px 5px 5px rgb(53, 52, 52));
+  }
+
+  .dropdown-item:hover {
+    cursor: pointer;
   }
 
   /* #app {

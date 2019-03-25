@@ -8,6 +8,7 @@
                 <th>Name</th>
                 <th>Email</th> 
                 <th>Manager</th>
+                <th>TEST</th>             
                 <th>Hours</th>
                 <th>Wage</th>             
               </tr>
@@ -16,6 +17,7 @@
                 <td class="pt-2">{{employee.name}}</td>
                 <td class="pt-2">{{employee.email}}</td> 
                 <td class="pt-2">{{employee.manager}}</td>
+                <td class="pt-2">{{employee.employmentStatus}}</td>
                 <td class="pt-2">coming soon</td>
                 <td class="pt-2">coming soon</td>
                 <button v-show="!disabledEdit" @click="activeEmployee = employee" :disabled="disabledEdit" class="btn my-2 my-sm-0 d-flex  align-self-end" data-toggle="modal" data-target="#editEmployeeModal"><i class="smallme fas fa-pen"></i></button>

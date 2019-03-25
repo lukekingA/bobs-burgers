@@ -1,6 +1,6 @@
 <template>
-  <div class="Order">
-    <div class="row">
+  <div class="Order h-100">
+    <div class="row h-75">
       <div class="col-3 d-flex mt-3 flex-column align-items-start">
 
         <button @click="switchView('sandwichDropdown')"
@@ -18,10 +18,64 @@
       <div class="col-3 mt-3">
         <dropdown-sandwiches v-show="sandwichDropdown" @orderSandwichSelect="setCurrentMealSandwich">
         </dropdown-sandwiches>
-        <dropdown-sides v-show="sideDropdown"></dropdown-sides>
-        <dropdown-drinks v-show="drinkDropdown"></dropdown-drinks>
+        <dropdown-sides @orderSideSelect="setCurrentMealSide" v-show="sideDropdown"></dropdown-sides>
+        <dropdown-drinks @orderDrinkSelect="setCurrentMealDrink" v-show="drinkDropdown"></dropdown-drinks>
         <dropdown-comments v-show="commentDropdown"></dropdown-comments>
         <dropdown-specials v-show="specialDropdown"></dropdown-specials>
+      </div>
+      <div class="col-3">
+        <div class="card h-75 mt-3">
+          <div class="card-body">
+            <div class="d-flex flex-column justify-content-between h-100">
+              <div>
+                <h5 class="mt-2 text-center">Meal</h5>
+                <ul class="pl-1">
+                  <li v-if="item.name" v-for="(item,key) in currentMeal">
+                    <div @click="removeMenuItem(key)" class="d-flex justify-content-between">{{item.name}}
+                      <span>${{parseFloat(item.price).toFixed(2)}}</span></div>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div class="d-flex justify-content-between">
+                  <span>subtotal</span><span>{{(mealTotal).toFixed(2)}}</span></div>
+                <div class="d-flex justify-content-between">
+                  <span>tax</span><span>{{(mealTotal * .06).toFixed(2)}}</span></div>
+                <div class="d-flex justify-content-between"><span
+                    class="font-weight-bold">total</span><span>{{(mealTotal * 1.06).toFixed(2)}}</span>
+                </div>
+                <div class="mt-2 d-flex justify-content-between">
+                  <button @click="makeMealCombo" :disabled="!allowCombo"
+                    class="btn btn-secondary shadow border-dark">Combo</button>
+                  <button @click="addToOrder" class="btn btn-secondary shadow border-dark">Add to Order</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="card h-75 mt-3">
+          <div class="card-body">
+            <div>
+              <h5 class="text-center">Order</h5>
+            </div>
+            <div>
+              <ul>
+                <li v-for="meal in currentOrder">
+
+                  <div class="text-left">
+                    <p>{{meal.sandwich.name}}</p>
+                    <p>{{meal.side.name}}</p>
+                    <p>{{meal.drink.name}}</p>
+                  </div>
+                  <p class="text-right">{{meal.price}}</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -44,10 +98,49 @@
         drinkDropdown: false,
         commentDropdown: false,
         specialDropdown: false,
-        currentMeal: {},
+        currentMeal: {
+          sandwich: {},
+          drink: {},
+          side: {},
+          combo: false
+        },
+
       };
     },
-    computed: {},
+    computed: {
+      mealTotal() {
+        let sandwich = 0
+        let drink = 0
+        let side = 0
+        if (this.currentMeal.sandwich.price) {
+          sandwich = this.currentMeal.sandwich.price
+        }
+        if (this.currentMeal.drink.price) {
+          drink = this.currentMeal.drink.price
+        }
+        if (this.currentMeal.side.price) {
+          side = this.currentMeal.side.price
+        }
+        let result = sandwich + drink + side
+        if (this.currentMeal.combo) {
+          result *= .85
+        }
+        return result
+      },
+      allowCombo() {
+        if (this.currentMeal.sandwich.name && this.currentMeal.drink.name && this.currentMeal.side.name) {
+          return true
+        } else {
+          return false
+        }
+      },
+      currentOrder() {
+        return this.$store.state.currentOrder
+      }
+    },
+    watch: {
+
+    },
     methods: {
       switchView(selection) {
         let shows = [
@@ -63,6 +156,29 @@
       },
       setCurrentMealSandwich(sandwich) {
         this.currentMeal.sandwich = sandwich
+      },
+      setCurrentMealSide(side) {
+        this.currentMeal.side = side
+      },
+      setCurrentMealDrink(drink) {
+        this.currentMeal.drink = drink
+      },
+      addToOrder() {
+        let data = this.currentMeal
+        data.price = this.mealTotal
+        this.$store.dispatch('addToOrder', this.currentMeal)
+        this.currentMeal = {
+          sandwich: {},
+          drink: {},
+          side: {},
+          combo: false
+        }
+      },
+      makeMealCombo() {
+        this.currentMeal.combo = true
+      },
+      removeMenuItem(key) {
+        this.currentMeal[key] = {}
       }
     },
     components: {
@@ -75,7 +191,7 @@
   };
 </script>
 
-<style>
+<style scoped>
   .button-width {
     width: 200px;
   }

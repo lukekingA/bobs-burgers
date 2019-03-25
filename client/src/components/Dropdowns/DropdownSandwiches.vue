@@ -41,8 +41,6 @@
   };
 </script>
 
-<style scoped>
-  .dropdown-item:hover {
-    cursor: pointer;
-  }
+<style>
+
 </style>

@@ -189,10 +189,7 @@ export default new Vuex.Store({
       })
     },
 
-    getEntrees({
-      commit,
-      dispatch
-    }) {
+    getEntrees({commit, dispatch}) {
       api.get('menu/entrees').then(res => {
         commit('setEntrees', res.data)
       })

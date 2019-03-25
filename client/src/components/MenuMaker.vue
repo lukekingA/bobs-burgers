@@ -145,80 +145,74 @@
           </div>
         </div>
         <!-- Sides Ends -->
+        <!-- Add Ingredient -->
       </div>
       <div class="col-6">
         <div class="add-entree-item row">
           <div class="col-6">
-            <button
-              @click="addIngredient = !addIngredient"
-              class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-3"
-            >
-              Add
-              Ingredient
-            </button>
-            <div v-show="addIngredient">
-              <h6>Ingredients</h6>
-              <form class="mt-2" @submit.prevent="addEntreeItem">
-                <div class="d-flex flex-column">
-                  <input
-                    class="rounded pl-3 mb-2"
-                    type="text"
-                    placeholder="name"
-                    v-model="entreeItemName"
-                  >
-                  <input
-                    class="rounded pl-3 mb-2"
-                    type="text"
-                    placeholder="cost"
-                    v-model="entreeItemCost"
-                  >
-                </div>
-                <button
-                  type="submit"
-                  class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1"
-                >Submit</button>
-              </form>
+            <div class="mb-3">
+              <button
+                @click="addIngredient = !addIngredient"
+                class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-3"
+              >
+                Add
+                Ingredient
+              </button>
+              <div v-show="addIngredient">
+                <h6>Ingredients</h6>
+                <form class="mt-2" @submit.prevent="addEntreeItem">
+                  <div class="d-flex flex-column">
+                    <input
+                      class="rounded pl-3 mb-2"
+                      type="text"
+                      placeholder="name"
+                      v-model="entreeItemName"
+                    >
+                    <input
+                      class="rounded pl-3 mb-2"
+                      type="text"
+                      placeholder="cost"
+                      v-model="entreeItemCost"
+                    >
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1"
+                  >Submit</button>
+                </form>
+              </div>
+            </div>
+            <div>
+              <button
+                @click="addComments = !addComments"
+                class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-4"
+              >
+                Add
+                Comments
+              </button>
+              <div v-show="addComments">
+                <h6>Comments</h6>
+                <form class="mt-2" @submit.prevent="addComment">
+                  <div class="d-flex flex-column">
+                    <input
+                      class="rounded pl-3 mb-2"
+                      type="text"
+                      placeholder="name"
+                      v-model="commentName"
+                    >
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1"
+                  >Submit</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <!-- new comments -->
-      <div class="col-6">
-        <div class="add-entree-item-comments row">
-          <div class="col-6">
-            <button
-              @click="addComment = !addComment"
-              class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-3"
-            >
-              Add
-              Comments
-            </button>
-            <div v-show="addComment">
-              <h6>Comments</h6>
-              <form class="mt-2" @submit.prevent="addEntreeItem">
-                <div class="d-flex flex-column">
-                  <input
-                    class="rounded pl-3 mb-2"
-                    type="text"
-                    placeholder="name"
-                    v-model="entreeItemName"
-                  >
-                  <input
-                    class="rounded pl-3 mb-2"
-                    type="text"
-                    placeholder="cost"
-                    v-model="entreeItemCost"
-                  >
-                </div>
-                <button
-                  type="submit"
-                  class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1"
-                >Submit</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+
       <!-- end of comments -->
     </div>
   </div>
@@ -228,10 +222,12 @@
 <script>
 export default {
   name: "menu-maker",
+
   data() {
     return {
       addIngredient: false,
-      addComment: false,
+      addComments: false,
+      commentName: "",
       menuType: "",
       menuItemName: "",
       menuItemSize: "",
@@ -253,6 +249,7 @@ export default {
   mounted() {
     this.$store.dispatch("getEntreeItems");
   },
+
   methods: {
     fieldReset() {
       this.menuType = "";
@@ -322,8 +319,17 @@ export default {
       this.fieldReset();
       this.menuItemSize = "";
       this.entreeItemActive = false;
+    },
+    addComment() {
+      let data = {
+        comment: this.commentName
+      };
+      this.$store.dispatch("addComment", data);
+
+      this.commentName = "";
     }
   },
+
   components: {}
 };
 </script>

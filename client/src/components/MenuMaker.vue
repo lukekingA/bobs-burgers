@@ -22,11 +22,10 @@
               <div class="d-flex align-items-baseline">
                 <input type="checkbox" :id="item.name" v-model="currentEntreeItems[index]" :value="item">
                 <div>
-                  <input class="rounded ml-3 pl-1" type="number" placeholder="0" min="1" v-model="currentEntreeItemsCount[index]">
+                  <input class="rounded ml-3 pl-1" type="number" placeholder="0" min="1"
+                    v-model="currentEntreeItemsCount[index]">
                 </div>
                 <label class="ml-2 text-light" :for="item.name">{{item.name}}</label>
-
-
               </div>
             </div>
             <input type="checkbox" id="activateItem" value="true" v-model="entreeItemActive">
@@ -51,8 +50,8 @@
                   <div class="d-flex justify-content-around border-top pt-2">
                     <button @click="clearNewEntree" class="btn btn-sm text-success bg-light border-dark mr-3 shadow"><i
                         class="fas fa-check"></i></button>
-                    <button @click="deleteEntree(newEntree._id)" class="btn btn-sm text-danger bg-light border-dark shadow"><i
-                        class="fas fa-times"></i></button>
+                    <button @click="deleteEntree(newEntree._id)"
+                      class="btn btn-sm text-danger bg-light border-dark shadow"><i class="fas fa-times"></i></button>
                   </div>
                 </div>
               </div>
@@ -123,7 +122,8 @@
         <div class="add-entree-item row">
           <div class="col-6">
 
-            <button @click="addIngredient = !addIngredient" class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-3">Add
+            <button @click="addIngredient = !addIngredient"
+              class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-3">Add
               Ingredient</button>
             <div v-show="addIngredient">
               <h6>Ingredients</h6>
@@ -175,7 +175,7 @@
     },
     methods: {
       fieldReset() {
-        this.menuType = ''
+        // this.menuType = ''
         this.menuItemName = "";
         this.menuItemPrice = "";
       },
@@ -222,10 +222,12 @@
       },
       deleteEntree(id) {
         this.$store.dispatch('deleteEntree', id)
+        this.menuType = ''
       },
 
       clearNewEntree() {
         this.$store.dispatch('clearNewEntree')
+        this.menuType = ''
       },
       addDrink() {
         let data = {

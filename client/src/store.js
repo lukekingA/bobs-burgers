@@ -27,7 +27,8 @@ export default new Vuex.Store({
     newEntree: {},
     drinks: [],
     sides: [],
-    comments: []
+    comments: [],
+    curentOrder: {},
   },
   mutations: {
     setUser(state, data) {

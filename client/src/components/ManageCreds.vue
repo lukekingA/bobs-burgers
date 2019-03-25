@@ -3,23 +3,23 @@
     <div class="col">
         <div class="mt-5 row d-flex ">
           <div class="col-11 d-flex justify-content-center">
-            <table style="width:50%">
+            <table style="width:80%">
               <tr>
                 <th>Name</th>
                 <th>Email</th> 
-                <th>Manager</th>
-                <th>TEST</th>             
-                <th>Hours</th>
-                <th>Wage</th>             
+                <th class="text-center">Manager</th>
+                <th class="text-center">Employed</th>             
+                <th class="text-center">Hours</th>
+                <th class="text-center">Wage</th>  
               </tr>
               <!-- class="d-flex  align-self-baseline" -->
               <tr v-for="employee in employees">
                 <td class="pt-2">{{employee.name}}</td>
                 <td class="pt-2">{{employee.email}}</td> 
-                <td class="pt-2">{{employee.manager}}</td>
-                <td class="pt-2">{{employee.employmentStatus}}</td>
-                <td class="pt-2">coming soon</td>
-                <td class="pt-2">coming soon</td>
+                <td class="pt-2 text-center">{{employee.manager}}</td>
+                <td class="pt-2 text-center">{{employee.employmentStatus}}</td>
+                <td class="pt-2 text-center">coming soon</td>
+                <td class="pt-2 text-center">coming soon</td>
                 <button v-show="!disabledEdit" @click="activeEmployee = employee" :disabled="disabledEdit" class="btn my-2 my-sm-0 d-flex  align-self-end" data-toggle="modal" data-target="#editEmployeeModal"><i class="smallme fas fa-pen"></i></button>
               </tr>
             </table>
@@ -158,6 +158,9 @@ import $ from 'jquery'
   }
   .smallme{
     font-size: 10px
+  }
+  th{
+    background-color: #00c6d7
   }
 
 </style>

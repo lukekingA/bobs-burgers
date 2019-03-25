@@ -162,10 +162,7 @@ export default new Vuex.Store({
 
     //#region --Menu --
 
-    getEntreeItems({
-      commit,
-      dispatch
-    }) {
+    getEntreeItems({ commit,dispatch}) {
       api.get('menu/item').then(res => {
         commit('setEntreeItems', res.data)
       })

@@ -66,10 +66,7 @@ export default new Vuex.Store({
 
     //USER
     //#region --Login --
-    login({
-      commit,
-      dispatch
-    }, creds) {
+    login({commit , dispatch}, creds) {
       auth.post('login', creds)
         .then(res => {
           commit('setUser', res.data)
@@ -108,11 +105,15 @@ export default new Vuex.Store({
         })
     },
 
-    register({
-      commit,
-      dispatch
-    }, newCreds) {
+    register({commit , dispatch}, newCreds) {
       auth.post('register', newCreds)
+        .then(res => {
+          dispatch('getAllEmployees')
+          return res.data
+        })
+    },
+    registerNewEmployee({commit , dispatch}, newCreds) {
+      auth.post('newemployee', newCreds)
         .then(res => {
           dispatch('getAllEmployees')
           return res.data
@@ -140,8 +141,21 @@ export default new Vuex.Store({
       dispatch
     }, employeeId) {
       auth.delete('/' + employeeId)
-        .then(res => {
+      .then(res => {
+        console.log(res)
           dispatch('getAllEmployees')
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+    editEmployee({commit , dispatch} , newCreds){
+      auth.put('edit' , newCreds)
+        .then( res => {
+          dispatch('getAllEmployees')
+        })
+        .catch( err => {
+          console.error(err)
         })
     },
     //#endregion

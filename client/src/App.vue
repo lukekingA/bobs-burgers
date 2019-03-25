@@ -30,7 +30,7 @@
           <i class="fas fa-user-plus"></i>
         </button>
         <form v-if="showRegister" class="form-inline" @submit.prevent="register">
-          <input v-model="newAccount.email" class="form-control mr-sm-2" type="search" placeholder="Email"
+          <input v-model="newAccount.email" class="form-control rounded pl-3 mr-1 mb-2" type="search" placeholder="Email"
             aria-label="Search">
           <input v-model="newAccount.name" class="form-control mr-sm-2" type="search" placeholder="Username"
             aria-label="Search">
@@ -59,10 +59,10 @@
             Where do you want to go?
           </div>
           <div class="modal-footer d-flex justify-content-center">
-            <button @click="$router.push({name: 'order'})" type="button" class="btn btn-primary"><i
+            <button data-dismiss="modal" @click="$router.push({name: 'order'})" type="button" class="btn btn-primary"><i
                 class="fas fa-cash-register"></i></button>
-            <button type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i></button>
-            <button @click="$router.push({name: 'admin'})" v-if="user.manager" type="button" class="btn btn-primary"><i
+            <button data-dismiss="modal" type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i></button>
+            <button data-dismiss="modal" @click="$router.push({name: 'admin'})" v-if="user.manager" type="button" class="btn btn-primary"><i
                 class="fas fa-chart-bar"></i></button>
           </div>
         </div>

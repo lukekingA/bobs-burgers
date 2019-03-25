@@ -30,27 +30,52 @@
               <div>
                 <h5 class="mt-2 text-center">Meal</h5>
                 <ul class="pl-1">
-                  <li v-if="item.name" v-for="item in currentMeal">
-                    <div class="d-flex justify-content-between">{{item.name}}
+                  <li v-if="item.name" v-for="(item,key) in currentMeal">
+                    <div @click="removeMenuItem(key)" class="d-flex justify-content-between">{{item.name}}
                       <span>${{parseFloat(item.price).toFixed(2)}}</span></div>
                   </li>
                 </ul>
               </div>
               <div>
                 <div class="d-flex justify-content-between">
-                  <span>subtotal</span><span>{{parseFloat(mealTotal).toFixed(2)}}</span></div>
+                  <span>subtotal</span><span>{{(mealTotal).toFixed(2)}}</span></div>
                 <div class="d-flex justify-content-between">
-                  <span>tax</span><span>{{parseFloat(mealTotal * .06).toFixed(2)}}</span></div>
+                  <span>tax</span><span>{{(mealTotal * .06).toFixed(2)}}</span></div>
                 <div class="d-flex justify-content-between"><span
-                    class="font-weight-bold">total</span><span>{{parseFloat(mealTotal * 1.06).toFixed(2)}}</span>
+                    class="font-weight-bold">total</span><span>{{(mealTotal * 1.06).toFixed(2)}}</span>
                 </div>
-                <div class="mt-2">
+                <div class="mt-2 d-flex justify-content-between">
+                  <button @click="makeMealCombo" :disabled="!allowCombo"
+                    class="btn btn-secondary shadow border-dark">Combo</button>
                   <button @click="addToOrder" class="btn btn-secondary shadow border-dark">Add to Order</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div class="col-3">
+        <div class="card h-75 mt-3">
+          <div class="card-body">
+            <div>
+              <h5 class="text-center">Order</h5>
+            </div>
+            <div>
+              <ul>
+                <li v-for="meal in currentOrder">
+
+                  <div class="text-left">
+                    <p>{{meal.sandwich.name}}</p>
+                    <p>{{meal.side.name}}</p>
+                    <p>{{meal.drink.name}}</p>
+                  </div>
+                  <p class="text-right">{{meal.price}}</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -76,8 +101,10 @@
         currentMeal: {
           sandwich: {},
           drink: {},
-          side: {}
+          side: {},
+          combo: false
         },
+
       };
     },
     computed: {
@@ -94,8 +121,25 @@
         if (this.currentMeal.side.price) {
           side = this.currentMeal.side.price
         }
-        return sandwich + drink + side
+        let result = sandwich + drink + side
+        if (this.currentMeal.combo) {
+          result *= .85
+        }
+        return result
+      },
+      allowCombo() {
+        if (this.currentMeal.sandwich.name && this.currentMeal.drink.name && this.currentMeal.side.name) {
+          return true
+        } else {
+          return false
+        }
+      },
+      currentOrder() {
+        return this.$store.state.currentOrder
       }
+    },
+    watch: {
+
     },
     methods: {
       switchView(selection) {
@@ -120,12 +164,21 @@
         this.currentMeal.drink = drink
       },
       addToOrder() {
+        let data = this.currentMeal
+        data.price = this.mealTotal
         this.$store.dispatch('addToOrder', this.currentMeal)
         this.currentMeal = {
           sandwich: {},
           drink: {},
-          side: {}
+          side: {},
+          combo: false
         }
+      },
+      makeMealCombo() {
+        this.currentMeal.combo = true
+      },
+      removeMenuItem(key) {
+        this.currentMeal[key] = {}
       }
     },
     components: {

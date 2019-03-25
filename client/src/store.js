@@ -28,7 +28,7 @@ export default new Vuex.Store({
     drinks: [],
     sides: [],
     comments: [],
-    curentOrder: {},
+    curentOrder: [],
   },
   mutations: {
     setUser(state, data) {
@@ -62,8 +62,7 @@ export default new Vuex.Store({
       state.newEntree = {}
     },
     addToOrder(state, data) {
-      if (Object.keys(state.curentOrder))
-        state.currentOrder
+      state.curentOrder.push(data)
     }
   },
   actions: {

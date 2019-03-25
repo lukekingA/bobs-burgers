@@ -36,13 +36,38 @@
             </label>
             <button @click="addEntree" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
           </div>
+          <div class="col-6">
+            <div v-if="newEntree.name" class="text-left">
+              <div class="card border border-dark">
+                <div class="card-body">
+                  <h4 class="card-title">{{newEntree.name}}</h4>
+                  <p>Price: ${{newEntree.price}}</p>
+                  <p>In Current Menu: {{newEntree.active}}</p>
+                  <p>Current special: {{newEntree.special}}</p>
+                  <p>Ingredients:</p>
+                  <ul class="pl-1">
+                    <li v-for="item in newEntree.components">{{item.name}} for $ {{item.cost}}</li>
+                  </ul>
+                  <div class="d-flex justify-content-around border-top pt-2">
+                    <button @click="clearNewEntree" class="btn btn-sm text-success bg-light border-dark mr-3 shadow"><i
+                        class="fas fa-check"></i></button>
+                    <button @click="deleteEntree(newEntree._id)" class="btn btn-sm text-danger bg-light border-dark shadow"><i
+                        class="fas fa-times"></i></button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
         <!-- DRINKS!!!!!! -->
         <div v-show="menuType == 'drink'" class="row">
           <div class="col-6">
             <H6 class="ml-2">Drinks</H6>
-            <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
-            <input class="rounded pl-3 mr-1 mb-2" type="number" v-model="menuItemPrice" placeholder="price">
+            <div class="d-flex flex-column">
+              <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
+              <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
+            </div>
             <div>
               <input type="radio" id="sizes" value="-1" v-model="menuItemSize">
               <label class="ml-1" for="sizes">Small</label>
@@ -68,8 +93,10 @@
         <div v-show="menuType == 'side'" class="row">
           <div class="col-6">
             <H6 class="ml-2">Sides</H6>
-            <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
-            <input class="rounded pl-3 mr-1 mb-2" type="number" v-model="menuItemPrice" placeholder="price">
+            <div class="d-flex flex-column">
+              <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
+              <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
+            </div>
             <div>
               <input type="radio" id="sizeS" value="-1" v-model="menuItemSize">
               <label class="ml-1" for="sizeS">Small</label>
@@ -90,8 +117,8 @@
             <button @click="addSide" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
           </div>
         </div>
-        <!-- Sides Ends -->
       </div>
+      <!-- Sides Ends -->
       <div class="col-6">
         <div class="add-entree-item row">
           <div class="col-6">
@@ -138,6 +165,9 @@
     computed: {
       entreeItems() {
         return this.$store.state.entreeItems;
+      },
+      newEntree() {
+        return this.$store.state.newEntree
       }
     },
     mounted() {
@@ -190,6 +220,13 @@
         this.currentEntreeItemsCount = [];
         this.entreeItemActive = false;
       },
+      deleteEntree(id) {
+        this.$store.dispatch('deleteEntree', id)
+      },
+
+      clearNewEntree() {
+        this.$store.dispatch('clearNewEntree')
+      },
       addDrink() {
         let data = {
           name: this.menuItemName,
@@ -230,5 +267,9 @@
     height: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
+  }
+
+  li {
+    list-style: none;
   }
 </style>

@@ -28,7 +28,7 @@ let entree = new Schema({
     type: String,
     required: true
   },
-  //components: [component]
+  components: [component]
 })
 
 

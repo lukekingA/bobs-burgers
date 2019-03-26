@@ -20,6 +20,7 @@ let api = Axios.create({
 export default new Vuex.Store({
   state: {
     user: {},
+    employee: {},
     employees: [],
     admin: {},
     entreeItems: [],
@@ -63,6 +64,9 @@ export default new Vuex.Store({
     },
     addToOrder(state, data) {
       state.currentOrder.push(data)
+    },
+    employeeRegister(state, data) {
+      state.employee = data
     }
   },
   actions: {
@@ -172,6 +176,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.error(err)
         })
+    },
+
+    employeeRegister({
+      commit
+    }, data) {
+      commit('employeeRegister', data)
     },
     //#endregion
 
@@ -290,7 +300,6 @@ export default new Vuex.Store({
 
 
     addComment({
-      commit,
       dispatch
     }, data) {
       api.post('/menu/comments', data).then(res => {
@@ -306,8 +315,16 @@ export default new Vuex.Store({
       commit
     }, data) {
       commit('addToOrder', data)
-    }
+    },
 
+    makeOrder({
+      commit,
+      dispatch,
+      state
+    }, data) {
+      data.order.managerId = state.user._id
+      // api.post() you-are-here
+    }
     //#endregion
 
 

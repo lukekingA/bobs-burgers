@@ -18,8 +18,9 @@
             :key="comment._id"
           >{{comment.comment}}</span>
           <span>
-            <input type="text" class="ml-3">
+            <input type="text" class="ml-3" v-model="add1comment">
             <button
+              @click="commentSelection.push(add1comment)"
               type="submit"
               class="btn btn-secondary border-dark text-light btn-sm ml-2 mt-1 ml-3"
             >Submit</button>
@@ -36,7 +37,8 @@ export default {
   props: [],
   data() {
     return {
-      commentSelection: []
+      commentSelection: [],
+      add1comment: ""
     };
   },
   mounted() {
@@ -49,7 +51,7 @@ export default {
   },
   methods: {
     commentAdd(comment) {
-      this.commentSelection.push(comment);
+      this.commentSelection.push(comment.comment);
     }
   },
   components: {}

@@ -188,10 +188,14 @@
       },
       newEntree() {
         return this.$store.state.newEntree
+      },
+      comments() {
+        return this.$store.state.comments;
       }
     },
     mounted() {
       this.$store.dispatch("getEntreeItems");
+      this.$store.dispatch("getComments");
     },
     methods: {
       fieldReset() {
@@ -205,128 +209,133 @@
           cost: this.entreeItemCost
         };
         this.$store.dispatch("addEntreeItem", data);
-        export default {
-          name: "menu-maker",
 
-          data() {
-            return {
-              addIngredient: false,
-              addComments: false,
-              commentName: "",
-              menuType: "",
-              menuItemName: "",
-              menuItemSize: "",
-              menuItemPrice: "",
-              picked: "",
-              components: "",
-              entreeItemName: "",
-              entreeItemCost: 0,
-              entreeItemActive: false,
-              currentEntreeItems: [],
-              currentEntreeItemsCount: []
-            };
-          },
-          computed: {
-            entreeItems() {
-              return this.$store.state.entreeItems;
-              return this.$store.state.comments;
+
+        // export default {
+        //   name: "menu-maker",
+
+        //   data() {
+        //     return {
+        //       addIngredient: false,
+        //       addComments: false,
+        //       commentName: "",
+        //       menuType: "",
+        //       menuItemName: "",
+        //       menuItemSize: "",
+        //       menuItemPrice: "",
+        //       picked: "",
+        //       components: "",
+        //       entreeItemName: "",
+        //       entreeItemCost: 0,
+        //       entreeItemActive: false,
+        //       currentEntreeItems: [],
+        //       currentEntreeItemsCount: []
+        //     };
+        //   },
+        //   computed: {
+        //     entreeItems() {
+        //       return this.$store.state.entreeItems;
+        //       return this.$store.state.comments;
+        //     }
+        //   },
+        //   mounted() {
+        //     this.$store.dispatch("getEntreeItems");
+        //     this.$store.dispatch("getComments");
+        //   },
+
+        //   methods: {
+        //     fieldReset() {
+        //       this.menuType = "";
+        //       this.menuItemName = "";
+        //       this.menuItemPrice = "";
+        //     },
+        //     addEntreeItem() {
+        //       let data = {
+        //         name: this.entreeItemName,
+        //         cost: this.entreeItemCost
+        //       };
+        //       this.$store.dispatch("addEntreeItem", data);
+
+
+
+
+        this.entreeItemName = "";
+        this.entreeItemCost = 0;
+      },
+      addEntree() {
+        let comp = []
+        this.entreeItems.forEach((item, index) => {
+          if (this.currentEntreeItems[index]) {
+            let loop = this.currentEntreeItemsCount[index]
+            if (!loop) {
+              loop = 1
             }
-          },
-          mounted() {
-            this.$store.dispatch("getEntreeItems");
-            this.$store.dispatch("getComments");
-          },
-
-          methods: {
-            fieldReset() {
-              this.menuType = "";
-              this.menuItemName = "";
-              this.menuItemPrice = "";
-            },
-            addEntreeItem() {
-              let data = {
-                name: this.entreeItemName,
-                cost: this.entreeItemCost
-              };
-              this.$store.dispatch("addEntreeItem", data);
-
-              this.entreedItemName = "";
-              this.entreeItemCost = 0;
-            },
-            addEntree() {
-              let comp = []
-              this.entreeItems.forEach((item, index) => {
-                if (this.currentEntreeItems[index]) {
-                  let loop = this.currentEntreeItemsCount[index]
-                  if (!loop) {
-                    loop = 1
-                  }
-                  for (let i = 0; i < loop; i++) {
-                    comp.push(item);
-                  }
-                }
-              });
-              let data = {
-                entree: {
-                  name: this.menuItemName,
-                  price: this.menuItemPrice,
-                  active: this.entreeItemActive
-                },
-                entreeItems: {
-                  components: comp
-                }
-              };
-              this.$store.dispatch("addEntree", data);
-              this.fieldReset()
-              this.currentEntreeItems = [];
-              this.currentEntreeItemsCount = [];
-              this.entreeItemActive = false;
-            },
-            deleteEntree(id) {
-              this.$store.dispatch('deleteEntree', id)
-              this.menuType = ''
-            },
-
-            clearNewEntree() {
-              this.$store.dispatch('clearNewEntree')
-              this.menuType = ''
-            },
-            addDrink() {
-              let data = {
-                name: this.menuItemName,
-                size: this.menuItemSize,
-                price: this.menuItemPrice,
-                active: this.entreeItemActive
-              };
-              this.$store.dispatch("addDrink", data);
-              this.fieldReset();
-              this.menuItemSize = "";
-              this.entreeItemActive = false;
-            },
-            addSide() {
-              let data = {
-                name: this.menuItemName,
-                size: this.menuItemSize,
-                price: this.menuItemPrice,
-                active: this.entreeItemActive
-              };
-              this.$store.dispatch("addSide", data);
-              this.fieldReset();
-              this.menuItemSize = "";
-              this.entreeItemActive = false;
-            },
-            addComment() {
-              let data = {
-                comment: this.commentName
-              };
-              this.$store.dispatch("addComment", data);
-
-              this.commentName = "";
+            for (let i = 0; i < loop; i++) {
+              comp.push(item);
             }
+          }
+        });
+        let data = {
+          entree: {
+            name: this.menuItemName,
+            price: this.menuItemPrice,
+            active: this.entreeItemActive
           },
-
-          components: {}
+          entreeItems: {
+            components: comp
+          }
         };
+        this.$store.dispatch("addEntree", data);
+        this.fieldReset()
+        this.currentEntreeItems = [];
+        this.currentEntreeItemsCount = [];
+        this.entreeItemActive = false;
+      },
+      deleteEntree(id) {
+        this.$store.dispatch('deleteEntree', id)
+        this.menuType = ''
+      },
+
+      clearNewEntree() {
+        this.$store.dispatch('clearNewEntree')
+        this.menuType = ''
+      },
+      addDrink() {
+        let data = {
+          name: this.menuItemName,
+          size: this.menuItemSize,
+          price: this.menuItemPrice,
+          active: this.entreeItemActive
+        };
+        this.$store.dispatch("addDrink", data);
+        this.fieldReset();
+        this.menuItemSize = "";
+        this.entreeItemActive = false;
+      },
+      addSide() {
+        let data = {
+          name: this.menuItemName,
+          size: this.menuItemSize,
+          price: this.menuItemPrice,
+          active: this.entreeItemActive
+        };
+        this.$store.dispatch("addSide", data);
+        this.fieldReset();
+        this.menuItemSize = "";
+        this.entreeItemActive = false;
+      },
+      addComment() {
+        let data = {
+          comment: this.commentName
+        };
+        this.$store.dispatch("addComment", data);
+
+        this.commentName = "";
+      }
+    },
+
+    components: {}
+  };
 </script>
 
 

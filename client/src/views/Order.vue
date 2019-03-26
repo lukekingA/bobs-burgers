@@ -203,9 +203,7 @@
       removeMenuItem(key) {
         this.currentMeal[key] = {}
       },
-      submitOrder() {
-
-      }
+      submitOrder() {}
     },
     components: {
       DropdownSandwiches,

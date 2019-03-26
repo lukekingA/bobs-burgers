@@ -2,8 +2,9 @@
   <div id="logo" class="sticky-bottom">
     <nav class="navbar sticky-top">
       <a class="navbar-brand">
-        <img src="./assets/bob_logo_sm.png" width="65" height="65" alt>
+        <img class src="./assets/bob_logo_sm.png" width="65" height="65" alt>
       </a>
+      <p class="Time">{{time}}</p>
       <div class="btn-group">
         <button @click="logout" v-if="user._id" class="btn my-2 my-sm-0">
           <i class="fas fa-door-open"></i>
@@ -129,6 +130,8 @@
 
 <script>
 import $ from "jquery";
+import Moment from "moment";
+
 export default {
   name: "app",
   data() {
@@ -138,11 +141,13 @@ export default {
       creds: {},
       showLogin: false,
       showRegister: false,
-      newAccount: {}
+      newAccount: {},
+      time: ""
     };
   },
   mounted() {
     this.$store.dispatch("authenticate");
+    this.formatTime();
   },
   computed: {
     user() {
@@ -170,12 +175,29 @@ export default {
     },
     logout() {
       this.$store.dispatch("logout");
+    },
+    formatTime() {
+      let date = new Date();
+      this.time = Moment(String(date)).format("MMMM Do YYYY, h:mm:ss a");
+      setTimeout(this.formatTime, 1000);
     }
   }
 };
+
+//   filters: {
+//     formatTime(date) {
+//       return Moment(String(date)).format("MM/DD/YYYY, LT");
+//     }
+//   }
+// };
 </script>
 
 <style>
+.Time {
+  font-weight: 700;
+  font-size: 20px;
+  color: rgb(54, 54, 54);
+}
 img {
   margin-top: -10;
   margin-bottom: -30;

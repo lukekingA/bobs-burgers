@@ -61,32 +61,62 @@
               class="btn btn-primary"><i class="fas fa-chart-bar"></i></button>
           </div>
         </div>
-        <!-- content 2 -->
-        <div v-if="!user._id" class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">Logout Succesful</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body text-center">
-            00:00
-          </div>
-          <div class="modal-footer d-flex justify-content-center">
-            <button type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i></button>
+        </nav>
+        <div id="app" class="container-fluid">
+          <router-view></router-view>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <!-- Content -->
+            <div v-if="user._id" class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Login Succesful</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">Where do you want to go?</div>
+              <div class="modal-footer d-flex justify-content-center">
+                <button @click="$router.push({name: 'order'})" type="button" class="btn btn-primary">
+                  <i class="fas fa-cash-register"></i>
+                </button>
+                <button type="button" class="btn btn-primary">
+                  <i class="fas fa-calendar-alt"></i>
+                </button>
+                <button @click="$router.push({name: 'admin'})" v-if="user.manager" type="button"
+                  class="btn btn-primary">
+                  <i class="fas fa-chart-bar"></i>
+                </button>
+              </div>
+            </div>
+            <!-- content 2 -->
+            <div v-if="!user._id" class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Logout Succesful</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-center">00:00</div>
+              <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-primary">
+                  <i class="fas fa-calendar-alt"></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
-  </div>
 </template>
 
 
 
 
 <script>
-  import $ from 'jquery'
+  import $ from "jquery";
   export default {
     name: "app",
     data() {
@@ -96,23 +126,23 @@
         creds: {},
         showLogin: false,
         showRegister: false,
-        newAccount: {},
+        newAccount: {}
       };
     },
     mounted() {
-      this.$store.dispatch('authenticate')
+      this.$store.dispatch("authenticate");
     },
     computed: {
       user() {
         return this.$store.state.user;
       },
       loginModalComputed() {
-        return this.$store.state.loginModal
-      },
+        return this.$store.state.loginModal;
+      }
     },
     watch: {
       user: function (val) {
-        $('#loginModal').modal('show')
+        $("#loginModal").modal("show");
       }
     },
     methods: {
@@ -124,13 +154,13 @@
       },
       login() {
         this.showLogin = false;
-        this.$store.dispatch("login", this.creds)
+        this.$store.dispatch("login", this.creds);
       },
       logout() {
         this.$store.dispatch("logout");
-      },
+      }
     }
-  }
+  };
 </script>
 
 <style>
@@ -178,6 +208,44 @@
   }
 
   /* #app {
+img {
+  margin-top: -10;
+  margin-bottom: -30;
+  padding-top: -20;
+  padding-bottom: -20;
+}
+
+html,
+body {
+  height: 100vh;
+}
+
+#logo {
+  background: url("assets/bobs-backgroundArtboard 1-100.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  height: 100%;
+  width: auto;
+  padding-top: 120px;
+  top: 0;
+  left: 0;
+}
+
+.navbar {
+  background-color: rgb(0, 198, 215);
+}
+
+.fas {
+  font-size: 3vh;
+}
+
+.drop-shadow {
+  filter: drop-shadow(3px 5px 5px rgb(53, 52, 52));
+}
+
+/* #app {
   background-color: lightskyblue;
   height: 100vh;
 } */

@@ -2,14 +2,16 @@
   <div class="dropdownComments">
     <div>
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+        <button class="btn btn-secondary dropdown-toggle mb-2" type="button" id="dropdownMenu1" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">Comments</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <span @click="commentselection = comments" class="dropdown-item border-bottom" v-for="comment in comments"
+          <span @click="commentAdd(comment)" class="dropdown-item border-bottom" v-for="comment in comments"
             :key="comment._id">{{comment.comment}}</span>
+          <span>
+            <input type="text" class="justify-content-center">
+          </span>
         </div>
       </div>
-      <input type="text">
     </div>
   </div>
 </template>
@@ -22,7 +24,7 @@
     props: [],
     data() {
       return {
-        commentSelection: {}
+        commentSelection: []
       };
     },
     mounted() {
@@ -33,7 +35,11 @@
         return this.$store.state.comments;
       }
     },
-    methods: {},
+    methods: {
+      commentAdd(comment) {
+        this.commentSelection.push(comment)
+      }
+    },
     components: {}
   };
 </script>

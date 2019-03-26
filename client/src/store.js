@@ -288,12 +288,14 @@ export default new Vuex.Store({
       })
     },
 
+
     addComment({
       commit,
       dispatch
     }, data) {
       api.post('/menu/comments', data).then(res => {
         dispatch('getComments')
+
       })
     },
 

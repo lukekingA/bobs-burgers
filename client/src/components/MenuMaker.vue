@@ -68,15 +68,15 @@
             <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
             <input class="rounded pl-3 mr-1 mb-2" type="number" v-model="menuItemPrice" placeholder="price">
             <div>
-              <input type="radio" id="sizes" value="-1" v-model="menuItemSize">
+              <input type="radio" id="sizes" value="Small" v-model="menuItemSize">
               <label class="ml-1" for="sizes">Small</label>
             </div>
             <div>
-              <input type="radio" id="sizem" value="0" v-model="menuItemSize">
+              <input type="radio" id="sizem" value="Medium" v-model="menuItemSize">
               <label class="ml-1" for="sizem">Medium</label>
             </div>
             <div>
-              <input type="radio" id="sizel" value="1" v-model="menuItemSize">
+              <input type="radio" id="sizel" value="Large" v-model="menuItemSize">
               <label class="ml-1" for="sizel">Large</label>
             </div>
             <input type="checkbox" id="activateDrink" value="true" v-model="entreeItemActive">
@@ -95,15 +95,15 @@
             <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
             <input class="rounded pl-3 mr-1 mb-2" type="number" v-model="menuItemPrice" placeholder="price">
             <div>
-              <input type="radio" id="sizeS" value="-1" v-model="menuItemSize">
+              <input type="radio" id="sizeS" value="Small" v-model="menuItemSize">
               <label class="ml-1" for="sizeS">Small</label>
             </div>
             <div>
-              <input type="radio" id="sizeM" value="0" v-model="menuItemSize">
+              <input type="radio" id="sizeM" value="Medium" v-model="menuItemSize">
               <label class="ml-1" for="sizeM">Medium</label>
             </div>
             <div>
-              <input type="radio" id="sizeL" value="1" v-model="menuItemSize">
+              <input type="radio" id="sizeL" value="Large" v-model="menuItemSize">
               <label class="ml-1" for="sizeL">Large</label>
             </div>
             <input type="checkbox" id="activateSide" value="true" v-model="entreeItemActive">

@@ -230,14 +230,15 @@ export default new Vuex.Store({
     }) {
       commit('clearNewEntree')
     },
+    editEntree({commit , dispatch} , newData){
+      console.log(newData)
+      api.put('menu/entrees/' + newData._id , newData)
+    },
     //#endregion
 
     //#region --drinks--
 
-    getDrinks({
-      commit,
-      dispatch
-    }) {
+    getDrinks({commit,dispatch}) {
       api.get('/menu/drinks').then(res => {
         commit('setDrinks', res.data)
       })
@@ -252,7 +253,14 @@ export default new Vuex.Store({
       })
     },
 
-
+    editDrink({commit , dispatch} , newData) {
+      console.log(newData)
+      api.put('/menu/drinks/' + newData._id , newData)
+        .then(res => {
+          console.log(res)
+        })
+    },
+    
     //#endregion
 
     //#region --sides--
@@ -273,6 +281,16 @@ export default new Vuex.Store({
       api.post('/menu/sides', data).then(res => {
         dispatch('getSides')
       })
+    },
+
+    editSide({commit , dipatch} , newData){
+      api.put('/menu/sides/' + newData._id , newData)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.error(err)
+        })
     },
 
 

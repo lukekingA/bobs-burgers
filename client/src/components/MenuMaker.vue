@@ -256,6 +256,7 @@ export default {
   data() {
     return {
       addIngredient: false,
+      addComments: false,
       menuType: "",
       menuItemName: "",
       menuItemSize: "",

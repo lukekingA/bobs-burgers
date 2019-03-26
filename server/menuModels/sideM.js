@@ -11,8 +11,7 @@ let schema = new Schema({
   // size is either -1,0,1
   size: {
     type: String,
-    required: true,
-    default: 'Medium'
+    required: true
   },
   price: {
     type: Number,

@@ -279,7 +279,8 @@
           entree: {
             name: this.menuItemName,
             price: this.menuItemPrice,
-            active: this.entreeItemActive
+            active: this.entreeItemActive,
+            commentName: ''
           },
           entreeItems: {
             components: comp
@@ -301,6 +302,7 @@
         this.menuType = ''
       },
       addDrink() {
+        debugger
         let data = {
           name: this.menuItemName,
           size: this.menuItemSize,

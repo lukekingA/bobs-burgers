@@ -2,10 +2,11 @@
   <div class="dropdown-drinks">
     <div>
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">Drinks</button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <span @click="drinkSelection = drink" class="dropdown-item border-bottom" v-for="drink in drinks" :key="drink._id">{{drink.name}}</span>
+        <button class="btn btn-secondary dropdown-toggle border border-light drop-shadow" type="button"
+          id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Drinks</button>
+        <div class="dropdown-menu mt-2" aria-labelledby="dropdownMenu1">
+          <span @click="drinkSelection = drink" class="dropdown-item border-bottom" v-for="drink in drinks"
+            :key="drink._id">{{drink.name}}</span>
         </div>
       </div>
     </div>
@@ -27,6 +28,12 @@
     computed: {
       drinks() {
         return this.$store.state.drinks;
+      }
+    },
+    watch: {
+      drinkSelection: function () {
+        this.$emit('orderDrinkSelect', this.drinkSelection)
+
       }
     },
     methods: {},

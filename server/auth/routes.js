@@ -29,6 +29,34 @@ router.post('/auth/register', (req, res) => {
     })
 })
 
+//EDITS EMPLOYEE
+router.put('/auth/edit' , (req , res) => {
+  Users.findByIdAndUpdate({_id:req.body._id} , req.body)
+  .then(data => {
+    res.send('succes')
+  })
+  .catch(err => {
+    console.error(err)
+  })
+})
+
+//CREATE A NEW EMPLOYEE
+router.post('/auth/newemployee', (req, res) => {
+  if (req.body.password.length < 5) {
+    return res.status(400).send({
+      error: 'Password must be at least 6 characters'
+    })
+  }
+  req.body.hash = Users.generateHash(req.body.password)
+  Users.create(req.body)
+    .then(user => {
+      res.status(201).send(user)
+    })
+    .catch(err => {
+      res.status(400).send(err)
+    })
+})
+
 router.post('/auth/login', (req, res) => {
   //FIND A USER BASED ON PROVIDED EMAIL
   Users.findOne({
@@ -96,11 +124,10 @@ router.get('/auth/all', (req, res) => {
   })
 })
 
-router.delete('/auth/:id', (req, res) => {
-  Users.findByIdAndRemove({
-    _id: req.params.id
-  }).then(res => {
-    console.log(res)
+router.delete('/auth/:id', (req, res, next) => {
+  Users.findByIdAndRemove(req.params.id)
+    .then(() => {
+    res.send('deleted succesfully')
   })
 })
 

@@ -264,45 +264,26 @@
       addEntree() {
         let comp = [];
         this.entreeItems.forEach((item, index) => {
-              if (this.currentEntreeItems[index]) {
-                let loop = this.currentEntreeItemsCount[index];
-                if (!loop) {
-                  loop = 1;
-                }
-              });
-            let data = {
-              entree: {
-                name: this.menuItemName,
-                price: this.menuItemPrice,
-                active: this.entreeItemActive,
-                commentName: ''
-              },
-              entreeItems: {
-                components: comp
-              }
-            }; this.$store.dispatch("addEntree", data); this.fieldReset() this.currentEntreeItems = []; this
-            .currentEntreeItemsCount = []; this.entreeItemActive = false;
+          if (this.currentEntreeItems[index]) {
+            let loop = this.currentEntreeItemsCount[index];
+            if (!loop) {
+              loop = 1;
+            }
+            for (let i = 0; i < loop; i++) {
+              comp.push(item);
+            }
+          }
+        });
+        let data = {
+          entree: {
+            name: this.menuItemName,
+            price: this.menuItemPrice,
+            active: this.entreeItemActive
           },
-          deleteEntree(id) {
-            this.$store.dispatch('deleteEntree', id)
-            this.menuType = ''
-          },
-
-          clearNewEntree() {
-            this.$store.dispatch('clearNewEntree')
-            this.menuType = ''
-          },
-          addDrink() {
-            debugger
-            let data = {
-                name: this.menuItemName,
-                price: this.menuItemPrice,
-                active: this.entreeItemActive
-              },
-              entreeItems: {
-                components: comp
-              }
-          };
+          entreeItems: {
+            components: comp
+          }
+        };
         this.$store.dispatch("addEntree", data);
         this.fieldReset();
         this.currentEntreeItems = [];

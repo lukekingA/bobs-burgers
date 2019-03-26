@@ -38,6 +38,7 @@
       <div class="col-3 d-flex">
         <table style="width:75% text-center">
             <h4>DRINKS</h4>
+            <tr></tr>
             <tr class="pt-2 " bg-light>
             <th>Name</th>
             <th class="pl-3">Price</th>

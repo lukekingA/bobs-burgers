@@ -260,18 +260,7 @@ export default new Vuex.Store({
           console.log(res)
         })
     },
-      
-
-
-
-
-
-
-
-
-
-
-
+    
     //#endregion
 
     //#region --sides--

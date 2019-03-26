@@ -222,7 +222,7 @@
         let data = {
           order: {
             orderIdentifer: this.orderIdentifer,
-            price: this.menuTotal,
+            price: this.orderTotal,
             employeeId: this.employeeLogedIn.name + '-' + this.employeeLogedIn.code
           },
           meals: this.currentOrder

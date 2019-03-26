@@ -169,6 +169,8 @@
     data() {
       return {
         addIngredient: false,
+        addComments: false,
+        commentName: '',
         menuType: "",
         menuItemName: "",
         menuItemSize: "",

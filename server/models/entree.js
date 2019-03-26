@@ -15,6 +15,11 @@ let component = new Schema({
 })
 
 let entree = new Schema({
+  orderId: {
+    type: ObjectId,
+    ref: 'Order',
+    required: true
+  },
   mealId: {
     type: ObjectId,
     ref: 'Meal',

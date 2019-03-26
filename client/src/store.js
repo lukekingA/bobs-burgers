@@ -1,21 +1,21 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import Axios from 'axios'
-import router from './router'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import Axios from 'axios';
+import router from './router';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 let auth = Axios.create({
-  baseURL: "//localhost:3000/auth/",
+  baseURL: '//localhost:3000/auth/',
   // timeout: 3000,
   withCredentials: true
-})
+});
 
 let api = Axios.create({
-  baseURL: "//localhost:3000/api/",
+  baseURL: '//localhost:3000/api/',
   timeout: 6000,
   withCredentials: true
-})
+});
 
 export default new Vuex.Store({
   state: {
@@ -29,81 +29,81 @@ export default new Vuex.Store({
     drinks: [],
     sides: [],
     comments: [],
-    currentOrder: [],
+    currentOrder: []
   },
   mutations: {
     setUser(state, data) {
-      state.user = data
+      state.user = data;
     },
     setAdmin(state, data) {
-      state.admin = data
+      state.admin = data;
     },
     setEntreeItems(state, data) {
-      state.entreeItems = data
+      state.entreeItems = data;
     },
     setAllEmployees(state, data) {
-      state.employees = data
+      state.employees = data;
     },
     setEntrees(state, data) {
-      state.entrees = data
+      state.entrees = data;
     },
     setComments(state, data) {
-      state.comments = data
+      state.comments = data;
     },
     setSides(state, data) {
-      state.sides = data
+      state.sides = data;
     },
     setDrinks(state, data) {
-      state.drinks = data
+      state.drinks = data;
     },
     setNewEntree(state, data) {
-      state.newEntree = data
+      state.newEntree = data;
     },
     clearNewEntree(state) {
-      state.newEntree = {}
+      state.newEntree = {};
     },
     addToOrder(state, data) {
-      state.currentOrder.push(data)
+      state.currentOrder.push(data);
     },
     employeeRegister(state, data) {
-      state.employee = data
+      state.employee = data;
     }
   },
   actions: {
-
     //USER
     //#region --Login --
     login({
       commit,
       dispatch
     }, creds) {
-      auth.post('login', creds)
+      auth
+        .post('login', creds)
         .then(res => {
-          commit('setUser', res.data)
+          commit('setUser', res.data);
         })
         .catch(err => {
-          console.error(err)
-        })
+          console.error(err);
+        });
     },
     logout({
       commit,
       dispatch
     }) {
-      auth.delete('logout')
-        .then(res => {
-          commit('setUser', {})
-          router.push({
-            name: 'login'
-          })
-        })
+      auth.delete('logout').then(res => {
+        commit('setUser', {});
+        router.push({
+          name: 'login'
+        });
+      });
     },
     authenticate({
       commit,
       dispatch
     }) {
-      auth.get('authenticate')
+      auth
+        .get('authenticate')
         .then(res => {
-          commit('setUser', res.data)
+          commit('setUser', res.data);
           // router.push({
           //   name: 'boards'
           // })
@@ -111,77 +111,76 @@ export default new Vuex.Store({
         .catch(res => {
           router.push({
             name: 'login'
-          })
-        })
+          });
+        });
     },
 
     register({
       commit,
       dispatch
     }, newCreds) {
-      auth.post('register', newCreds)
-        .then(res => {
-          dispatch('getAllEmployees')
-          return res.data
-        })
+      auth.post('register', newCreds).then(res => {
+        dispatch('getAllEmployees');
+        return res.data;
+      });
     },
     registerNewEmployee({
       commit,
       dispatch
     }, newCreds) {
-      auth.post('newemployee', newCreds)
-        .then(res => {
-          dispatch('getAllEmployees')
-          return res.data
-        })
+      auth.post('newemployee', newCreds).then(res => {
+        dispatch('getAllEmployees');
+        return res.data;
+      });
     },
     closeLoginModal({
       commit,
       dispatch
     }) {
-      commit('closeLoginModal')
+      commit('closeLoginModal');
     },
 
     getAllEmployees({
       commit,
       dispatch
     }) {
-      auth.get('all')
-        .then(res => {
-          console.log(res)
-          commit('setAllEmployees', res.data)
-        })
+      auth.get('all').then(res => {
+        console.log(res);
+        commit('setAllEmployees', res.data);
+      });
     },
     fireEmployee({
       commit,
       dispatch
     }, employeeId) {
-      auth.delete('/' + employeeId)
+      auth
+        .delete('/' + employeeId)
         .then(res => {
-          console.log(res)
-          dispatch('getAllEmployees')
+          console.log(res);
+          dispatch('getAllEmployees');
         })
         .catch(err => {
-          console.error(err)
-        })
+          console.error(err);
+        });
     },
     editEmployee({
       commit,
       dispatch
     }, newCreds) {
-      auth.put('edit', newCreds)
+      auth
+        .put('edit', newCreds)
         .then(res => {
-          dispatch('getAllEmployees')
+          dispatch('getAllEmployees');
         })
         .catch(err => {
-          console.error(err)
-        })
+          console.error(err);
+        });
     },
 
     employeeRegister({
       commit
     }, data) {
-      commit('employeeRegister', data)
+      commit('employeeRegister', data);
     },
     //#endregion
 
@@ -192,8 +191,8 @@ export default new Vuex.Store({
       dispatch
     }) {
       api.get('menu/item').then(res => {
-        commit('setEntreeItems', res.data)
-      })
+        commit('setEntreeItems', res.data);
+      });
     },
 
     addEntreeItem({
@@ -201,8 +200,8 @@ export default new Vuex.Store({
       dispatch
     }, data) {
       api.post('menu/item', data).then(res => {
-        dispatch('getEntreeItems')
-      })
+        dispatch('getEntreeItems');
+      });
     },
 
     addEntree({
@@ -210,11 +209,10 @@ export default new Vuex.Store({
       dispatch
     }, data) {
       api.post('menu/entrees', data.entree).then(res => {
-
         api.put('menu/entrees/' + res.data._id, data.entreeItems).then(res => {
-          commit('setNewEntree', res.data.data)
-        })
-      })
+          commit('setNewEntree', res.data.data);
+        });
+      });
     },
 
     getEntrees({
@@ -222,8 +220,8 @@ export default new Vuex.Store({
       dispatch
     }) {
       api.get('menu/entrees').then(res => {
-        commit('setEntrees', res.data)
-      })
+        commit('setEntrees', res.data);
+      });
     },
 
     deleteEntree({
@@ -231,14 +229,14 @@ export default new Vuex.Store({
       dispatch
     }, id) {
       api.delete('menu/entrees/' + id).then(res => {
-        dispatch('clearNewEntree')
-      })
+        dispatch('clearNewEntree');
+      });
     },
 
     clearNewEntree({
       commit
     }) {
-      commit('clearNewEntree')
+      commit('clearNewEntree');
     },
     //#endregion
 
@@ -249,8 +247,8 @@ export default new Vuex.Store({
       dispatch
     }) {
       api.get('/menu/drinks').then(res => {
-        commit('setDrinks', res.data)
-      })
+        commit('setDrinks', res.data);
+      });
     },
 
     addDrink({
@@ -258,10 +256,9 @@ export default new Vuex.Store({
       dispatch
     }, data) {
       api.post('/menu/drinks', data).then(res => {
-        dispatch('getDrinks')
-      })
+        dispatch('getDrinks');
+      });
     },
-
 
     //#endregion
 
@@ -272,8 +269,8 @@ export default new Vuex.Store({
       dispatch
     }) {
       api.get('/menu/sides').then(res => {
-        commit('setSides', res.data)
-      })
+        commit('setSides', res.data);
+      });
     },
 
     addSide({
@@ -281,10 +278,9 @@ export default new Vuex.Store({
       dispatch
     }, data) {
       api.post('/menu/sides', data).then(res => {
-        dispatch('getSides')
-      })
+        dispatch('getSides');
+      });
     },
-
 
     //#endregion
     //#region --COMMENTS--
@@ -294,18 +290,16 @@ export default new Vuex.Store({
       dispatch
     }) {
       api.get('/menu/comments').then(res => {
-        commit('setComments', res.data)
-      })
+        commit('setComments', res.data);
+      });
     },
-
 
     addComment({
       dispatch
     }, data) {
       api.post('/menu/comments', data).then(res => {
-        dispatch('getComments')
-
-      })
+        dispatch('getComments');
+      });
     },
 
     //#endregion
@@ -314,7 +308,7 @@ export default new Vuex.Store({
     addToOrder({
       commit
     }, data) {
-      commit('addToOrder', data)
+      commit('addToOrder', data);
     },
 
     makeOrder({
@@ -322,12 +316,73 @@ export default new Vuex.Store({
       dispatch,
       state
     }, data) {
-      data.order.managerId = state.user._id
-      // api.post() you-are-here
+      data.order.managerId = state.user._id;
+      api.post('orders/', data.order).then(orderRes => {
+        //clear current order in state
+        console.log(orderRes);
+
+        let promises = data.meals.map(meal => {
+          let item = {
+            orderId: orderRes.data.data._id,
+            price: meal.price,
+            comment: meal.comment
+          };
+          api.post('orders/meals', item)
+        })
+        Promise.all(promises).then(mealRes => {
+          console.log(mealRes);
+        })
+      })
     }
+
+
+
+    // let mealId = mealRes.data.data._id
+    // if (meal.sandwich.name) {
+    //   let entree = {
+    //     orderId: orderRes.data.data._id,
+    //     mealId: mealId,
+    //     price: meal.sandwich.price,
+    //     name: meal.sandwich.name
+    //   };
+    //   api.post('orders/entree', entree).then(entreeRes => {
+    //     console.log(entreeRes);
+
+
+
+
+    // meal.sandwich.components.forEach(component => {
+    //   let data = {
+    //     name: component.name,
+    //     cost: component.cost
+    //   };
+    //   api
+    //     .post('orders/entree/' + res.data.data._id, data)
+    //     .then(res => {
+    //       console.log(res);
+    //     });
+    // });
+
+
+
+
+    //           })
+    //         }
+    //         if (meal.drink.name) {
+    //           let drink = {
+    //             orderId: orderRes.data.data._id,
+    //             mealId: mealId,
+    //             price: meal.drink.price,
+    //             name: meal.drink.name
+    //           }
+    //           api.post('orders/drink', drink).then(drinkRes => {
+    //             console.log(drinkRes);
+    //           })
+    //         }
+    //       })
+    //     })
+    //   })
+    // }
     //#endregion
-
-
   }
-
-})
+});

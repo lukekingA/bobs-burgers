@@ -9,14 +9,9 @@ let schema = new Schema({
     ref: 'Order',
     required: true
   },
-  managerId: {
+  mealId: {
     type: ObjectId,
-    ref: 'User',
-    required: true
-  },
-  employeeId: {
-    type: ObjectId,
-    ref: 'User',
+    ref: 'Meal',
     required: true
   },
   name: {

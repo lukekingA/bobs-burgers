@@ -11,7 +11,7 @@
             aria-haspopup="true"
             aria-expanded="false"
           >Add Menu Item</button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <div id="scroll" class="dropdown-menu" aria-labelledby="dropdownMenu1">
             <span class="dropdown-item hover border-bottom" @click="menuType = 'entree'">Entree</span>
             <span class="dropdown-item hover border-bottom" @click="menuType = 'drink'">Drink</span>
             <span class="dropdown-item hover" @click="menuType = 'side'">Side</span>
@@ -347,5 +347,9 @@ input[type="number"] {
   height: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
+}
+#scroll {
+  overflow-y: scroll;
+  height: 200px;
 }
 </style>

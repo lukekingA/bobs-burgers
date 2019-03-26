@@ -133,15 +133,25 @@ router.post('/drinks/', (req, res, next) => {
 })
 
 router.delete('/drinks/:id', (req, res, next) => {
-    Drinks.findByIdAndRemove({
-            _id: req.params.id
-        }).then(drink => {
+    Drinks.findByIdAndRemove({id: req.params.id})
+    .then(drink => {
             res.send('Drink Successfully Deleted')
         })
         .catch(err => {
             res.status(400).send('ACCESS DENIED; Invalid Request')
         })
 })
+
+router.put('/drinks/:id' , (req , res , next) => {
+    Drinks.findByIdAndUpdate({_id : req.params.id} , req.body , {new: true})
+    .then(drink => {
+        res.send(drink)
+    })
+    .catch(err => {
+        console.error(err)
+    })
+})
+
 //POST
 router.get('/sides/', (req, res, next) => {
     Sides.find({}).then(sides => {
@@ -164,7 +174,7 @@ router.post('/sides/', (req, res, next) => {
 
 router.delete('/sides/:id', (req, res, next) => {
     Sides.findByIdAndRemove({
-            _id: req.params.id
+            _id: req.params.id  
         }).then(side => {
             res.send('Side Successfully Deleted')
         })
@@ -172,6 +182,14 @@ router.delete('/sides/:id', (req, res, next) => {
             res.status(400).send('ACCESS DENIED; Invalid Request')
         })
 })
+
+router.put('/sides/:id' , (req ,res ,next) => {
+    Sides.findByIdAndUpdate({_id : req.params.id} , req.body)
+    .then(side => {
+        res.send(req.body)
+    })
+})
+
 //Commments!!!
 router.get('/comments/', (req, res, next) => {
     Comments.find({}).then(comments => {

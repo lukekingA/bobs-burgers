@@ -7,31 +7,38 @@ let Entrees = require('../models/entree')
 
 //POST
 router.post('/', (req, res, next) => {
-  Orders.create(req.body.order).then(order => {
-    req.body.meals.forEach(m => {
-      m.orderId = order._id
-      router.post('/meals', (req, res, next) => {
-        Meals.create(m).then(meal => {
-          if (m.sandwich.name) {
-            m.sandwich.mealId = meal._id
-            router.post('/entree', () => {
-              Entrees.create(m.sandwich).then(sandwich => {
-                m.sandwich.components.forEach(comp => {
-                  sandwich.components.push(comp)
-                  // you-are-here
+      Orders.create(req.body.order).then(order => {
+
+        req.body.meals.forEach(m => {
+          m.orderId = order._id
+          router.post('/meals', (req, res, next) => {
+            Meals.create(m).then(meal => {
+              if (m.sandwich.name) {
+                m.sandwich.mealId = meal._id
+                router.post('/entree', () => {
+                    Entrees.create(m.sandwich).then(sandwich => {
+                      m.sandwich.components.forEach(comp => {
+                        sandwich.components.push(comp)
+                        sandwich.save(err => {
+                          if (err) {
+                            res.status(400).send('failure to save sandwich component')
+                          }
+                          res.send('saved sandwich component')
+                        })
+                      })
+                    })
+                  }
                 })
-              })
             })
-          }
+
+          })
         })
       })
+    }
 
-    })
-  })
-})
-//PUT
+    //PUT
 
-//DELETE
+    //DELETE
 
 
-module.exports = router
+    module.exports = router

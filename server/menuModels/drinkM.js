@@ -9,9 +9,9 @@ let schema = new Schema({
     required: true
   },
   size: {
-    type: String,
+    type: Number,
     required: true,
-    default: "Med"
+    default: 0
   },
   price: {
     type: Number,

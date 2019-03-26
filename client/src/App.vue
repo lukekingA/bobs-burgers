@@ -3,14 +3,11 @@
     <nav class="navbar">
       <a class="navbar-brand">
         <img src="./assets/bob_logo_sm.png" width="65" height="65" alt>
-        <!-- <i class="fas fa-hamburger"></i>BOBS BURGERS -->
       </a>
       <div class="btn-group">
         <button @click="logout" v-if="user._id" class="btn my-2 my-sm-0">
           <i class="fas fa-door-open"></i>
         </button>
-
-
 
         <button v-if="!user._id" @click="showLogin = !showLogin" class="btn my-2 my-sm-0">
           <i class="fas fa-door-closed"></i>
@@ -23,15 +20,12 @@
           <button class="btn my-2 my-sm-0" type="submit">GO!</button>
         </form>
 
-
-
-
         <button v-if="!user._id" @click="showRegister = !showRegister" class="btn my-2 my-sm-0">
           <i class="fas fa-user-plus"></i>
         </button>
         <form v-if="showRegister" class="form-inline" @submit.prevent="register">
-          <input v-model="newAccount.email" class="form-control rounded pl-3 mr-1 mb-2" type="search" placeholder="Email"
-            aria-label="Search">
+          <input v-model="newAccount.email" class="form-control rounded pl-3 mr-1 mb-2" type="search"
+            placeholder="Email" aria-label="Search">
           <input v-model="newAccount.name" class="form-control mr-sm-2" type="search" placeholder="Username"
             aria-label="Search">
           <input v-model="newAccount.password" class="form-control mr-sm-2" type="search" placeholder="Password"
@@ -61,9 +55,10 @@
           <div class="modal-footer d-flex justify-content-center">
             <button data-dismiss="modal" @click="$router.push({name: 'order'})" type="button" class="btn btn-primary"><i
                 class="fas fa-cash-register"></i></button>
-            <button data-dismiss="modal" type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i></button>
-            <button data-dismiss="modal" @click="$router.push({name: 'admin'})" v-if="user.manager" type="button" class="btn btn-primary"><i
-                class="fas fa-chart-bar"></i></button>
+            <button data-dismiss="modal" type="button" class="btn btn-primary"><i
+                class="fas fa-calendar-alt"></i></button>
+            <button data-dismiss="modal" @click="$router.push({name: 'admin'})" v-if="user.manager" type="button"
+              class="btn btn-primary"><i class="fas fa-chart-bar"></i></button>
           </div>
         </div>
         <!-- content 2 -->
@@ -91,7 +86,7 @@
 
 
 <script>
-  import $ from 'jquery'
+  import $ from "jquery";
   export default {
     name: "app",
     data() {
@@ -101,23 +96,23 @@
         creds: {},
         showLogin: false,
         showRegister: false,
-        newAccount: {},
+        newAccount: {}
       };
     },
     mounted() {
-      this.$store.dispatch('authenticate')
+      this.$store.dispatch("authenticate");
     },
     computed: {
       user() {
         return this.$store.state.user;
       },
       loginModalComputed() {
-        return this.$store.state.loginModal
-      },
+        return this.$store.state.loginModal;
+      }
     },
     watch: {
       user: function (val) {
-        $('#loginModal').modal('show')
+        $("#loginModal").modal("show");
       }
     },
     methods: {
@@ -129,13 +124,13 @@
       },
       login() {
         this.showLogin = false;
-        this.$store.dispatch("login", this.creds)
+        this.$store.dispatch("login", this.creds);
       },
       logout() {
         this.$store.dispatch("logout");
-      },
+      }
     }
-  }
+  };
 </script>
 
 <style>
@@ -183,6 +178,44 @@
   }
 
   /* #app {
+img {
+  margin-top: -10;
+  margin-bottom: -30;
+  padding-top: -20;
+  padding-bottom: -20;
+}
+
+html,
+body {
+  height: 100vh;
+}
+
+#logo {
+  background: url("assets/bobs-backgroundArtboard 1-100.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  height: 100%;
+  width: auto;
+  padding-top: 120px;
+  top: 0;
+  left: 0;
+}
+
+.navbar {
+  background-color: rgb(0, 198, 215);
+}
+
+.fas {
+  font-size: 3vh;
+}
+
+.drop-shadow {
+  filter: drop-shadow(3px 5px 5px rgb(53, 52, 52));
+}
+
+/* #app {
   background-color: lightskyblue;
   height: 100vh;
 } */

@@ -28,7 +28,7 @@ export default new Vuex.Store({
     drinks: [],
     sides: [],
     comments: [],
-    curentOrder: [],
+    currentOrder: [],
   },
   mutations: {
     setUser(state, data) {
@@ -62,14 +62,17 @@ export default new Vuex.Store({
       state.newEntree = {}
     },
     addToOrder(state, data) {
-      state.curentOrder.push(data)
+      state.currentOrder.push(data)
     }
   },
   actions: {
 
     //USER
     //#region --Login --
-    login({commit , dispatch}, creds) {
+    login({
+      commit,
+      dispatch
+    }, creds) {
       auth.post('login', creds)
         .then(res => {
           commit('setUser', res.data)
@@ -108,14 +111,20 @@ export default new Vuex.Store({
         })
     },
 
-    register({commit , dispatch}, newCreds) {
+    register({
+      commit,
+      dispatch
+    }, newCreds) {
       auth.post('register', newCreds)
         .then(res => {
           dispatch('getAllEmployees')
           return res.data
         })
     },
-    registerNewEmployee({commit , dispatch}, newCreds) {
+    registerNewEmployee({
+      commit,
+      dispatch
+    }, newCreds) {
       auth.post('newemployee', newCreds)
         .then(res => {
           dispatch('getAllEmployees')
@@ -144,20 +153,23 @@ export default new Vuex.Store({
       dispatch
     }, employeeId) {
       auth.delete('/' + employeeId)
-      .then(res => {
-        console.log(res)
+        .then(res => {
+          console.log(res)
           dispatch('getAllEmployees')
         })
         .catch(err => {
           console.error(err)
         })
     },
-    editEmployee({commit , dispatch} , newCreds){
-      auth.put('edit' , newCreds)
-        .then( res => {
+    editEmployee({
+      commit,
+      dispatch
+    }, newCreds) {
+      auth.put('edit', newCreds)
+        .then(res => {
           dispatch('getAllEmployees')
         })
-        .catch( err => {
+        .catch(err => {
           console.error(err)
         })
     },
@@ -165,7 +177,10 @@ export default new Vuex.Store({
 
     //#region --Menu --
 
-    getEntreeItems({ commit,dispatch}) {
+    getEntreeItems({
+      commit,
+      dispatch
+    }) {
       api.get('menu/item').then(res => {
         commit('setEntreeItems', res.data)
       })
@@ -192,7 +207,10 @@ export default new Vuex.Store({
       })
     },
 
-    getEntrees({commit, dispatch}) {
+    getEntrees({
+      commit,
+      dispatch
+    }) {
       api.get('menu/entrees').then(res => {
         commit('setEntrees', res.data)
       })
@@ -299,12 +317,14 @@ export default new Vuex.Store({
       })
     },
 
+
     addComment({
       commit,
       dispatch
     }, data) {
       api.post('/menu/comments', data).then(res => {
         dispatch('getComments')
+
       })
     },
 

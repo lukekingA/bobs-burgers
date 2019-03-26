@@ -37,12 +37,12 @@
                 </ul>
               </div>
               <div>
-                <div class="d-flex justify-content-between">
+                <!-- <div class="d-flex justify-content-between">
                   <span>subtotal</span><span>{{(mealTotal).toFixed(2)}}</span></div>
                 <div class="d-flex justify-content-between">
-                  <span>tax</span><span>{{(mealTotal * .06).toFixed(2)}}</span></div>
+                  <span>tax</span><span>{{(mealTotal * .06).toFixed(2)}}</span></div> -->
                 <div class="d-flex justify-content-between"><span
-                    class="font-weight-bold">total</span><span>{{(mealTotal * 1.06).toFixed(2)}}</span>
+                    class="font-weight-bold">total</span><span>{{(mealTotal).toFixed(2)}}</span>
                 </div>
                 <div class="mt-2 d-flex justify-content-between">
                   <button @click="makeMealCombo" :disabled="!allowCombo"
@@ -55,27 +55,43 @@
         </div>
       </div>
       <div class="col-3">
-        <div class="card h-75 mt-3">
+        <div class="card h-100 mt-3">
           <div class="card-body">
-            <div>
-              <h5 class="text-center">Order</h5>
-            </div>
-            <div>
-              <ul>
-                <li v-for="meal in currentOrder">
+            <div class="d-flex flex-column justify-content-between h-100 overflow-auto">
+              <div>
+                <div>
+                  <h5 class="text-center">Order</h5>
+                </div>
+                <input class="rounded pl-1" type="text" v-model="orderIdentifer" placeholder="customer name">
+                <div class="mt-1">
+                  <ul class="pl-1">
+                    <li class="pl-1" v-for="meal in currentOrder">
 
-                  <div class="text-left">
-                    <p>{{meal.sandwich.name}}</p>
-                    <p>{{meal.side.name}}</p>
-                    <p>{{meal.drink.name}}</p>
-                  </div>
-                  <p class="text-right">{{meal.price}}</p>
-                </li>
-              </ul>
+                      <div class="text-left">
+                        <p class="mb-1">{{meal.sandwich.name}}</p>
+                        <p class="mb-1">{{meal.side.name}}</p>
+                        <p class="mb-1">{{meal.drink.name}}</p>
+                      </div>
+                      <p class="text-right">{{meal.price.toFixed(2)}}</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div>
+                <div class="d-flex justify-content-between">
+                  <span>subtotal</span><span>{{orderTotal.toFixed(2)}}</span></div>
+                <div class="d-flex justify-content-between">
+                  <span>tax</span><span>{{(orderTotal * .06).toFixed(2)}}</span></div>
+                <div class="d-flex justify-content-between"><span
+                    class="font-weight-bold">total</span><span>{{(orderTotal * 1.06).toFixed(2)}}</span>
+                </div>
+                <div class="mt-2 d-flex justify-content-between">
+                  <button @click="submitOrder" class="btn btn-secondary shadow border-dark">Submit Order</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -104,7 +120,7 @@
           side: {},
           combo: false
         },
-
+        orderIdentifer: ''
       };
     },
     computed: {
@@ -136,7 +152,14 @@
       },
       currentOrder() {
         return this.$store.state.currentOrder
-      }
+      },
+      orderTotal() {
+        let total = 0
+        this.currentOrder.forEach(m => {
+          total += m.price
+        })
+        return total
+      },
     },
     watch: {
 
@@ -179,7 +202,8 @@
       },
       removeMenuItem(key) {
         this.currentMeal[key] = {}
-      }
+      },
+      submitOrder() {}
     },
     components: {
       DropdownSandwiches,

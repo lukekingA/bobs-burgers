@@ -15,11 +15,11 @@ let component = new Schema({
 })
 
 let entree = new Schema({
-  // orderId: {
-  //   type: ObjectId,
-  //   ref: 'Order',                will be _id created in each instance
-  //   required: true
-  // },
+  mealId: {
+    type: ObjectId,
+    ref: 'Meal',
+    required: true
+  },
   price: {
     type: Number,
     required: true

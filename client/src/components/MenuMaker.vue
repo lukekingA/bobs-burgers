@@ -169,6 +169,7 @@
     data() {
       return {
         addIngredient: false,
+        addComments: false,
         menuType: "",
         menuItemName: "",
         menuItemSize: "",
@@ -193,6 +194,7 @@
         return this.$store.state.comments;
       }
     },
+
     mounted() {
       this.$store.dispatch("getEntreeItems");
       this.$store.dispatch("getComments");

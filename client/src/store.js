@@ -29,7 +29,9 @@ export default new Vuex.Store({
     drinks: [],
     sides: [],
     comments: [],
-    currentOrder: []
+    currentOrder: [],
+    buildingOrder: {},
+    buildingMeal: {},
   },
   mutations: {
     setUser(state, data) {
@@ -67,6 +69,12 @@ export default new Vuex.Store({
     },
     employeeRegister(state, data) {
       state.employee = data;
+    },
+    buildingOrder(state, data) {
+      state.buildingOrder = data
+    },
+    buildingMeal(state, data) {
+      state.buildingMeal = data
     }
   },
   actions: {
@@ -306,9 +314,28 @@ export default new Vuex.Store({
 
     //#region --Order--
     addToOrder({
-      commit
+      commit,
+      dispatch,
+      state
     }, data) {
       commit('addToOrder', data);
+      let mealData = {
+        orderId: state.buildingOrder._id,
+        price: data.price,
+        comment: data.comment
+      }
+      api.post('orders/meals', ).then(res => {
+        commit('buildingMeal', res.data.data)
+        dispatch('makeMeal', data)
+      })
+    },
+
+    makeMeal({
+      commit,
+      dispatch,
+      state
+    }, data) {
+
     },
 
     makeOrder({
@@ -316,73 +343,57 @@ export default new Vuex.Store({
       dispatch,
       state
     }, data) {
-      data.order.managerId = state.user._id;
-      api.post('orders/', data.order).then(orderRes => {
-        //clear current order in state
-        console.log(orderRes);
-
-        let promises = data.meals.map(meal => {
-          let item = {
-            orderId: orderRes.data.data._id,
-            price: meal.price,
-            comment: meal.comment
-          };
-          api.post('orders/meals', item)
-        })
-        Promise.all(promises).then(mealRes => {
-          console.log(mealRes);
-        })
+      data.managerId = state.user._id;
+      api.post('orders/', data).then(res => {
+        commit('buildingOrder', res.data.data)
       })
+
+      //#endregion
     }
-
-
-
-    // let mealId = mealRes.data.data._id
-    // if (meal.sandwich.name) {
-    //   let entree = {
-    //     orderId: orderRes.data.data._id,
-    //     mealId: mealId,
-    //     price: meal.sandwich.price,
-    //     name: meal.sandwich.name
-    //   };
-    //   api.post('orders/entree', entree).then(entreeRes => {
-    //     console.log(entreeRes);
-
-
-
-
-    // meal.sandwich.components.forEach(component => {
-    //   let data = {
-    //     name: component.name,
-    //     cost: component.cost
-    //   };
-    //   api
-    //     .post('orders/entree/' + res.data.data._id, data)
-    //     .then(res => {
-    //       console.log(res);
-    //     });
-    // });
-
-
-
-
-    //           })
-    //         }
-    //         if (meal.drink.name) {
-    //           let drink = {
-    //             orderId: orderRes.data.data._id,
-    //             mealId: mealId,
-    //             price: meal.drink.price,
-    //             name: meal.drink.name
-    //           }
-    //           api.post('orders/drink', drink).then(drinkRes => {
-    //             console.log(drinkRes);
-    //           })
-    //         }
-    //       })
-    //     })
-    //   })
-    // }
-    //#endregion
   }
-});
+})
+//   .then(orderRes => {
+//     //clear current order in state
+//     console.log(orderRes);
+//     Promise.all(
+//     data.meals.forEach(meal => {
+//       let item = {
+//         orderId: orderRes.data.data._id,
+//         price: meal.price,
+//         comment: meal.comment
+//       };
+//       api.post('orders/meals', item)
+//     ).then(mealRes => {
+//         console.log(mealRes);
+//         let mealId = mealRes.data.data._id
+//         if (meal.sandwich.name) {
+//           let entree = {
+//             mealId: mealId,
+//             price: meal.sandwich.price,
+//             name: meal.sandwich.name
+//           };
+//           api.post('orders/entree', entree).then(entreeRes => {
+//             console.log(entreeRes);
+//             // meal.sandwich.components.forEach(component => {
+//             //   let data = {
+//             //     name: component.name,
+//             //     cost: component.cost
+//             //   };
+//             //   api
+//             //     .post('orders/entree/' + res.data.data._id, data)
+//             //     .then(res => {
+//             //       console.log(res);
+//             //     });
+//             // });
+//           })
+//         }
+//         if (meal.drink.name) {
+//           let drink = {
+//             mealId: mealId,
+
+//           }
+//         }
+//       })
+//     })
+//   })
+// }

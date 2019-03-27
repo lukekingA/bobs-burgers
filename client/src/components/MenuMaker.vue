@@ -64,7 +64,7 @@
           <div class="col-6">
             <H6 class="ml-2">Drinks</H6>
             <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
-            <input class="rounded pl-3 mr-1 mb-2" type="number" v-model="menuItemPrice" placeholder="price">
+            <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
             <div>
               <input type="radio" id="sizes" value="-1" v-model="menuItemSize">
               <label class="ml-1" for="sizes">Small</label>
@@ -91,7 +91,7 @@
           <div class="col-6">
             <H6 class="ml-2">Sides</H6>
             <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
-            <input class="rounded pl-3 mr-1 mb-2" type="number" v-model="menuItemPrice" placeholder="price">
+            <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
             <div>
               <input type="radio" id="sizeS" value="-1" v-model="menuItemSize">
               <label class="ml-1" for="sizeS">Small</label>

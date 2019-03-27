@@ -11,6 +11,7 @@ let schema = new Schema({
   },
   price: {
     type: Number,
+    default: 0,
     required: true
   },
   comment: {

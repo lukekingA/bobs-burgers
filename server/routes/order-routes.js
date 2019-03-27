@@ -12,6 +12,7 @@ router.get('/', (req, res, next) => {
   })
 })
 //POST
+//make empty order
 router.post('/', (req, res, next) => {
   Orders.create(req.body).then(order => {
     res.send({
@@ -20,7 +21,7 @@ router.post('/', (req, res, next) => {
     })
   })
 })
-
+//make empty meal associated with order
 router.post('/meals', (req, res, next) => {
   Meals.create(req.body).then(meal => {
     res.send({
@@ -29,7 +30,7 @@ router.post('/meals', (req, res, next) => {
     })
   })
 })
-
+//make entree without components
 router.post('/entree', (req, res, next) => {
   Entrees.create(req.body).then(entree => {
     res.send({
@@ -38,7 +39,7 @@ router.post('/entree', (req, res, next) => {
     })
   })
 })
-
+//add entree components
 router.post('/entree/:id', (req, res, next) => {
   Entrees.findById({
     _id: req.params.id
@@ -52,12 +53,21 @@ router.post('/entree/:id', (req, res, next) => {
     })
   })
 })
-
+//add drink
 router.post('/drink', (req, res, next) => {
   Drinks.create(req.body).then(drink => {
     res.send({
       data: drink,
       message: 'DrinkCreated'
+    })
+  })
+})
+
+router.post('/side', (req, res, next) => {
+  Sides.create(req.body).then(side => {
+    res.send({
+      data: side,
+      message: 'Side Created'
     })
   })
 })

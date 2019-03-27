@@ -48,14 +48,16 @@
                     <li v-for="item in newEntree.components">{{item.name}} for $ {{item.cost}}</li>
                   </ul>
                   <div class="d-flex justify-content-around border-top pt-2">
-                    <button @click="clearNewEntree" class="btn btn-sm text-success bg-light border-dark mr-3 shadow"><i
-                        class="fas fa-check"></i></button>
+                    <button @click="clearNewEntree" class="btn btn-sm text-success bg-light border-dark mr-3 shadow">
+                      <i class="fas fa-check"></i>
+                    </button>
                     <button @click="deleteEntree(newEntree._id)"
-                      class="btn btn-sm text-danger bg-light border-dark shadow"><i class="fas fa-times"></i></button>
+                      class="btn btn-sm text-danger bg-light border-dark shadow">
+                      <i class="fas fa-times"></i>
+                    </button>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -66,15 +68,15 @@
             <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
             <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
             <div>
-              <input type="radio" id="sizes" value="-1" v-model="menuItemSize">
+              <input type="radio" id="sizes" value="Small" v-model="menuItemSize">
               <label class="ml-1" for="sizes">Small</label>
             </div>
             <div>
-              <input type="radio" id="sizem" value="0" v-model="menuItemSize">
+              <input type="radio" id="sizem" value="Medium" v-model="menuItemSize">
               <label class="ml-1" for="sizem">Medium</label>
             </div>
             <div>
-              <input type="radio" id="sizel" value="1" v-model="menuItemSize">
+              <input type="radio" id="sizel" value="Large" v-model="menuItemSize">
               <label class="ml-1" for="sizel">Large</label>
             </div>
             <input type="checkbox" id="activateDrink" value="true" v-model="entreeItemActive">
@@ -93,15 +95,15 @@
             <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
             <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
             <div>
-              <input type="radio" id="sizeS" value="-1" v-model="menuItemSize">
+              <input type="radio" id="sizeS" value="Small" v-model="menuItemSize">
               <label class="ml-1" for="sizeS">Small</label>
             </div>
             <div>
-              <input type="radio" id="sizeM" value="0" v-model="menuItemSize">
+              <input type="radio" id="sizeM" value="Medium" v-model="menuItemSize">
               <label class="ml-1" for="sizeM">Medium</label>
             </div>
             <div>
-              <input type="radio" id="sizeL" value="1" v-model="menuItemSize">
+              <input type="radio" id="sizeL" value="Large" v-model="menuItemSize">
               <label class="ml-1" for="sizeL">Large</label>
             </div>
             <input type="checkbox" id="activateSide" value="true" v-model="entreeItemActive">
@@ -170,7 +172,6 @@
       return {
         addIngredient: false,
         addComments: false,
-        commentName: '',
         menuType: "",
         menuItemName: "",
         menuItemSize: "",
@@ -189,7 +190,7 @@
         return this.$store.state.entreeItems;
       },
       newEntree() {
-        return this.$store.state.newEntree
+        return this.$store.state.newEntree;
       },
       comments() {
         return this.$store.state.comments;
@@ -212,16 +213,61 @@
         };
         this.$store.dispatch("addEntreeItem", data);
 
+        // export default {
+        //   name: "menu-maker",
+
+        //   data() {
+        //     return {
+        //       addIngredient: false,
+        //       addComments: false,
+        //       commentName: "",
+        //       menuType: "",
+        //       menuItemName: "",
+        //       menuItemSize: "",
+        //       menuItemPrice: "",
+        //       picked: "",
+        //       components: "",
+        //       entreeItemName: "",
+        //       entreeItemCost: 0,
+        //       entreeItemActive: false,
+        //       currentEntreeItems: [],
+        //       currentEntreeItemsCount: []
+        //     };
+        //   },
+        //   computed: {
+        //     entreeItems() {
+        //       return this.$store.state.entreeItems;
+        //       return this.$store.state.comments;
+        //     }
+        //   },
+        //   mounted() {
+        //     this.$store.dispatch("getEntreeItems");
+        //     this.$store.dispatch("getComments");
+        //   },
+
+        //   methods: {
+        //     fieldReset() {
+        //       this.menuType = "";
+        //       this.menuItemName = "";
+        //       this.menuItemPrice = "";
+        //     },
+        //     addEntreeItem() {
+        //       let data = {
+        //         name: this.entreeItemName,
+        //         cost: this.entreeItemCost
+        //       };
+        //       this.$store.dispatch("addEntreeItem", data);
+
         this.entreeItemName = "";
         this.entreeItemCost = 0;
       },
       addEntree() {
-        let comp = []
+        let comp = [];
         this.entreeItems.forEach((item, index) => {
           if (this.currentEntreeItems[index]) {
-            let loop = this.currentEntreeItemsCount[index]
+            let loop = this.currentEntreeItemsCount[index];
             if (!loop) {
-              loop = 1
+              loop = 1;
             }
             for (let i = 0; i < loop; i++) {
               comp.push(item);
@@ -239,19 +285,19 @@
           }
         };
         this.$store.dispatch("addEntree", data);
-        this.fieldReset()
+        this.fieldReset();
         this.currentEntreeItems = [];
         this.currentEntreeItemsCount = [];
         this.entreeItemActive = false;
       },
       deleteEntree(id) {
-        this.$store.dispatch('deleteEntree', id)
-        this.menuType = ''
+        this.$store.dispatch("deleteEntree", id);
+        this.menuType = "";
       },
 
       clearNewEntree() {
-        this.$store.dispatch('clearNewEntree')
-        this.menuType = ''
+        this.$store.dispatch("clearNewEntree");
+        this.menuType = "";
       },
       addDrink() {
         let data = {

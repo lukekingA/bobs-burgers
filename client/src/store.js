@@ -246,6 +246,13 @@ export default new Vuex.Store({
     }) {
       commit('clearNewEntree');
     },
+    editEntree({
+      commit,
+      dispatch
+    }, newData) {
+      console.log(newData)
+      api.put('menu/entrees/' + newData._id, newData)
+    },
     //#endregion
 
     //#region --drinks--
@@ -266,6 +273,17 @@ export default new Vuex.Store({
       api.post('/menu/drinks', data).then(res => {
         dispatch('getDrinks');
       });
+    },
+
+    editDrink({
+      commit,
+      dispatch
+    }, newData) {
+      console.log(newData)
+      api.put('/menu/drinks/' + newData._id, newData)
+        .then(res => {
+          console.log(res)
+        })
     },
 
     //#endregion
@@ -289,6 +307,20 @@ export default new Vuex.Store({
         dispatch('getSides');
       });
     },
+
+    editSide({
+      commit,
+      dipatch
+    }, newData) {
+      api.put('/menu/sides/' + newData._id, newData)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    },
+
 
     //#endregion
     //#region --COMMENTS--

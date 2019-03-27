@@ -25,9 +25,8 @@ let schema = new Schema({
   },
   // size is either -1,0,1
   size: {
-    type: Number,
+    type: String,
     required: true,
-    default: 0
   },
   cost: {
     type: Number,

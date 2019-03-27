@@ -35,7 +35,7 @@
               </dropdown-sandwiches>
               <dropdown-sides @orderSideSelect="setCurrentMealSide" v-show="sideDropdown"></dropdown-sides>
               <dropdown-drinks @orderDrinkSelect="setCurrentMealDrink" v-show="drinkDropdown"></dropdown-drinks>
-              <dropdown-comments v-show="commentDropdown"></dropdown-comments>
+              <dropdown-comments @currentComments="setCurrentComment" v-show="commentDropdown"></dropdown-comments>
               <dropdown-specials v-show="specialDropdown"></dropdown-specials>
             </div>
             <div class="col-3">
@@ -52,10 +52,6 @@
                       </ul>
                     </div>
                     <div>
-                      <!-- <div class="d-flex justify-content-between">
-                          <span>subtotal</span><span>{{(mealTotal).toFixed(2)}}</span></div>
-                        <div class="d-flex justify-content-between">
-                          <span>tax</span><span>{{(mealTotal * .06).toFixed(2)}}</span></div> -->
                       <div class="d-flex justify-content-between"><span
                           class="font-weight-bold">total</span><span>{{(mealTotal).toFixed(2)}}</span>
                       </div>
@@ -86,6 +82,7 @@
                               <p class="mb-1">{{meal.sandwich.name}}</p>
                               <p class="mb-1">{{meal.side.name}}</p>
                               <p class="mb-1">{{meal.drink.name}}</p>
+                              <p class="mb-1">{{meal.comment}}</p>
                             </div>
                             <p class="text-right">{{meal.price.toFixed(2)}}</p>
                           </li>
@@ -137,6 +134,7 @@
           sandwich: {},
           drink: {},
           side: {},
+          comment: '',
           combo: false
         },
         orderIdentifer: '',
@@ -222,6 +220,9 @@
       setCurrentMealDrink(drink) {
         this.currentMeal.drink = drink
       },
+      setCurrentComment(comment) {
+        this.currentMeal.comment = comment
+      },
       addToOrder() {
         let data = this.currentMeal
         data.price = this.mealTotal
@@ -230,6 +231,7 @@
           sandwich: {},
           drink: {},
           side: {},
+          comment: '',
           combo: false
         }
       },

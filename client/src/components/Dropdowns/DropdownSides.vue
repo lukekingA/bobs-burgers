@@ -26,8 +26,13 @@
       this.$store.dispatch("getSides");
     },
     computed: {
+      // sides() {
+      //   return this.$store.state.sides;
+      // }
       sides() {
-        return this.$store.state.sides;
+        const sideT = this.$store.state.sides
+        const actSide = sideT.filter(s => s.active == true)
+        return actSide;
       }
     },
     watch: {

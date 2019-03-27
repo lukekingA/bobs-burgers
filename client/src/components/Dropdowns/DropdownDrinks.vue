@@ -26,8 +26,13 @@
       this.$store.dispatch("getDrinks");
     },
     computed: {
+      // drinks() {
+      //   return this.$store.state.drinks;
+      // }
       drinks() {
-        return this.$store.state.drinks;
+        const drinkT = this.$store.state.drinks
+        const actDrink = drinkT.filter(s => s.active == true)
+        return actDrink;
       }
     },
     watch: {

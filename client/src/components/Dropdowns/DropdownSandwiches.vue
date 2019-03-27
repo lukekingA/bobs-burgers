@@ -26,8 +26,13 @@
       this.$store.dispatch("getEntrees");
     },
     computed: {
+      // sandwiches() {
+      //   return this.$store.state.entrees;
+      // }
       sandwiches() {
-        return this.$store.state.entrees;
+        const sand = this.$store.state.entrees
+        const actSand = sand.filter(s => s.active == true)
+        return actSand;
       }
     },
     watch: {

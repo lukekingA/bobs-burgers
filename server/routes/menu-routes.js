@@ -122,7 +122,6 @@ router.get('/drinks/', (req, res, next) => {
 })
 
 router.post('/drinks/', (req, res, next) => {
-
     Drinks.create(req.body)
         .then(data => {
             res.send({

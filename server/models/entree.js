@@ -15,6 +15,11 @@ let component = new Schema({
 })
 
 let entree = new Schema({
+  orderId: {
+    type: ObjectId,
+    ref: 'Order',
+    required: true
+  },
   mealId: {
     type: ObjectId,
     ref: 'Meal',
@@ -28,7 +33,7 @@ let entree = new Schema({
     type: String,
     required: true
   },
-  //components: [component]
+  components: [component]
 })
 
 

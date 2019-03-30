@@ -5,7 +5,7 @@ let schemaName = 'SideM'
 
 let schema = new Schema({
   name: {
-    type: String,
+    type: Number,
     required: true
   },
   // size is either -1,0,1

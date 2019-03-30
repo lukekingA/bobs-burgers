@@ -10,7 +10,7 @@
     </div>
     <div class="h-100" v-if="employeeLogedIn.name">
       <div class="row h-75">
-        <div class="col text-center" v-show="!ordering">
+        <div class="col text-center mt-5" v-show="!ordering">
           <button @click="newOrder" class="btn bg-secondary border border-light text-light drop-shadow">New
             Order</button>
         </div>
@@ -46,9 +46,11 @@
                       <h5 class="mt-2 text-center">Meal</h5>
                       <ul class="pl-1">
                         <li v-if="item.name" v-for="(item,key) in currentMeal">
-                          <div @click="removeMenuItem(key)" class="d-flex justify-content-between">{{item.name}}
+                          <div @click="removeMenuItem(key)" class="d-flex justify-content-between">
+                            {{item.name}}
                             <span>${{parseFloat(item.price).toFixed(2)}}</span></div>
                         </li>
+                        <li @click="remLocalCom" v-if="currentMeal.comment">{{currentMeal.comment}}</li>
                       </ul>
                     </div>
                     <div>
@@ -139,7 +141,8 @@
         },
         orderIdentifer: '',
         employeeName: '',
-        employeeCode: ''
+        employeeCode: '',
+
       };
     },
     computed: {
@@ -177,7 +180,7 @@
       },
       orderTotal() {
         let total = 0
-        this.currentOrder.forEach(m => {
+        this.$store.state.currentOrder.forEach(m => {
           total += m.price
         })
         return total
@@ -225,7 +228,9 @@
       },
       addToOrder() {
         let data = this.currentMeal
-        data.price = this.mealTotal
+          data.price = this.mealTotal
+          data.orderTotal = {price: this.orderTotal }
+        delete data.combo
         this.$store.dispatch('addToOrder', data)
         this.currentMeal = {
           sandwich: {},
@@ -241,6 +246,9 @@
       removeMenuItem(key) {
         this.currentMeal[key] = {}
       },
+      remLocalCom() {
+        this.$root.$emit('removeComment')
+      },
       newOrder() {
         let data = {
           employeeId: this.employeeLogedIn.name + '-' + this.employeeLogedIn.code
@@ -248,8 +256,11 @@
         this.$store.dispatch('makeOrder', data)
         this.ordering = true
       },
-      submitOrder() {
-
+        submitOrder() {
+            let data = {
+                price: this.orderTotal
+            }
+          this.$store.dispatch('editOrder',data)
       },
       employeeRegister() {
         let data = {
@@ -260,14 +271,6 @@
         this.employeeName = ''
         this.employeeCode = ''
       },
-
-      orderTotal() {
-        let total = 0;
-        this.currentOrder.forEach(m => {
-          total += m.price;
-        });
-        return total;
-      }
     },
     watch: {},
     components: {

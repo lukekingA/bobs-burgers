@@ -14,20 +14,10 @@
           <i class="fas fa-door-closed"></i>
         </button>
         <form v-if="showLogin" class="form-inline" @submit.prevent="login">
-          <input
-            v-model="creds.email"
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Email"
-            aria-label="Search"
-          >
-          <input
-            v-model="creds.password"
-            class="form-control mr-sm-2"
-            type="password"
-            placeholder="Password"
-            aria-label="Search"
-          >
+          <input v-model="creds.email" class="form-control mr-sm-2" type="search" placeholder="Email"
+            aria-label="Search">
+          <input v-model="creds.password" class="form-control mr-sm-2" type="password" placeholder="Password"
+            aria-label="Search">
           <button class="btn my-2 my-sm-0" type="submit">GO!</button>
         </form>
 
@@ -35,43 +25,22 @@
           <i class="fas fa-user-plus"></i>
         </button>
         <form v-if="showRegister" class="form-inline" @submit.prevent="register">
-          <input
-            v-model="newAccount.email"
-            class="form-control rounded pl-3 mr-1 mb-2"
-            type="search"
-            placeholder="Email"
-            aria-label="Search"
-          >
-          <input
-            v-model="newAccount.name"
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Username"
-            aria-label="Search"
-          >
-          <input
-            v-model="newAccount.password"
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Password"
-            aria-label="Search"
-          >
+          <input v-model="newAccount.email" class="form-control rounded pl-3 mr-1 mb-2" type="search"
+            placeholder="Email" aria-label="Search">
+          <input v-model="newAccount.name" class="form-control mr-sm-2" type="search" placeholder="Username"
+            aria-label="Search">
+          <input v-model="newAccount.password" class="form-control mr-sm-2" type="search" placeholder="Password"
+            aria-label="Search">
           <button class="btn my-2 my-sm-0" type="submit">GO!</button>
         </form>
       </div>
     </nav>
-    <div id="app" class="container-fluid h-100">
+    <div id="app" class="container-fluid app-height">
       <router-view></router-view>
     </div>
     <!-- Modal -->
-    <div
-      class="modal fade"
-      id="loginModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <!-- Content -->
         <div v-if="user._id" class="modal-content">
@@ -83,24 +52,14 @@
           </div>
           <div class="modal-body">Where do you want to go?</div>
           <div class="modal-footer d-flex justify-content-center">
-            <button
-              data-dismiss="modal"
-              @click="$router.push({name: 'order'})"
-              type="button"
-              class="btn btn-primary"
-            >
+            <button data-dismiss="modal" @click="$router.push({name: 'order'})" type="button" class="btn btn-primary">
               <i class="fas fa-cash-register"></i>
             </button>
             <button data-dismiss="modal" type="button" class="btn btn-primary">
               <i class="fas fa-calendar-alt"></i>
             </button>
-            <button
-              data-dismiss="modal"
-              @click="$router.push({name: 'admin'})"
-              v-if="user.manager"
-              type="button"
-              class="btn btn-primary"
-            >
+            <button data-dismiss="modal" @click="$router.push({name: 'admin'})" v-if="user.manager" type="button"
+              class="btn btn-primary">
               <i class="fas fa-chart-bar"></i>
             </button>
           </div>
@@ -129,163 +88,125 @@
 
 
 <script>
-import $ from "jquery";
-import Moment from "moment";
+  import $ from "jquery";
+  import Moment from "moment";
 
-export default {
-  name: "app",
-  data() {
-    return {
-      showAdminLogin: false,
-      loginForm: true,
-      creds: {},
-      showLogin: false,
-      showRegister: false,
-      newAccount: {},
-      time: ""
-    };
-  },
-  mounted() {
-    this.$store.dispatch("authenticate");
-    this.formatTime();
-  },
-  computed: {
-    user() {
-      return this.$store.state.user;
+  export default {
+    name: "app",
+    data() {
+      return {
+        showAdminLogin: false,
+        loginForm: true,
+        creds: {},
+        showLogin: false,
+        showRegister: false,
+        newAccount: {},
+        time: ""
+      };
     },
-    loginModalComputed() {
-      return this.$store.state.loginModal;
+    mounted() {
+      this.$store.dispatch("authenticate");
+      this.formatTime();
+    },
+    computed: {
+      user() {
+        return this.$store.state.user;
+      },
+      loginModalComputed() {
+        return this.$store.state.loginModal;
+      }
+    },
+    watch: {
+      user: function (val) {
+        $("#loginModal").modal("show");
+      }
+    },
+    methods: {
+      register() {
+        let data = this.newAccount;
+        data.manager = false;
+        this.$store.dispatch("register", this.newAccount);
+        this.newAdmin = {};
+      },
+      login() {
+        this.showLogin = false;
+        this.$store.dispatch("login", this.creds);
+      },
+      logout() {
+        this.$store.dispatch("logout");
+      },
+      formatTime() {
+        let date = new Date();
+        this.time = Moment(String(date)).format("MMMM Do YYYY, h:mm:ss a");
+        setTimeout(this.formatTime, 1000);
+      }
     }
-  },
-  watch: {
-    user: function(val) {
-      $("#loginModal").modal("show");
-    }
-  },
-  methods: {
-    register() {
-      let data = this.newAccount;
-      data.manager = false;
-      this.$store.dispatch("register", this.newAccount);
-      this.newAdmin = {};
-    },
-    login() {
-      this.showLogin = false;
-      this.$store.dispatch("login", this.creds);
-    },
-    logout() {
-      this.$store.dispatch("logout");
-    },
-    formatTime() {
-      let date = new Date();
-      this.time = Moment(String(date)).format("MMMM Do YYYY, h:mm:ss a");
-      setTimeout(this.formatTime, 1000);
-    }
-  }
-};
+  };
 
-//   filters: {
-//     formatTime(date) {
-//       return Moment(String(date)).format("MM/DD/YYYY, LT");
-//     }
-//   }
-// };
+  //   filters: {
+  //     formatTime(date) {
+  //       return Moment(String(date)).format("MM/DD/YYYY, LT");
+  //     }
+  //   }
+  // };
 </script>
 
 <style>
-.Time {
-  font-weight: 700;
-  font-size: 20px;
-  color: rgb(54, 54, 54);
-}
-img {
-  margin-top: -10;
-  margin-bottom: -30;
-  padding-top: -20;
-  padding-bottom: -20;
-}
+  .Time {
+    font-weight: 700;
+    font-size: 20px;
+    color: rgb(54, 54, 54);
+  }
 
-html,
-body {
-  height: 100vh;
-}
+  img {
+    margin-top: -10;
+    margin-bottom: -30;
+    padding-top: -20;
+    padding-bottom: -20;
+  }
 
-li {
-  list-style: none;
-}
+  html,
+  body {
+    height: 100vh;
+  }
 
-#logo {
-  background: url("assets/bobs-backgroundArtboard 1-100.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: fixed;
-  height: 100%;
-  width: auto;
+  li {
+    list-style: none;
+  }
 
-  top: 0;
-  left: 0;
-}
+  #logo {
+    background: url("assets/bobs-backgroundArtboard 1-100.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: fixed;
+    height: 100%;
+    width: auto;
 
-.navbar {
-  background-color: rgb(0, 198, 215);
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
+    top: 0;
+    left: 0;
+  }
 
-.fas {
-  font-size: 3vh;
-}
+  .navbar {
+    background-color: rgb(0, 198, 215);
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
 
-.drop-shadow {
-  filter: drop-shadow(3px 5px 5px rgb(53, 52, 52));
-}
+  .fas {
+    font-size: 3vh;
+  }
 
-.dropdown-item:hover {
-  cursor: pointer;
-}
+  .drop-shadow {
+    filter: drop-shadow(3px 5px 5px rgb(53, 52, 52));
+  }
 
-/* #app {
-img {
-  margin-top: -10;
-  margin-bottom: -30;
-  padding-top: -20;
-  padding-bottom: -20;
-}
+  .dropdown-item:hover {
+    cursor: pointer;
+  }
 
-html,
-body {
-  height: 100vh;
-}
-
-#logo {
-  background: url("assets/bobs-backgroundArtboard 1-100.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-  height: 100%;
-  width: auto;
-  padding-top: 120px;
-  top: 0;
-  left: 0;
-}
-
-.navbar {
-  background-color: rgb(0, 198, 215);
-}
-
-.fas {
-  font-size: 3vh;
-}
-
-.drop-shadow {
-  filter: drop-shadow(3px 5px 5px rgb(53, 52, 52));
-}
-
-/* #app {
-  background-color: lightskyblue;
-  height: 100vh;
-} */
+  .app-height {
+    height: calc(100vh - 95px)
+  }
 </style>

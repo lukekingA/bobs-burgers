@@ -32,6 +32,7 @@ export default new Vuex.Store({
     currentOrder: [],
     buildingOrder: {},
     buildingMeal: {},
+    buildingMealItems: []
   },
   mutations: {
     setUser(state, data) {
@@ -75,6 +76,9 @@ export default new Vuex.Store({
     },
     buildingMeal(state, data) {
       state.buildingMeal = data
+    },
+    buildingMealItems(state, data) {
+      state.buildingMealItems.push(data)
     }
   },
   actions: {
@@ -356,7 +360,7 @@ export default new Vuex.Store({
         price: data.price,
         comment: data.comment
       }
-      api.post('orders/meals', ).then(res => {
+      api.post('orders/meals', mealData).then(res => {
         commit('buildingMeal', res.data.data)
         dispatch('makeMeal', data)
       })
@@ -367,7 +371,23 @@ export default new Vuex.Store({
       dispatch,
       state
     }, data) {
+        debugger
+        //sort out what each of the keys is and send the appropriate call. ref err list
+      Object.keys(data).forEach(key => {
+            if (typeof data[key] != 'number' && typeof data[key] !== 'string'){
+        data[key].orderId = state.buildingOrder._id
+        data[key].mealId = state.buildingMeal._id
+        }
+        api.post('orders/entree', data[key]).then(res => {
+          commit('buildingMealItems', res.data)
+          if (data[key].components) {
+            api.put('orders/entree/' + res.data._id).then(res => {
+              console.log(res)
+            })
+          }
+        })
 
+      })
     },
 
     makeOrder({
@@ -379,53 +399,16 @@ export default new Vuex.Store({
       api.post('orders/', data).then(res => {
         commit('buildingOrder', res.data.data)
       })
-
+    },
       //#endregion
+      editOrder({
+        commit,
+        state
+    }, data) {
+        api.put('orders/' + state.buildingOrder._id,data).then(res => {
+            commit('buildingOrder', res.data.data)
+        })
     }
+
   }
 })
-//   .then(orderRes => {
-//     //clear current order in state
-//     console.log(orderRes);
-//     Promise.all(
-//     data.meals.forEach(meal => {
-//       let item = {
-//         orderId: orderRes.data.data._id,
-//         price: meal.price,
-//         comment: meal.comment
-//       };
-//       api.post('orders/meals', item)
-//     ).then(mealRes => {
-//         console.log(mealRes);
-//         let mealId = mealRes.data.data._id
-//         if (meal.sandwich.name) {
-//           let entree = {
-//             mealId: mealId,
-//             price: meal.sandwich.price,
-//             name: meal.sandwich.name
-//           };
-//           api.post('orders/entree', entree).then(entreeRes => {
-//             console.log(entreeRes);
-//             // meal.sandwich.components.forEach(component => {
-//             //   let data = {
-//             //     name: component.name,
-//             //     cost: component.cost
-//             //   };
-//             //   api
-//             //     .post('orders/entree/' + res.data.data._id, data)
-//             //     .then(res => {
-//             //       console.log(res);
-//             //     });
-//             // });
-//           })
-//         }
-//         if (meal.drink.name) {
-//           let drink = {
-//             mealId: mealId,
-
-//           }
-//         }
-//       })
-//     })
-//   })
-// }

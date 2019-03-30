@@ -71,6 +71,8 @@ router.post('/entrees', (req, res, next) => {
     Entrees.create(req.body)
         .then(data => {
             res.send(data)
+        }).catch(err => {
+            res.status(400).send("Couldn't make entree")
         })
 })
 //change to findByOneAndUpdate to return the doc with {new:true}
@@ -83,22 +85,10 @@ router.put('/entrees/:id', (req, res, next) => {
         res.send({
             message: "Seccessfully updated entree",
             data: doc
+        }).catch(err => {
+            res.status(400).send("Couldn't update entree")
         })
     })
-    // Entrees.findById({
-    //     _id: req.params.id
-    // }).then(entree => {
-    //     if (!entree) {
-    //         res.status(400).send('No entree with that Id')
-    //     }
-    //     entree.update(req.body, (err) => {
-    //         if (err) {
-    //             console.log(err)
-    //             res.status(400).send('Failed to update entree')
-    //         }
-    //         res.send('Successfully updated entree')
-    //     })
-    // })
 })
 
 router.delete('/entrees/:id', (req, res, next) => {
@@ -118,6 +108,8 @@ router.get('/drinks/', (req, res, next) => {
             res.status(400).send("Drinks Not Found")
         }
         res.send(drinks)
+    }).catch(err => {
+        res.status(400).send("Couldn't get drinks")
     })
 })
 
@@ -129,6 +121,8 @@ router.post('/drinks/', (req, res, next) => {
                 message: 'Successfully Created Drink',
                 data: data
             })
+        }).catch(err => {
+            res.status(400).send("Couldn't make drink")
         })
 })
 
@@ -159,6 +153,8 @@ router.get('/sides/', (req, res, next) => {
             res.status(400).send("Sides Not Found")
         }
         res.send(sides)
+    }).catch(err => {
+        res.status(400).send("Couldn't get sides")
     })
 })
 
@@ -168,6 +164,11 @@ router.post('/sides/', (req, res, next) => {
             res.send({
                 message: 'Successfully Created A Side',
                 data: data
+            })
+        }).catch(err => {
+            res.status(400).send({
+                message: "Couldn't make side",
+                error:err
             })
         })
 })
@@ -187,16 +188,20 @@ router.put('/sides/:id' , (req ,res ,next) => {
     Sides.findByIdAndUpdate({_id : req.params.id} , req.body)
     .then(side => {
         res.send(req.body)
-    })
+        }).catch(err => {
+            res.status(400).send('ACCESS DENIED; Invalid Request')
+        })
 })
 
 //Commments!!!
 router.get('/comments/', (req, res, next) => {
     Comments.find({}).then(comments => {
         if (!comments) {
-            res.status(400).send("Sides Not Found")
+            res.status(400).send("Comments Not Found")
         }
         res.send(comments)
+    }).catch(err => {
+        res.status(400).send("Couldn't get Comments")
     })
 })
 
@@ -206,6 +211,11 @@ router.post('/comments/', (req, res, next) => {
             res.send({
                 message: 'Successfully Created A Comment',
                 data: data
+            })
+        }).catch(err => {
+            res.status(400).send({
+                message: "Couldn't make coment",
+                error: err
             })
         })
 })
@@ -219,9 +229,34 @@ router.delete('/comments/:id', (req, res, next) => {
             res.status(400).send('ACCESS DENIED; Invalid Request')
         })
 })
+//#endregion 
+
 //DELETE
 
-//#endregion 
+router.delete('/sides', (req, res, next) => {
+    Sides.deleteMany({}).then(data => {
+        res.send(data)
+    }).catch(err => {
+        res.status(400).send('ACCESS DENIED; Invalid Request')
+    })
+})
+
+router.delete('/drinks', (req, res, next) => {
+    Drinks.deleteMany({}).then(data => {
+        res.send(data)
+    }).catch(err => {
+        res.status(400).send('ACCESS DENIED; Invalid Request')
+    })
+})
+
+router.delete('/entrees', (req, res, next) => {
+    Drinks.deleteMany({}).then(data => {
+        res.send(data)
+    }).catch(err => {
+        res.status(400).send('ACCESS DENIED; Invalid Request')
+    })
+})
+
 
 
 

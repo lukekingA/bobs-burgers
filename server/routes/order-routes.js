@@ -5,11 +5,35 @@ let Entrees = require('../models/entree')
 let Drinks = require('../models/drink')
 let Sides = require('../models/side')
 
-//GET
+//GET ALL
 router.get('/', (req, res, next) => {
   Orders.find({}).then(orders => {
     res.send(orders)
   })
+})
+
+router.get('/meals', (req, res, next) => {
+    Meals.find({}).then(meals => {
+        res.send(meals)
+    })
+})
+
+router.get('/entree', (req, res, next) => {
+    Entrees.find({}).then(entrees => {
+        res.send(entrees)
+    })
+})
+
+router.get('/drink', (req, res, next) => {
+    Drinks.find({}).then(drinks => {
+        res.send(drinks)
+    })
+})
+
+router.get('/side', (req, res, next) => {
+    Sides.find({}).then(sides => {
+        res.send(sides)
+    })
 })
 //POST
 //make empty order
@@ -90,11 +114,29 @@ router.post('/side', (req, res, next) => {
 })
 //PUT
 
-//DELETE
+//DELETE MANY Cleanup
 router.delete('/', (req, res, next) => {
   Orders.deleteMany({}).then((data) => {
     res.send(data)
   })
+})
+
+router.delete('/entree', (req, res, next) => {
+    Entrees.deleteMany({}).then((data) => {
+        res.send(data)
+    })
+})
+
+router.delete('/side', (req, res, next) => {
+    Sides.deleteMany({}).then((data) => {
+        res.send(data)
+    })
+})
+
+router.delete('/drink', (req, res, next) => {
+    Drinks.deleteMany({}).then((data) => {
+        res.send(data)
+    })
 })
 
 module.exports = router

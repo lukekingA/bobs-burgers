@@ -374,18 +374,19 @@ export default new Vuex.Store({
         debugger
         //sort out what each of the keys is and send the appropriate call. ref err list
       Object.keys(data).forEach(key => {
-            if (typeof data[key] != 'number' && typeof data[key] !== 'string'){
-        data[key].orderId = state.buildingOrder._id
-        data[key].mealId = state.buildingMeal._id
-        }
-        api.post('orders/entree', data[key]).then(res => {
-          commit('buildingMealItems', res.data)
-          if (data[key].components) {
-            api.put('orders/entree/' + res.data._id).then(res => {
-              console.log(res)
-            })
+          if (typeof data[key] != 'number' && typeof data[key] !== 'string') {
+              data[key].orderId = state.buildingOrder._id
+              data[key].mealId = state.buildingMeal._id
+
+              api.post('orders/entree', data[key]).then(res => {
+                  commit('buildingMealItems', res.data)
+                  if (data[key].components) {
+                      api.put('orders/entree/' + res.data._id).then(res => {
+                          console.log(res)
+                      })
+                  }
+              })
           }
-        })
 
       })
     },

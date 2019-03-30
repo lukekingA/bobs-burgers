@@ -45,7 +45,8 @@
                     <div>
                       <h5 class="mt-2 text-center">Meal</h5>
                       <ul class="pl-1">
-                        <li v-if="item.name" v-for="(item,key) in currentMeal">
+                          //need to filter curent meal and not have to filter with v-if vue error
+                        <li v-for="(item,key) in curMealFilter" :key="'meal'+item+key">
                           <div @click="removeMenuItem(key)" class="d-flex justify-content-between">
                             {{item.name}}
                             <span>${{parseFloat(item.price).toFixed(2)}}</span></div>
@@ -78,15 +79,15 @@
                       <input class="rounded pl-1" type="text" v-model="orderIdentifer" placeholder="customer name">
                       <div class="mt-1">
                         <ul class="pl-1">
-                          <li class="pl-1" v-for="meal in currentOrder">
+                          <li class="pl-1" v-for="(item,index) in currentOrder" :key="item +index">
 
                             <div class="text-left">
-                              <p class="mb-1">{{meal.sandwich.name}}</p>
-                              <p class="mb-1">{{meal.side.name}}</p>
-                              <p class="mb-1">{{meal.drink.name}}</p>
-                              <p class="mb-1">{{meal.comment}}</p>
+                              <p class="mb-1">{{item.sandwich.name}}</p>
+                              <p class="mb-1">{{item.side.name}}</p>
+                              <p class="mb-1">{{item.drink.name}}</p>
+                              <p class="mb-1">{{item.comment}}</p>
                             </div>
-                            <p class="text-right">{{meal.price.toFixed(2)}}</p>
+                            <p class="text-right">{{item.price.toFixed(2)}}</p>
                           </li>
                         </ul>
                       </div>
@@ -145,7 +146,16 @@
 
       };
     },
-    computed: {
+        computed: {
+            curMealFilter() {
+                let out = {}
+                for (let key in this.currentMeal) {
+                    if (currentMeal[key].name) {
+                        out[key] = currentMeal[key]
+                    }
+                }
+                return out
+            },
       mealTotal() {
         let sandwich = 0
         let drink = 0
@@ -164,13 +174,6 @@
           result *= .85
         }
         return result
-      },
-      allowCombo() {
-        if (this.currentMeal.sandwich.name && this.currentMeal.drink.name && this.currentMeal.side.name) {
-          return true
-        } else {
-          return false
-        }
       },
       currentOrder() {
         return this.$store.state.currentOrder

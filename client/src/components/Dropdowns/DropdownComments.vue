@@ -32,12 +32,14 @@
     },
     mounted() {
       this.$store.dispatch("getComments")
+      this.$root.$on('removeComment', () => this.commentSelection = [])
     },
     computed: {
       comments() {
         return this.$store.state.comments
       }
     },
+
     methods: {
       commentAdd(comment) {
         this.commentSelection.push(comment.comment)
@@ -51,7 +53,8 @@
       commentSelection: function (val, oldval) {
         let commentString = val.join(', ')
         this.$emit('currentComments', commentString)
-      }
+      },
+
     },
     components: {}
   };

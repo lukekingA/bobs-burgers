@@ -371,26 +371,25 @@ export default new Vuex.Store({
       dispatch,
       state
     }, data) {
-        debugger
-        //sort out what each of the keys is and send the appropriate call. ref err list
+      //sort out what each of the keys is and send the appropriate call. ref err list
       Object.keys(data).forEach(key => {
-          if (typeof data[key] == 'object' && data[key].name ) {
-              data[key].orderId = state.buildingOrder._id
-              data[key].mealId = state.buildingMeal._id
-              let dict = {
-                 sandwich: 'entree',
-                  drink: 'drink',
-                  side:'side'
-              }
-              api.post(`orders/${dict[key]}`, data[key]).then(res => {
-                  commit('buildingMealItems', res.data)
-                  if (data[key].components) {
-                      api.put('orders/entree/' + res.data._id).then(res => {
-                          console.log(res)
-                      })
-                  }
-              })
+        if (typeof data[key] == 'object' && data[key].name) {
+          data[key].orderId = state.buildingOrder._id
+          data[key].mealId = state.buildingMeal._id
+          let dict = {
+            sandwich: 'entree',
+            drink: 'drink',
+            side: 'side'
           }
+          api.post(`orders/${dict[key]}`, data[key]).then(res => {
+            commit('buildingMealItems', res.data)
+            if (data[key].components) {
+              api.put('orders/entree/' + res.data.data._id).then(res => {
+                console.log(res)
+              })
+            }
+          })
+        }
 
       })
     },
@@ -405,14 +404,14 @@ export default new Vuex.Store({
         commit('buildingOrder', res.data.data)
       })
     },
-      //#endregion
-      editOrder({
-        commit,
-        state
+    //#endregion
+    editOrder({
+      commit,
+      state
     }, data) {
-        api.put('orders/' + state.buildingOrder._id,data).then(res => {
-            commit('buildingOrder', res.data.data)
-        })
+      api.put('orders/' + state.buildingOrder._id, data).then(res => {
+        commit('buildingOrder', res.data.data)
+      })
     }
 
   }

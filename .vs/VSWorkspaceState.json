@@ -3,11 +3,15 @@
     "",
     "\\client",
     "\\client\\src",
+    "\\client\\src\\components",
+    "\\client\\src\\components\\Dropdowns",
     "\\client\\src\\views",
     "\\server",
-    "\\server\\models",
-    "\\server\\routes"
+    "\\server\\auth",
+    "\\server\\db",
+    "\\server\\menuModels",
+    "\\testdb"
   ],
-  "SelectedNode": "\\client\\src\\store.js",
+  "SelectedNode": "\\server\\routes\\menu-routes.js",
   "PreviewInSolutionExplorer": false
 }

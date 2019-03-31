@@ -13,27 +13,27 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/meals', (req, res, next) => {
-    Meals.find({}).then(meals => {
-        res.send(meals)
-    })
+  Meals.find({}).then(meals => {
+    res.send(meals)
+  })
 })
 
 router.get('/entree', (req, res, next) => {
-    Entrees.find({}).then(entrees => {
-        res.send(entrees)
-    })
+  Entrees.find({}).then(entrees => {
+    res.send(entrees)
+  })
 })
 
 router.get('/drink', (req, res, next) => {
-    Drinks.find({}).then(drinks => {
-        res.send(drinks)
-    })
+  Drinks.find({}).then(drinks => {
+    res.send(drinks)
+  })
 })
 
 router.get('/side', (req, res, next) => {
-    Sides.find({}).then(sides => {
-        res.send(sides)
-    })
+  Sides.find({}).then(sides => {
+    res.send(sides)
+  })
 })
 //POST
 //make empty order
@@ -47,14 +47,18 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:id', (req, res, next) => {
-    Orders.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true }).then(doc => {
-        res.send({
-            data: doc,
-            message:"Successfully updated order"
-        })
-    }).catch(err => {
-        res.status(400).send("Couldn't update order")
+  Orders.findByIdAndUpdate({
+    _id: req.params.id
+  }, req.body, {
+    new: true
+  }).then(doc => {
+    res.send({
+      data: doc,
+      message: "Successfully updated order"
     })
+  }).catch(err => {
+    res.status(400).send("Couldn't update order")
+  })
 })
 //make empty meal associated with order
 router.post('/meals', (req, res, next) => {
@@ -71,9 +75,9 @@ router.post('/entree', (req, res, next) => {
     res.send({
       data: entree,
       message: 'Created Entree'
-      })
+    })
   }).catch(err => {
-      res.status(400).send(err)
+    res.status(400).send(err)
   })
 })
 //add entree components
@@ -95,10 +99,10 @@ router.post('/drink', (req, res, next) => {
   Drinks.create(req.body).then(drink => {
     res.send({
       data: drink,
-      message: 'DrinkCreated'
+      message: 'Drink Created'
     })
   }).catch(err => {
-      res.status(400).send(err)
+    res.status(400).send(err)
   })
 })
 
@@ -109,7 +113,7 @@ router.post('/side', (req, res, next) => {
       message: 'Side Created'
     })
   }).catch(err => {
-      res.status(400).send(err)
+    res.status(400).send(err)
   })
 })
 //PUT
@@ -121,23 +125,29 @@ router.delete('/', (req, res, next) => {
   })
 })
 
+router.delete('/meal', (req, res, next) => {
+  Meals.deleteMany({}).then((data) => {
+    res.send(data)
+  })
+})
+
+
 router.delete('/entree', (req, res, next) => {
-    Entrees.deleteMany({}).then((data) => {
-        res.send(data)
-    })
+  Entrees.deleteMany({}).then((data) => {
+    res.send(data)
+  })
 })
 
 router.delete('/side', (req, res, next) => {
-    Sides.deleteMany({}).then((data) => {
-        res.send(data)
-    })
+  Sides.deleteMany({}).then((data) => {
+    res.send(data)
+  })
 })
 
 router.delete('/drink', (req, res, next) => {
-    Drinks.deleteMany({}).then((data) => {
-        res.send(data)
-    })
+  Drinks.deleteMany({}).then((data) => {
+    res.send(data)
+  })
 })
 
 module.exports = router
-

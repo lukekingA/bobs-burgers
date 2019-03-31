@@ -171,8 +171,8 @@
     data() {
       return {
         addIngredient: false,
-          addComments: false,
-        commentName:'',
+        addComments: false,
+        commentName: '',
         menuType: "",
         menuItemName: "",
         menuItemSize: "",
@@ -232,7 +232,7 @@
         let data = {
           entree: {
             name: this.menuItemName,
-            price: parseInt(this.menuItemPrice),
+            price: parseFloat(this.menuItemPrice).toFixed(2),
             active: this.entreeItemActive
           },
           entreeItems: {
@@ -258,7 +258,7 @@
         let data = {
           name: this.menuItemName,
           size: this.menuItemSize,
-          price: parseInt(this.menuItemPrice),
+          price: parseFloat(this.menuItemPrice).toFixed(2),
           active: this.entreeItemActive
         };
         this.$store.dispatch("addDrink", data);
@@ -270,7 +270,7 @@
         let data = {
           name: this.menuItemName,
           size: this.menuItemSize,
-          price: parseInt(this.menuItemPrice),
+          price: parseFloat(this.menuItemPrice).toFixed(2),
           active: this.entreeItemActive
         };
         this.$store.dispatch("addSide", data);

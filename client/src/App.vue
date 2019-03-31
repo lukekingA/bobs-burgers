@@ -2,9 +2,9 @@
   <div id="logo" class="sticky-bottom">
     <nav class="navbar sticky-top">
       <a class="navbar-brand">
-        <img class src="./assets/bob_logo_sm.png" width="65" height="65" alt>
+        <img src="./assets/bob_logo_sm.png" width="65" height="65" alt>
       </a>
-      <p class="Time">{{time}}</p>
+      <p class="time">{{time}}</p>
       <div class="btn-group">
         <button @click="logout" v-if="user._id" class="btn my-2 my-sm-0">
           <i class="fas fa-door-open"></i>
@@ -110,35 +110,35 @@
     },
     computed: {
       user() {
-        return this.$store.state.user;
+        return this.$store.state.user
       },
       loginModalComputed() {
-        return this.$store.state.loginModal;
+        return this.$store.state.loginModal
       }
     },
     watch: {
       user: function (val) {
-        $("#loginModal").modal("show");
+        $("#loginModal").modal("show")
       }
     },
     methods: {
       register() {
         let data = this.newAccount;
         data.manager = false;
-        this.$store.dispatch("register", this.newAccount);
-        this.newAdmin = {};
+        this.$store.dispatch("register", this.newAccount)
+        this.newAdmin = {}
       },
       login() {
-        this.showLogin = false;
-        this.$store.dispatch("login", this.creds);
+        this.showLogin = false
+        this.$store.dispatch("login", this.creds)
       },
       logout() {
-        this.$store.dispatch("logout");
+        this.$store.dispatch("logout")
       },
       formatTime() {
-        let date = new Date();
-        this.time = Moment(String(date)).format("MMMM Do YYYY, h:mm:ss a");
-        setTimeout(this.formatTime, 1000);
+         
+        this.time = Moment().format("MMMM DD YYYY, h:mm:ss a")
+        setTimeout(this.formatTime, 1000)
       }
     }
   };
@@ -152,17 +152,17 @@
 </script>
 
 <style>
-  .Time {
+  .time {
     font-weight: 700;
     font-size: 20px;
     color: rgb(54, 54, 54);
   }
 
   img {
-    margin-top: -10;
-    margin-bottom: -30;
-    padding-top: -20;
-    padding-bottom: -20;
+    margin-top: -10px;
+    margin-bottom: -30px;
+    padding-top: -20px;
+    padding-bottom: -20px;
   }
 
   html,

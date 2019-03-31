@@ -45,7 +45,6 @@
                     <div>
                       <h5 class="mt-2 text-center">Meal</h5>
                       <ul class="pl-1">
-                          //need to filter curent meal and not have to filter with v-if vue error
                         <li v-for="(item,key) in curMealFilter" :key="'meal'+item+key">
                           <div @click="removeMenuItem(key)" class="d-flex justify-content-between">
                             {{item.name}}
@@ -150,8 +149,8 @@
             curMealFilter() {
                 let out = {}
                 for (let key in this.currentMeal) {
-                    if (currentMeal[key].name) {
-                        out[key] = currentMeal[key]
+                    if (this.currentMeal[key].name) {
+                        out[key] = this.currentMeal[key]
                     }
                 }
                 return out

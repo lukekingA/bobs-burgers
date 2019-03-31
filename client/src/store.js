@@ -13,7 +13,7 @@ let auth = Axios.create({
 
 let api = Axios.create({
   baseURL: '//localhost:3000/api/',
-  timeout: 6000,
+  //timeout: 6000,
   withCredentials: true
 });
 
@@ -374,11 +374,15 @@ export default new Vuex.Store({
         debugger
         //sort out what each of the keys is and send the appropriate call. ref err list
       Object.keys(data).forEach(key => {
-          if (typeof data[key] != 'number' && typeof data[key] !== 'string') {
+          if (typeof data[key] == 'object' && data[key].name ) {
               data[key].orderId = state.buildingOrder._id
               data[key].mealId = state.buildingMeal._id
-
-              api.post('orders/entree', data[key]).then(res => {
+              let dict = {
+                 sandwich: 'entree',
+                  drink: 'drink',
+                  side:'side'
+              }
+              api.post(`orders/${dict[key]}`, data[key]).then(res => {
                   commit('buildingMealItems', res.data)
                   if (data[key].components) {
                       api.put('orders/entree/' + res.data._id).then(res => {

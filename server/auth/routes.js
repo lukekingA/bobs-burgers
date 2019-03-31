@@ -30,14 +30,16 @@ router.post('/auth/register', (req, res) => {
 })
 
 //EDITS EMPLOYEE
-router.put('/auth/edit' , (req , res) => {
-  Users.findByIdAndUpdate({_id:req.body._id} , req.body)
-  .then(data => {
-    res.send('succes')
-  })
-  .catch(err => {
-    console.error(err)
-  })
+router.put('/auth/edit', (req, res) => {
+  Users.findByIdAndUpdate({
+      _id: req.body._id
+    }, req.body)
+    .then(data => {
+      res.send('succes')
+    })
+    .catch(err => {
+      console.error(err)
+    })
 })
 
 //CREATE A NEW EMPLOYEE
@@ -116,7 +118,6 @@ router.get('/auth/authenticate', (req, res) => {
 
 router.get('/auth/all', (req, res) => {
   Users.find({}).then(data => {
-    console.log(data)
     if (!data) {
       res.send('no data')
     }
@@ -127,8 +128,8 @@ router.get('/auth/all', (req, res) => {
 router.delete('/auth/:id', (req, res, next) => {
   Users.findByIdAndRemove(req.params.id)
     .then(() => {
-    res.send('deleted succesfully')
-  })
+      res.send('deleted succesfully')
+    })
 })
 
 module.exports = {

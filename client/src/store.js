@@ -31,7 +31,7 @@ export default new Vuex.Store({
     comments: [],
     currentOrder: [],
     buildingOrder: {},
-    buildingMeal: {},
+    buildingMeal: [],
     buildingMealItems: []
   },
   mutations: {
@@ -68,6 +68,9 @@ export default new Vuex.Store({
     addToOrder(state, data) {
       state.currentOrder.push(data);
     },
+    clearOrder(state) {
+      state.currentOrder = []
+    },
     employeeRegister(state, data) {
       state.employee = data;
     },
@@ -75,10 +78,13 @@ export default new Vuex.Store({
       state.buildingOrder = data
     },
     buildingMeal(state, data) {
-      state.buildingMeal = data
+      state.buildingMeal.push(data)
     },
     buildingMealItems(state, data) {
       state.buildingMealItems.push(data)
+    },
+    removeMeal(state, index) {
+      state.currentOrder.splice(index, 1)
     }
   },
   actions: {
@@ -110,7 +116,6 @@ export default new Vuex.Store({
     },
     authenticate({
       commit,
-      dispatch
     }) {
       auth
         .get('authenticate')
@@ -128,7 +133,6 @@ export default new Vuex.Store({
     },
 
     register({
-      commit,
       dispatch
     }, newCreds) {
       auth.post('register', newCreds).then(res => {
@@ -137,7 +141,6 @@ export default new Vuex.Store({
       });
     },
     registerNewEmployee({
-      commit,
       dispatch
     }, newCreds) {
       auth.post('newemployee', newCreds).then(res => {
@@ -146,15 +149,13 @@ export default new Vuex.Store({
       });
     },
     closeLoginModal({
-      commit,
-      dispatch
+      commit
     }) {
       commit('closeLoginModal');
     },
 
     getAllEmployees({
-      commit,
-      dispatch
+      commit
     }) {
       auth.get('all').then(res => {
         console.log(res);
@@ -162,7 +163,6 @@ export default new Vuex.Store({
       });
     },
     fireEmployee({
-      commit,
       dispatch
     }, employeeId) {
       auth
@@ -176,7 +176,6 @@ export default new Vuex.Store({
         });
     },
     editEmployee({
-      commit,
       dispatch
     }, newCreds) {
       auth
@@ -199,8 +198,7 @@ export default new Vuex.Store({
     //#region --Menu --
 
     getEntreeItems({
-      commit,
-      dispatch
+      commit
     }) {
       api.get('menu/item').then(res => {
         commit('setEntreeItems', res.data);
@@ -208,7 +206,6 @@ export default new Vuex.Store({
     },
 
     addEntreeItem({
-      commit,
       dispatch
     }, data) {
       api.post('menu/item', data).then(res => {
@@ -217,8 +214,7 @@ export default new Vuex.Store({
     },
 
     addEntree({
-      commit,
-      dispatch
+      commit
     }, data) {
       api.post('menu/entrees', data.entree).then(res => {
         api.put('menu/entrees/' + res.data._id, data.entreeItems).then(res => {
@@ -228,8 +224,7 @@ export default new Vuex.Store({
     },
 
     getEntrees({
-      commit,
-      dispatch
+      commit
     }) {
       api.get('menu/entrees').then(res => {
         commit('setEntrees', res.data);
@@ -237,7 +232,6 @@ export default new Vuex.Store({
     },
 
     deleteEntree({
-      commit,
       dispatch
     }, id) {
       api.delete('menu/entrees/' + id).then(res => {
@@ -251,8 +245,7 @@ export default new Vuex.Store({
       commit('clearNewEntree');
     },
     editEntree({
-      commit,
-      dispatch
+      commit
     }, newData) {
       console.log(newData)
       api.put('menu/entrees/' + newData._id, newData)
@@ -394,6 +387,16 @@ export default new Vuex.Store({
       })
     },
 
+    deleteMeal({
+      commit,
+      dispatch,
+      state
+    }, data) {
+      api.delete('orders/meals/' + data.id).then(() => {
+        commit('remove Meal', data.index)
+      })
+    },
+
     makeOrder({
       commit,
       dispatch,
@@ -404,15 +407,24 @@ export default new Vuex.Store({
         commit('buildingOrder', res.data.data)
       })
     },
-    //#endregion
     editOrder({
       commit,
+      dispatch,
       state
     }, data) {
       api.put('orders/' + state.buildingOrder._id, data).then(res => {
         commit('buildingOrder', res.data.data)
+        dispatch('clearOrder')
       })
+    },
+
+    clearOrder({
+      commit,
+      state
+    }) {
+      commit('clearOrder')
     }
 
+    //#endregion
   }
 })

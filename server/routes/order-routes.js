@@ -69,6 +69,21 @@ router.post('/meals', (req, res, next) => {
     })
   })
 })
+
+router.delete('/meals/:id', (req, res, next) => {
+  Meals.findByIdAndRemove({
+    _id: req.params.id
+  }).then(meal => {
+    if (meal) {
+      res.send({
+        message: 'Successfully deleted meal',
+        data: meal
+      })
+      res.status(400).send('Bad request no meal found')
+    }
+  })
+})
+
 //make entree without components
 router.post('/entree', (req, res, next) => {
   Entrees.create(req.body).then(entree => {

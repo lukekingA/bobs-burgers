@@ -19,6 +19,11 @@ let schema = new Schema({
     type: String,
     required: true
   },
+  activeOrder: {
+    type: Boolean,
+    required: true,
+    default: true
+  },
   orderIdentifer: {
     type: String,
   },

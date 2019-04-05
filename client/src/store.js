@@ -90,7 +90,10 @@ export default new Vuex.Store({
   actions: {
     //USER
     //#region --Login --
-    login({ commit, dispatch }, creds) {
+    login({
+      commit,
+      dispatch
+    }, creds) {
       auth
         .post('login', creds)
         .then(res => {
@@ -100,7 +103,10 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-    logout({ commit, dispatch }) {
+    logout({
+      commit,
+      dispatch
+    }) {
       auth.delete('logout').then(res => {
         commit('setUser', {});
         router.push({
@@ -108,7 +114,9 @@ export default new Vuex.Store({
         });
       });
     },
-    authenticate({ commit }) {
+    authenticate({
+      commit
+    }) {
       auth
         .get('authenticate')
         .then(res => {
@@ -124,29 +132,39 @@ export default new Vuex.Store({
         });
     },
 
-    register({ dispatch }, newCreds) {
+    register({
+      dispatch
+    }, newCreds) {
       auth.post('register', newCreds).then(res => {
         dispatch('getAllEmployees');
         return res.data;
       });
     },
-    registerNewEmployee({ dispatch }, newCreds) {
+    registerNewEmployee({
+      dispatch
+    }, newCreds) {
       auth.post('newemployee', newCreds).then(res => {
         dispatch('getAllEmployees');
         return res.data;
       });
     },
-    closeLoginModal({ commit }) {
+    closeLoginModal({
+      commit
+    }) {
       commit('closeLoginModal');
     },
 
-    getAllEmployees({ commit }) {
+    getAllEmployees({
+      commit
+    }) {
       auth.get('all').then(res => {
         console.log(res);
         commit('setAllEmployees', res.data);
       });
     },
-    fireEmployee({ dispatch }, employeeId) {
+    fireEmployee({
+      dispatch
+    }, employeeId) {
       auth
         .delete('/' + employeeId)
         .then(res => {
@@ -157,7 +175,9 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-    editEmployee({ dispatch }, newCreds) {
+    editEmployee({
+      dispatch
+    }, newCreds) {
       auth
         .put('edit', newCreds)
         .then(res => {
@@ -168,26 +188,34 @@ export default new Vuex.Store({
         });
     },
 
-    employeeRegister({ commit }, data) {
+    employeeRegister({
+      commit
+    }, data) {
       commit('employeeRegister', data);
     },
     //#endregion
 
     //#region --Menu --
 
-    getEntreeItems({ commit }) {
+    getEntreeItems({
+      commit
+    }) {
       api.get('menu/item').then(res => {
         commit('setEntreeItems', res.data);
       });
     },
 
-    addEntreeItem({ dispatch }, data) {
+    addEntreeItem({
+      dispatch
+    }, data) {
       api.post('menu/item', data).then(res => {
         dispatch('getEntreeItems');
       });
     },
 
-    addEntree({ commit }, data) {
+    addEntree({
+      commit
+    }, data) {
       api.post('menu/entrees', data.entree).then(res => {
         api.put('menu/entrees/' + res.data._id, data.entreeItems).then(res => {
           commit('setNewEntree', res.data.data);
@@ -195,22 +223,30 @@ export default new Vuex.Store({
       });
     },
 
-    getEntrees({ commit }) {
+    getEntrees({
+      commit
+    }) {
       api.get('menu/entrees').then(res => {
         commit('setEntrees', res.data);
       });
     },
 
-    deleteEntree({ dispatch }, id) {
+    deleteEntree({
+      dispatch
+    }, id) {
       api.delete('menu/entrees/' + id).then(res => {
         dispatch('clearNewEntree');
       });
     },
 
-    clearNewEntree({ commit }) {
+    clearNewEntree({
+      commit
+    }) {
       commit('clearNewEntree');
     },
-    editEntree({ commit }, newData) {
+    editEntree({
+      commit
+    }, newData) {
       console.log(newData);
       api.put('menu/entrees/' + newData._id, newData);
     },
@@ -218,19 +254,28 @@ export default new Vuex.Store({
 
     //#region --drinks--
 
-    getDrinks({ commit, dispatch }) {
+    getDrinks({
+      commit,
+      dispatch
+    }) {
       api.get('/menu/drinks').then(res => {
         commit('setDrinks', res.data);
       });
     },
 
-    addDrink({ commit, dispatch }, data) {
+    addDrink({
+      commit,
+      dispatch
+    }, data) {
       api.post('/menu/drinks', data).then(res => {
         dispatch('getDrinks');
       });
     },
 
-    editDrink({ commit, dispatch }, newData) {
+    editDrink({
+      commit,
+      dispatch
+    }, newData) {
       console.log(newData);
       api.put('/menu/drinks/' + newData._id, newData).then(res => {
         console.log(res);
@@ -241,19 +286,28 @@ export default new Vuex.Store({
 
     //#region --sides--
 
-    getSides({ commit, dispatch }) {
+    getSides({
+      commit,
+      dispatch
+    }) {
       api.get('/menu/sides').then(res => {
         commit('setSides', res.data);
       });
     },
 
-    addSide({ commit, dispatch }, data) {
+    addSide({
+      commit,
+      dispatch
+    }, data) {
       api.post('/menu/sides', data).then(res => {
         dispatch('getSides');
       });
     },
 
-    editSide({ commit, dipatch }, newData) {
+    editSide({
+      commit,
+      dipatch
+    }, newData) {
       api
         .put('/menu/sides/' + newData._id, newData)
         .then(res => {
@@ -267,13 +321,18 @@ export default new Vuex.Store({
     //#endregion
     //#region --COMMENTS--
 
-    getComments({ commit, dispatch }) {
+    getComments({
+      commit,
+      dispatch
+    }) {
       api.get('/menu/comments').then(res => {
         commit('setComments', res.data);
       });
     },
 
-    addComment({ dispatch }, data) {
+    addComment({
+      dispatch
+    }, data) {
       api.post('/menu/comments', data).then(res => {
         dispatch('getComments');
       });
@@ -282,7 +341,11 @@ export default new Vuex.Store({
     //#endregion
 
     //#region --Order--
-    addToOrder({ commit, dispatch, state }, data) {
+    addToOrder({
+      commit,
+      dispatch,
+      state
+    }, data) {
       commit('addToOrder', data);
       let mealData = {
         orderId: state.buildingOrder._id,
@@ -295,7 +358,11 @@ export default new Vuex.Store({
       });
     },
 
-    makeMeal({ commit, dispatch, state }, data) {
+    makeMeal({
+      commit,
+      dispatch,
+      state
+    }, data) {
       Object.keys(data).forEach(key => {
         delete data[key]._id;
         if (typeof data[key] == 'object' && data[key].name) {
@@ -317,29 +384,45 @@ export default new Vuex.Store({
             // }
           });
         }
+        dispatch('editOrder', )
       });
     },
 
-    deleteMeal({ commit, dispatch, state }, data) {
+    deleteMeal({
+      commit,
+      dispatch,
+      state
+    }, data) {
       api.delete('orders/meals/' + data.id).then(() => {
         commit('remove Meal', data.index);
       });
     },
 
-    makeOrder({ commit, dispatch, state }, data) {
+    makeOrder({
+      commit,
+      dispatch,
+      state
+    }, data) {
       data.managerId = state.user._id;
       api.post('orders/', data).then(res => {
         commit('buildingOrder', res.data.data);
       });
     },
-    editOrder({ commit, dispatch, state }, data) {
+    editOrder({
+      commit,
+      dispatch,
+      state
+    }, data) {
       api.put('orders/' + state.buildingOrder._id, data).then(res => {
         commit('buildingOrder', res.data.data);
         dispatch('clearOrder');
       });
     },
 
-    clearOrder({ commit, state }) {
+    clearOrder({
+      commit,
+      state
+    }) {
       commit('clearOrder');
     }
 

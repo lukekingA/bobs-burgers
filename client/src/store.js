@@ -69,31 +69,28 @@ export default new Vuex.Store({
       state.currentOrder.push(data);
     },
     clearOrder(state) {
-      state.currentOrder = []
+      state.currentOrder = [];
     },
     employeeRegister(state, data) {
       state.employee = data;
     },
     buildingOrder(state, data) {
-      state.buildingOrder = data
+      state.buildingOrder = data;
     },
     buildingMeal(state, data) {
-      state.buildingMeal.push(data)
+      state.buildingMeal.push(data);
     },
     buildingMealItems(state, data) {
-      state.buildingMealItems.push(data)
+      state.buildingMealItems.push(data);
     },
     removeMeal(state, index) {
-      state.currentOrder.splice(index, 1)
+      state.currentOrder.splice(index, 1);
     }
   },
   actions: {
     //USER
     //#region --Login --
-    login({
-      commit,
-      dispatch
-    }, creds) {
+    login({ commit, dispatch }, creds) {
       auth
         .post('login', creds)
         .then(res => {
@@ -103,10 +100,7 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-    logout({
-      commit,
-      dispatch
-    }) {
+    logout({ commit, dispatch }) {
       auth.delete('logout').then(res => {
         commit('setUser', {});
         router.push({
@@ -114,9 +108,7 @@ export default new Vuex.Store({
         });
       });
     },
-    authenticate({
-      commit,
-    }) {
+    authenticate({ commit }) {
       auth
         .get('authenticate')
         .then(res => {
@@ -132,39 +124,29 @@ export default new Vuex.Store({
         });
     },
 
-    register({
-      dispatch
-    }, newCreds) {
+    register({ dispatch }, newCreds) {
       auth.post('register', newCreds).then(res => {
         dispatch('getAllEmployees');
         return res.data;
       });
     },
-    registerNewEmployee({
-      dispatch
-    }, newCreds) {
+    registerNewEmployee({ dispatch }, newCreds) {
       auth.post('newemployee', newCreds).then(res => {
         dispatch('getAllEmployees');
         return res.data;
       });
     },
-    closeLoginModal({
-      commit
-    }) {
+    closeLoginModal({ commit }) {
       commit('closeLoginModal');
     },
 
-    getAllEmployees({
-      commit
-    }) {
+    getAllEmployees({ commit }) {
       auth.get('all').then(res => {
         console.log(res);
         commit('setAllEmployees', res.data);
       });
     },
-    fireEmployee({
-      dispatch
-    }, employeeId) {
+    fireEmployee({ dispatch }, employeeId) {
       auth
         .delete('/' + employeeId)
         .then(res => {
@@ -175,9 +157,7 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-    editEmployee({
-      dispatch
-    }, newCreds) {
+    editEmployee({ dispatch }, newCreds) {
       auth
         .put('edit', newCreds)
         .then(res => {
@@ -188,34 +168,26 @@ export default new Vuex.Store({
         });
     },
 
-    employeeRegister({
-      commit
-    }, data) {
+    employeeRegister({ commit }, data) {
       commit('employeeRegister', data);
     },
     //#endregion
 
     //#region --Menu --
 
-    getEntreeItems({
-      commit
-    }) {
+    getEntreeItems({ commit }) {
       api.get('menu/item').then(res => {
         commit('setEntreeItems', res.data);
       });
     },
 
-    addEntreeItem({
-      dispatch
-    }, data) {
+    addEntreeItem({ dispatch }, data) {
       api.post('menu/item', data).then(res => {
         dispatch('getEntreeItems');
       });
     },
 
-    addEntree({
-      commit
-    }, data) {
+    addEntree({ commit }, data) {
       api.post('menu/entrees', data.entree).then(res => {
         api.put('menu/entrees/' + res.data._id, data.entreeItems).then(res => {
           commit('setNewEntree', res.data.data);
@@ -223,117 +195,85 @@ export default new Vuex.Store({
       });
     },
 
-    getEntrees({
-      commit
-    }) {
+    getEntrees({ commit }) {
       api.get('menu/entrees').then(res => {
         commit('setEntrees', res.data);
       });
     },
 
-    deleteEntree({
-      dispatch
-    }, id) {
+    deleteEntree({ dispatch }, id) {
       api.delete('menu/entrees/' + id).then(res => {
         dispatch('clearNewEntree');
       });
     },
 
-    clearNewEntree({
-      commit
-    }) {
+    clearNewEntree({ commit }) {
       commit('clearNewEntree');
     },
-    editEntree({
-      commit
-    }, newData) {
-      console.log(newData)
-      api.put('menu/entrees/' + newData._id, newData)
+    editEntree({ commit }, newData) {
+      console.log(newData);
+      api.put('menu/entrees/' + newData._id, newData);
     },
     //#endregion
 
     //#region --drinks--
 
-    getDrinks({
-      commit,
-      dispatch
-    }) {
+    getDrinks({ commit, dispatch }) {
       api.get('/menu/drinks').then(res => {
         commit('setDrinks', res.data);
       });
     },
 
-    addDrink({
-      commit,
-      dispatch
-    }, data) {
+    addDrink({ commit, dispatch }, data) {
       api.post('/menu/drinks', data).then(res => {
         dispatch('getDrinks');
       });
     },
 
-    editDrink({
-      commit,
-      dispatch
-    }, newData) {
-      console.log(newData)
-      api.put('/menu/drinks/' + newData._id, newData)
-        .then(res => {
-          console.log(res)
-        })
+    editDrink({ commit, dispatch }, newData) {
+      console.log(newData);
+      api.put('/menu/drinks/' + newData._id, newData).then(res => {
+        console.log(res);
+      });
     },
 
     //#endregion
 
     //#region --sides--
 
-    getSides({
-      commit,
-      dispatch
-    }) {
+    getSides({ commit, dispatch }) {
       api.get('/menu/sides').then(res => {
         commit('setSides', res.data);
       });
     },
 
-    addSide({
-      commit,
-      dispatch
-    }, data) {
+    addSide({ commit, dispatch }, data) {
       api.post('/menu/sides', data).then(res => {
         dispatch('getSides');
       });
     },
 
-    editSide({
-      commit,
-      dipatch
-    }, newData) {
-      api.put('/menu/sides/' + newData._id, newData)
+    editSide({ commit, dipatch }, newData) {
+      api
+        .put('/menu/sides/' + newData._id, newData)
         .then(res => {
-          console.log(res)
+          console.log(res);
         })
         .catch(err => {
-          console.error(err)
-        })
+          console.error(err);
+        });
     },
-
 
     //#endregion
     //#region --COMMENTS--
 
-    getComments({
-      commit,
-      dispatch
-    }) {
+    getComments({ commit, dispatch }) {
       api.get('/menu/comments').then(res => {
         commit('setComments', res.data);
       });
     },
 
-    addComment({
-      dispatch
-    }, data) {
+    addComment({ dispatch }, data) {
       api.post('/menu/comments', data).then(res => {
         dispatch('getComments');
       });
@@ -342,89 +282,67 @@ export default new Vuex.Store({
     //#endregion
 
     //#region --Order--
-    addToOrder({
-      commit,
-      dispatch,
-      state
-    }, data) {
+    addToOrder({ commit, dispatch, state }, data) {
       commit('addToOrder', data);
       let mealData = {
         orderId: state.buildingOrder._id,
         price: data.price,
         comment: data.comment
-      }
+      };
       api.post('orders/meals', mealData).then(res => {
-        commit('buildingMeal', res.data.data)
-        dispatch('makeMeal', data)
-      })
+        commit('buildingMeal', res.data.data);
+        dispatch('makeMeal', data);
+      });
     },
 
-    makeMeal({
-      commit,
-      dispatch,
-      state
-    }, data) {
-      //sort out what each of the keys is and send the appropriate call. ref err list
+    makeMeal({ commit, dispatch, state }, data) {
       Object.keys(data).forEach(key => {
+        delete data[key]._id;
         if (typeof data[key] == 'object' && data[key].name) {
-          data[key].orderId = state.buildingOrder._id
-          data[key].mealId = state.buildingMeal._id
+          data[key].orderId = state.buildingOrder._id;
+          data[key].mealId =
+            state.buildingMeal[state.buildingMeal.length - 1]._id;
           let dict = {
             sandwich: 'entree',
             drink: 'drink',
             side: 'side'
-          }
+          };
           api.post(`orders/${dict[key]}`, data[key]).then(res => {
-            commit('buildingMealItems', res.data)
-            if (data[key].components) {
-              api.put('orders/entree/' + res.data.data._id).then(res => {
-                console.log(res)
-              })
-            }
-          })
+            commit('buildingMealItems', res.data.data);
+            // debugger;
+            // if (data[key].components) {
+            //   api.put('orders/entree/' + res.data.data._id).then(res => {
+            //     console.log(res);
+            //   });
+            // }
+          });
         }
-
-      })
+      });
     },
 
-    deleteMeal({
-      commit,
-      dispatch,
-      state
-    }, data) {
+    deleteMeal({ commit, dispatch, state }, data) {
       api.delete('orders/meals/' + data.id).then(() => {
-        commit('remove Meal', data.index)
-      })
+        commit('remove Meal', data.index);
+      });
     },
 
-    makeOrder({
-      commit,
-      dispatch,
-      state
-    }, data) {
+    makeOrder({ commit, dispatch, state }, data) {
       data.managerId = state.user._id;
       api.post('orders/', data).then(res => {
-        commit('buildingOrder', res.data.data)
-      })
+        commit('buildingOrder', res.data.data);
+      });
     },
-    editOrder({
-      commit,
-      dispatch,
-      state
-    }, data) {
+    editOrder({ commit, dispatch, state }, data) {
       api.put('orders/' + state.buildingOrder._id, data).then(res => {
-        commit('buildingOrder', res.data.data)
-        dispatch('clearOrder')
-      })
+        commit('buildingOrder', res.data.data);
+        dispatch('clearOrder');
+      });
     },
 
-    clearOrder({
-      commit,
-      state
-    }) {
-      commit('clearOrder')
+    clearOrder({ commit, state }) {
+      commit('clearOrder');
     }
 
     //#endregion
   }
-})
+});

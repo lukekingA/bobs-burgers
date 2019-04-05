@@ -25,7 +25,7 @@
           <i class="fas fa-user-plus"></i>
         </button>
         <form v-if="showRegister" class="form-inline" @submit.prevent="register">
-          <input v-model="newAccount.email" class="form-control rounded pl-3 mr-1 mb-2" type="search"
+          <input v-model="newAccount.email" class="form-control rounded pl-3 mr-1" type="search"
             placeholder="Email" aria-label="Search">
           <input v-model="newAccount.name" class="form-control mr-sm-2" type="search" placeholder="Username"
             aria-label="Search">
@@ -52,16 +52,9 @@
           </div>
           <div class="modal-body">Where do you want to go?</div>
           <div class="modal-footer d-flex justify-content-center">
-            <button data-dismiss="modal" @click="$router.push({name: 'order'})" type="button" class="btn btn-primary">
-              <i class="fas fa-cash-register"></i>
-            </button>
-            <button data-dismiss="modal" type="button" class="btn btn-primary">
-              <i class="fas fa-calendar-alt"></i>
-            </button>
-            <button data-dismiss="modal" @click="$router.push({name: 'admin'})" v-if="user.manager" type="button"
-              class="btn btn-primary">
-              <i class="fas fa-chart-bar"></i>
-            </button>
+            <button data-dismiss="modal" @click="$router.push({name: 'order'})" type="button" class="btn btn-primary">Register</button>
+            <button data-dismiss="modal" @click="$router.push({name: 'kitchen'})"  type="button" class="btn btn-primary">Kitchen</button>
+            <button data-dismiss="modal" @click="$router.push({name: 'admin'})" v-if="user.manager" type="button" class="btn btn-primary">Admin Tools</button>
           </div>
         </div>
         <!-- content 2 -->
@@ -74,9 +67,6 @@
           </div>
           <div class="modal-body text-center">00:00</div>
           <div class="modal-footer d-flex justify-content-center">
-            <button type="button" class="btn btn-primary">
-              <i class="fas fa-calendar-alt"></i>
-            </button>
           </div>
         </div>
       </div>
@@ -117,12 +107,13 @@
       }
     },
     watch: {
-      user: function (val) {
+      user: function () {
         $("#loginModal").modal("show")
       }
     },
     methods: {
       register() {
+        console.log(this.newAccount)
         let data = this.newAccount;
         data.manager = false;
         this.$store.dispatch("register", this.newAccount)
@@ -154,6 +145,7 @@
 <style>
   .time {
     font-weight: 700;
+    
     font-size: 20px;
     color: rgb(54, 54, 54);
   }

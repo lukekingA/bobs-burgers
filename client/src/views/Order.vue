@@ -10,11 +10,11 @@
     </div>
     <div class="h-100" v-if="employeeLogedIn.name">
       <div class="row h-75">
-        <div class="col text-center" v-show="!ordering">
+        <div class="col text-center mt-5" v-show="!buildingOrder._id">
           <button @click="newOrder" class="btn bg-secondary border border-light text-light drop-shadow">New
             Order</button>
         </div>
-        <div class="col" v-show="ordering">
+        <div class="col" v-show="buildingOrder._id">
           <div class="row h-100">
             <div class="col-3 d-flex mt-3 flex-column align-items-start">
 
@@ -45,10 +45,12 @@
                     <div>
                       <h5 class="mt-2 text-center">Meal</h5>
                       <ul class="pl-1">
-                        <li v-if="item.name" v-for="(item,key) in currentMeal">
-                          <div @click="removeMenuItem(key)" class="d-flex justify-content-between">{{item.name}}
+                        <li v-for="(item,key) in curMealFilter" :key="'meal'+item+key">
+                          <div @click="removeMenuItem(key)" class="d-flex justify-content-between">
+                            {{item.name}}
                             <span>${{parseFloat(item.price).toFixed(2)}}</span></div>
                         </li>
+                        <li @click="remLocalCom" v-if="currentMeal.comment">{{currentMeal.comment}}</li>
                       </ul>
                     </div>
                     <div>
@@ -76,15 +78,18 @@
                       <input class="rounded pl-1" type="text" v-model="orderIdentifer" placeholder="customer name">
                       <div class="mt-1">
                         <ul class="pl-1">
-                          <li class="pl-1" v-for="meal in currentOrder">
+                          <li class="pl-1" v-for="(item,index) in currentOrder" :key="item +index">
 
                             <div class="text-left">
-                              <p class="mb-1">{{meal.sandwich.name}}</p>
-                              <p class="mb-1">{{meal.side.name}}</p>
-                              <p class="mb-1">{{meal.drink.name}}</p>
-                              <p class="mb-1">{{meal.comment}}</p>
+                              <span @click="deleteMeal(index)"
+                                class="text-danger rounded bg-light border border-dark shadow-sm px-1 hover btn-neg-1"><small
+                                  class="font-weight-bold">Delete Meal</small></span>
+                              <p class="mb-1">{{item.sandwich.name}}</p>
+                              <p class="mb-1">{{item.side.name}}</p>
+                              <p class="mb-1">{{item.drink.name}}</p>
+                              <p class="mb-1">{{item.comment}}</p>
                             </div>
-                            <p class="text-right">{{meal.price.toFixed(2)}}</p>
+                            <p class="text-right">{{item.price.toFixed(2)}}</p>
                           </li>
                         </ul>
                       </div>
@@ -124,7 +129,7 @@
     props: [],
     data() {
       return {
-        ordering: false,
+
         sandwichDropdown: true,
         sideDropdown: false,
         drinkDropdown: false,
@@ -139,10 +144,20 @@
         },
         orderIdentifer: '',
         employeeName: '',
-        employeeCode: ''
+        employeeCode: '',
+
       };
     },
     computed: {
+      curMealFilter() {
+        let out = {}
+        for (let key in this.currentMeal) {
+          if (this.currentMeal[key].name) {
+            out[key] = this.currentMeal[key]
+          }
+        }
+        return out
+      },
       mealTotal() {
         let sandwich = 0
         let drink = 0
@@ -162,22 +177,18 @@
         }
         return result
       },
-      allowCombo() {
-        if (this.currentMeal.sandwich.name && this.currentMeal.drink.name && this.currentMeal.side.name) {
-          return true
-        } else {
-          return false
-        }
-      },
       currentOrder() {
         return this.$store.state.currentOrder
       },
-      orderId() {
+      buildingOrder() {
         return this.$store.state.buildingOrder
+      },
+      buildingMeal() {
+        return this.$store.state.buildingMeal
       },
       orderTotal() {
         let total = 0
-        this.currentOrder.forEach(m => {
+        this.$store.state.currentOrder.forEach(m => {
           total += m.price
         })
         return total
@@ -226,6 +237,10 @@
       addToOrder() {
         let data = this.currentMeal
         data.price = this.mealTotal
+        data.orderTotal = {
+          price: this.orderTotal
+        }
+        delete data.combo
         this.$store.dispatch('addToOrder', data)
         this.currentMeal = {
           sandwich: {},
@@ -241,15 +256,28 @@
       removeMenuItem(key) {
         this.currentMeal[key] = {}
       },
+      deleteMeal(index) {
+        let data = {
+          index: index,
+          id: this.buildingMeal[index]._id
+        }
+        this.$store.dispatch('deleteMeal', data)
+      },
+      remLocalCom() {
+        this.$root.$emit('removeComment')
+      },
       newOrder() {
         let data = {
           employeeId: this.employeeLogedIn.name + '-' + this.employeeLogedIn.code
         }
         this.$store.dispatch('makeOrder', data)
-        this.ordering = true
+
       },
       submitOrder() {
-
+        let data = {
+          price: this.orderTotal
+        }
+        this.$store.dispatch('editOrder', data)
       },
       employeeRegister() {
         let data = {
@@ -260,14 +288,6 @@
         this.employeeName = ''
         this.employeeCode = ''
       },
-
-      orderTotal() {
-        let total = 0;
-        this.currentOrder.forEach(m => {
-          total += m.price;
-        });
-        return total;
-      }
     },
     watch: {},
     components: {
@@ -283,5 +303,13 @@
 <style scoped>
   .button-width {
     width: 200px;
+  }
+
+  .hover {
+    cursor: pointer;
+  }
+
+  .btn-neg-1 {
+    margin-left: -5px;
   }
 </style>

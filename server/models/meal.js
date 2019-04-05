@@ -2,6 +2,9 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 let ObjectId = Schema.Types.ObjectId;
 let schemaName = 'Meal';
+let Entrees = require('./entree')
+let Drinks = require('./drink')
+let Sides = require('./side')
 
 let schema = new Schema({
   orderId: {
@@ -17,18 +20,15 @@ let schema = new Schema({
   comment: {
     type: String
   },
-  // entree: {
-  //   type: ObjectId,
-  //   ref: 'Order'
-  // },
-  // drink: {
-  //   type: ObjectId,
-  //   ref: 'Order'
-  // },
-  // side: {
-  //   type: ObjectId,
-  //   ref: 'Order'
-  // }
+
 });
+schema.pre('remove', function () {
+  let members = [Entrees, Drinks, Sides]
+  members.forEach(m => {
+    m.findByIdAndRemove({
+      mealId: this._id
+    })
+  })
+})
 
 module.exports = mongoose.model(schemaName, schema);

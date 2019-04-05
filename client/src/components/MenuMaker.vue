@@ -172,6 +172,7 @@
       return {
         addIngredient: false,
         addComments: false,
+        commentName: '',
         menuType: "",
         menuItemName: "",
         menuItemSize: "",
@@ -212,52 +213,6 @@
           cost: this.entreeItemCost
         };
         this.$store.dispatch("addEntreeItem", data);
-
-        // export default {
-        //   name: "menu-maker",
-
-        //   data() {
-        //     return {
-        //       addIngredient: false,
-        //       addComments: false,
-        //       commentName: "",
-        //       menuType: "",
-        //       menuItemName: "",
-        //       menuItemSize: "",
-        //       menuItemPrice: "",
-        //       picked: "",
-        //       components: "",
-        //       entreeItemName: "",
-        //       entreeItemCost: 0,
-        //       entreeItemActive: false,
-        //       currentEntreeItems: [],
-        //       currentEntreeItemsCount: []
-        //     };
-        //   },
-        //   computed: {
-        //     entreeItems() {
-        //       return this.$store.state.entreeItems;
-        //       return this.$store.state.comments;
-        //     }
-        //   },
-        //   mounted() {
-        //     this.$store.dispatch("getEntreeItems");
-        //     this.$store.dispatch("getComments");
-        //   },
-
-        //   methods: {
-        //     fieldReset() {
-        //       this.menuType = "";
-        //       this.menuItemName = "";
-        //       this.menuItemPrice = "";
-        //     },
-        //     addEntreeItem() {
-        //       let data = {
-        //         name: this.entreeItemName,
-        //         cost: this.entreeItemCost
-        //       };
-        //       this.$store.dispatch("addEntreeItem", data);
-
         this.entreeItemName = "";
         this.entreeItemCost = 0;
       },
@@ -277,7 +232,7 @@
         let data = {
           entree: {
             name: this.menuItemName,
-            price: this.menuItemPrice,
+            price: parseFloat(this.menuItemPrice).toFixed(2),
             active: this.entreeItemActive
           },
           entreeItems: {
@@ -303,7 +258,7 @@
         let data = {
           name: this.menuItemName,
           size: this.menuItemSize,
-          price: this.menuItemPrice,
+          price: parseFloat(this.menuItemPrice).toFixed(2),
           active: this.entreeItemActive
         };
         this.$store.dispatch("addDrink", data);
@@ -315,7 +270,7 @@
         let data = {
           name: this.menuItemName,
           size: this.menuItemSize,
-          price: this.menuItemPrice,
+          price: parseFloat(this.menuItemPrice).toFixed(2),
           active: this.entreeItemActive
         };
         this.$store.dispatch("addSide", data);

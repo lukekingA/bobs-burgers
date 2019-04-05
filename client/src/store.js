@@ -13,7 +13,7 @@ let auth = Axios.create({
 
 let api = Axios.create({
   baseURL: '//localhost:3000/api/',
-  timeout: 6000,
+  //timeout: 6000,
   withCredentials: true
 });
 
@@ -31,7 +31,8 @@ export default new Vuex.Store({
     comments: [],
     currentOrder: [],
     buildingOrder: {},
-    buildingMeal: {},
+    buildingMeal: [],
+    buildingMealItems: []
   },
   mutations: {
     setUser(state, data) {
@@ -67,6 +68,9 @@ export default new Vuex.Store({
     addToOrder(state, data) {
       state.currentOrder.push(data);
     },
+    clearOrder(state) {
+      state.currentOrder = []
+    },
     employeeRegister(state, data) {
       state.employee = data;
     },
@@ -74,7 +78,13 @@ export default new Vuex.Store({
       state.buildingOrder = data
     },
     buildingMeal(state, data) {
-      state.buildingMeal = data
+      state.buildingMeal.push(data)
+    },
+    buildingMealItems(state, data) {
+      state.buildingMealItems.push(data)
+    },
+    removeMeal(state, index) {
+      state.currentOrder.splice(index, 1)
     }
   },
   actions: {
@@ -106,7 +116,6 @@ export default new Vuex.Store({
     },
     authenticate({
       commit,
-      dispatch
     }) {
       auth
         .get('authenticate')
@@ -124,7 +133,6 @@ export default new Vuex.Store({
     },
 
     register({
-      commit,
       dispatch
     }, newCreds) {
       auth.post('register', newCreds).then(res => {
@@ -133,7 +141,6 @@ export default new Vuex.Store({
       });
     },
     registerNewEmployee({
-      commit,
       dispatch
     }, newCreds) {
       auth.post('newemployee', newCreds).then(res => {
@@ -142,15 +149,13 @@ export default new Vuex.Store({
       });
     },
     closeLoginModal({
-      commit,
-      dispatch
+      commit
     }) {
       commit('closeLoginModal');
     },
 
     getAllEmployees({
-      commit,
-      dispatch
+      commit
     }) {
       auth.get('all').then(res => {
         console.log(res);
@@ -158,7 +163,6 @@ export default new Vuex.Store({
       });
     },
     fireEmployee({
-      commit,
       dispatch
     }, employeeId) {
       auth
@@ -172,7 +176,6 @@ export default new Vuex.Store({
         });
     },
     editEmployee({
-      commit,
       dispatch
     }, newCreds) {
       auth
@@ -195,8 +198,7 @@ export default new Vuex.Store({
     //#region --Menu --
 
     getEntreeItems({
-      commit,
-      dispatch
+      commit
     }) {
       api.get('menu/item').then(res => {
         commit('setEntreeItems', res.data);
@@ -204,7 +206,6 @@ export default new Vuex.Store({
     },
 
     addEntreeItem({
-      commit,
       dispatch
     }, data) {
       api.post('menu/item', data).then(res => {
@@ -213,8 +214,7 @@ export default new Vuex.Store({
     },
 
     addEntree({
-      commit,
-      dispatch
+      commit
     }, data) {
       api.post('menu/entrees', data.entree).then(res => {
         api.put('menu/entrees/' + res.data._id, data.entreeItems).then(res => {
@@ -224,8 +224,7 @@ export default new Vuex.Store({
     },
 
     getEntrees({
-      commit,
-      dispatch
+      commit
     }) {
       api.get('menu/entrees').then(res => {
         commit('setEntrees', res.data);
@@ -233,7 +232,6 @@ export default new Vuex.Store({
     },
 
     deleteEntree({
-      commit,
       dispatch
     }, id) {
       api.delete('menu/entrees/' + id).then(res => {
@@ -247,8 +245,7 @@ export default new Vuex.Store({
       commit('clearNewEntree');
     },
     editEntree({
-      commit,
-      dispatch
+      commit
     }, newData) {
       console.log(newData)
       api.put('menu/entrees/' + newData._id, newData)
@@ -356,7 +353,7 @@ export default new Vuex.Store({
         price: data.price,
         comment: data.comment
       }
-      api.post('orders/meals', ).then(res => {
+      api.post('orders/meals', mealData).then(res => {
         commit('buildingMeal', res.data.data)
         dispatch('makeMeal', data)
       })
@@ -367,7 +364,37 @@ export default new Vuex.Store({
       dispatch,
       state
     }, data) {
+      //sort out what each of the keys is and send the appropriate call. ref err list
+      Object.keys(data).forEach(key => {
+        if (typeof data[key] == 'object' && data[key].name) {
+          data[key].orderId = state.buildingOrder._id
+          data[key].mealId = state.buildingMeal._id
+          let dict = {
+            sandwich: 'entree',
+            drink: 'drink',
+            side: 'side'
+          }
+          api.post(`orders/${dict[key]}`, data[key]).then(res => {
+            commit('buildingMealItems', res.data)
+            if (data[key].components) {
+              api.put('orders/entree/' + res.data.data._id).then(res => {
+                console.log(res)
+              })
+            }
+          })
+        }
 
+      })
+    },
+
+    deleteMeal({
+      commit,
+      dispatch,
+      state
+    }, data) {
+      api.delete('orders/meals/' + data.id).then(() => {
+        commit('remove Meal', data.index)
+      })
     },
 
     makeOrder({
@@ -379,53 +406,25 @@ export default new Vuex.Store({
       api.post('orders/', data).then(res => {
         commit('buildingOrder', res.data.data)
       })
+    },
+    editOrder({
+      commit,
+      dispatch,
+      state
+    }, data) {
+      api.put('orders/' + state.buildingOrder._id, data).then(res => {
+        commit('buildingOrder', res.data.data)
+        dispatch('clearOrder')
+      })
+    },
 
-      //#endregion
+    clearOrder({
+      commit,
+      state
+    }) {
+      commit('clearOrder')
     }
+
+    //#endregion
   }
 })
-//   .then(orderRes => {
-//     //clear current order in state
-//     console.log(orderRes);
-//     Promise.all(
-//     data.meals.forEach(meal => {
-//       let item = {
-//         orderId: orderRes.data.data._id,
-//         price: meal.price,
-//         comment: meal.comment
-//       };
-//       api.post('orders/meals', item)
-//     ).then(mealRes => {
-//         console.log(mealRes);
-//         let mealId = mealRes.data.data._id
-//         if (meal.sandwich.name) {
-//           let entree = {
-//             mealId: mealId,
-//             price: meal.sandwich.price,
-//             name: meal.sandwich.name
-//           };
-//           api.post('orders/entree', entree).then(entreeRes => {
-//             console.log(entreeRes);
-//             // meal.sandwich.components.forEach(component => {
-//             //   let data = {
-//             //     name: component.name,
-//             //     cost: component.cost
-//             //   };
-//             //   api
-//             //     .post('orders/entree/' + res.data.data._id, data)
-//             //     .then(res => {
-//             //       console.log(res);
-//             //     });
-//             // });
-//           })
-//         }
-//         if (meal.drink.name) {
-//           let drink = {
-//             mealId: mealId,
-
-//           }
-//         }
-//       })
-//     })
-//   })
-// }

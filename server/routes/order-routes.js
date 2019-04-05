@@ -5,10 +5,34 @@ let Entrees = require('../models/entree')
 let Drinks = require('../models/drink')
 let Sides = require('../models/side')
 
-//GET
+//GET ALL
 router.get('/', (req, res, next) => {
   Orders.find({}).then(orders => {
     res.send(orders)
+  })
+})
+
+router.get('/meals', (req, res, next) => {
+  Meals.find({}).then(meals => {
+    res.send(meals)
+  })
+})
+
+router.get('/entree', (req, res, next) => {
+  Entrees.find({}).then(entrees => {
+    res.send(entrees)
+  })
+})
+
+router.get('/drink', (req, res, next) => {
+  Drinks.find({}).then(drinks => {
+    res.send(drinks)
+  })
+})
+
+router.get('/side', (req, res, next) => {
+  Sides.find({}).then(sides => {
+    res.send(sides)
   })
 })
 //POST
@@ -21,6 +45,21 @@ router.post('/', (req, res, next) => {
     })
   })
 })
+
+router.put('/:id', (req, res, next) => {
+  Orders.findByIdAndUpdate({
+    _id: req.params.id
+  }, req.body, {
+    new: true
+  }).then(doc => {
+    res.send({
+      data: doc,
+      message: "Successfully updated order"
+    })
+  }).catch(err => {
+    res.status(400).send("Couldn't update order")
+  })
+})
 //make empty meal associated with order
 router.post('/meals', (req, res, next) => {
   Meals.create(req.body).then(meal => {
@@ -30,6 +69,21 @@ router.post('/meals', (req, res, next) => {
     })
   })
 })
+
+router.delete('/meals/:id', (req, res, next) => {
+  Meals.findByIdAndRemove({
+    _id: req.params.id
+  }).then(meal => {
+    if (meal) {
+      res.send({
+        message: 'Successfully deleted meal',
+        data: meal
+      })
+      res.status(400).send('Bad request no meal found')
+    }
+  })
+})
+
 //make entree without components
 router.post('/entree', (req, res, next) => {
   Entrees.create(req.body).then(entree => {
@@ -37,10 +91,12 @@ router.post('/entree', (req, res, next) => {
       data: entree,
       message: 'Created Entree'
     })
+  }).catch(err => {
+    res.status(400).send(err)
   })
 })
 //add entree components
-router.post('/entree/:id', (req, res, next) => {
+router.put('/entree/:id', (req, res, next) => {
   Entrees.findById({
     _id: req.params.id
   }).then(entree => {
@@ -58,8 +114,10 @@ router.post('/drink', (req, res, next) => {
   Drinks.create(req.body).then(drink => {
     res.send({
       data: drink,
-      message: 'DrinkCreated'
+      message: 'Drink Created'
     })
+  }).catch(err => {
+    res.status(400).send(err)
   })
 })
 
@@ -69,67 +127,42 @@ router.post('/side', (req, res, next) => {
       data: side,
       message: 'Side Created'
     })
+  }).catch(err => {
+    res.status(400).send(err)
   })
 })
 //PUT
 
-//DELETE
+//DELETE MANY Cleanup
 router.delete('/', (req, res, next) => {
   Orders.deleteMany({}).then((data) => {
     res.send(data)
   })
 })
 
+router.delete('/meal', (req, res, next) => {
+  Meals.deleteMany({}).then((data) => {
+    res.send(data)
+  })
+})
+
+
+router.delete('/entree', (req, res, next) => {
+  Entrees.deleteMany({}).then((data) => {
+    res.send(data)
+  })
+})
+
+router.delete('/side', (req, res, next) => {
+  Sides.deleteMany({}).then((data) => {
+    res.send(data)
+  })
+})
+
+router.delete('/drink', (req, res, next) => {
+  Drinks.deleteMany({}).then((data) => {
+    res.send(data)
+  })
+})
+
 module.exports = router
-
-//     req.body.meals.forEach(m => {
-//       m.orderId = order.id
-//       let data = {
-//         orderId: m.orderId,
-//         price: m.price,
-//         comment: m.comment
-//       }
-//       router.post('/meals', (req, res, next) => {
-//         Meals.create(data).then(meal => {
-//           if (m.sandwich.name) {
-//             m.sandwich.mealId = meal._id
-//             router.post('/entree', (req, res, next) => {
-//               Entrees.create(m.sandwich).then(sandwich => {
-//                 m.sandwich.components.forEach(comp => {
-//                   sandwich.components.push(comp)
-//                   sandwich.save(err => {
-//                     if (err) {
-//                       res.status(400).send('failure to save sandwich component')
-//                     }
-//                     res.send('saved sandwich component')
-//                   })
-//                 })
-//               })
-//             })
-//           }
-//           if (m.drink.name) {
-//             router.post('/drink', (req, res, next) => {
-//               Drinks.create(m.drink).then(drink => {
-//                 res.send({
-//                   data: drink,
-//                   message: 'Sucessfully created drink'
-//                 })
-//               })
-//             })
-//           }
-//           if (m.side.name) {
-//             router.post('/side', (req, res, next) => {
-//               Sides.create(m.side).then(side => {
-//                 res.send({
-//                   data: side,
-//                   message: 'Successfully created side'
-//                 })
-//               })
-//             })
-//           }
-//         })
-//       })
-//     })
-
-//   })
-// })

@@ -27,8 +27,7 @@
                 class="btn button-width mb-3 btn-lg border-light bg-dark text-light rounded drop-shadow">Drink</button>
               <button @click="switchView('commentDropdown')"
                 class="btn button-width mb-3 btn-lg border-light bg-dark text-light rounded drop-shadow">Comments</button>
-              <button @click="switchView('specialDropdown')"
-                class="btn button-width mb-3 btn-lg border-light bg-dark text-light rounded drop-shadow">Specials</button>
+
             </div>
             <div class="col-3 mt-3">
               <dropdown-sandwiches v-show="sandwichDropdown" @orderSandwichSelect="setCurrentMealSandwich">
@@ -36,7 +35,7 @@
               <dropdown-sides @orderSideSelect="setCurrentMealSide" v-show="sideDropdown"></dropdown-sides>
               <dropdown-drinks @orderDrinkSelect="setCurrentMealDrink" v-show="drinkDropdown"></dropdown-drinks>
               <dropdown-comments @currentComments="setCurrentComment" v-show="commentDropdown"></dropdown-comments>
-              <dropdown-specials v-show="specialDropdown"></dropdown-specials>
+
             </div>
             <div class="col-3">
               <div class="card h-75 mt-3">
@@ -123,7 +122,7 @@
   import DropdownDrinks from "@/components/Dropdowns/DropdownDrinks.vue";
   import DropdownSides from "@/components/Dropdowns/DropdownSides.vue";
   import DropdownComments from "@/components/Dropdowns/DropdownComments.vue";
-  import DropdownSpecials from "@/components/Dropdowns/DropdownSpecials.vue"
+
   export default {
     name: "Order",
     props: [],
@@ -179,6 +178,7 @@
       },
       currentOrder() {
         return this.$store.state.currentOrder
+        //return this.$store.state.buildingMealItems
       },
       buildingOrder() {
         return this.$store.state.buildingOrder
@@ -275,9 +275,11 @@
       },
       submitOrder() {
         let data = {
-          price: this.orderTotal
+          price: this.orderTotal,
+          orderIdentifer: this.orderIdentifer
         }
         this.$store.dispatch('editOrder', data)
+        this.orderIdentifer = '';
       },
       employeeRegister() {
         let data = {
@@ -295,7 +297,7 @@
       DropdownSides,
       DropdownDrinks,
       DropdownComments,
-      DropdownSpecials
+
     }
   }
 </script>

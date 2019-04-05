@@ -71,6 +71,9 @@ export default new Vuex.Store({
     clearOrder(state) {
       state.currentOrder = [];
     },
+    clearBuildingOrder(state) {
+      state.buildingOrder = {};
+    },
     employeeRegister(state, data) {
       state.employee = data;
     },
@@ -85,7 +88,8 @@ export default new Vuex.Store({
     },
     removeMeal(state, index) {
       state.currentOrder.splice(index, 1);
-    }
+    },
+
   },
   actions: {
     //USER
@@ -384,7 +388,7 @@ export default new Vuex.Store({
             // }
           });
         }
-        dispatch('editOrder', )
+
       });
     },
 
@@ -394,7 +398,7 @@ export default new Vuex.Store({
       state
     }, data) {
       api.delete('orders/meals/' + data.id).then(() => {
-        commit('remove Meal', data.index);
+        commit('removeMeal', data.index);
       });
     },
 
@@ -414,6 +418,7 @@ export default new Vuex.Store({
       state
     }, data) {
       api.put('orders/' + state.buildingOrder._id, data).then(res => {
+        debugger
         commit('buildingOrder', res.data.data);
         dispatch('clearOrder');
       });
@@ -424,6 +429,7 @@ export default new Vuex.Store({
       state
     }) {
       commit('clearOrder');
+      commit('clearBuildingOrder')
     }
 
     //#endregion

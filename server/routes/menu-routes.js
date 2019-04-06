@@ -53,8 +53,8 @@ router.post('/item', (req, res, next) => {
 
 router.delete('/item/:id', (req, res, next) => {
     EntreeItems.findByIdAndRemove({
-            _id: req.params.id
-        })
+        _id: req.params.id
+    })
         .then(entreeitem => {
             res.send("Entree item successfully Deleted")
         })
@@ -106,15 +106,15 @@ router.put('/entrees/:id', (req, res, next) => {
     Entrees.findByIdAndUpdate({
         _id: req.params.id
     }, req.body, {
-        new: true
-    }).then(doc => {
-        res.send({
-            message: 'Successfully updated entree',
-            data: doc
+            new: true
+        }).then(doc => {
+            res.send({
+                message: 'Successfully updated entree',
+                data: doc
+            })
+        }).catch(err => {
+            res.status(400).send("Couldn't update entree")
         })
-    }).catch(err => {
-        res.status(400).send("Couldn't update entree")
-    })
 })
 
 
@@ -154,8 +154,8 @@ router.post('/drinks/', (req, res, next) => {
 
 router.delete('/drinks/:id', (req, res, next) => {
     Drinks.findByIdAndRemove({
-            id: req.params.id
-        })
+        _id: req.params.id
+    })
         .then(drink => {
             res.send('Drink Successfully Deleted')
         })
@@ -166,8 +166,8 @@ router.delete('/drinks/:id', (req, res, next) => {
 
 router.put('/drinks/:id', (req, res, next) => {
     Drinks.findByIdAndUpdate({
-            _id: req.params.id
-        }, req.body, {
+        _id: req.params.id
+    }, req.body, {
             new: true
         })
         .then(drink => {
@@ -207,10 +207,10 @@ router.post('/sides/', (req, res, next) => {
 
 router.delete('/sides/:id', (req, res, next) => {
     Sides.findByIdAndRemove({
-            _id: req.params.id
-        }).then(side => {
-            res.send('Side Successfully Deleted')
-        })
+        _id: req.params.id
+    }).then(side => {
+        res.send('Side Successfully Deleted')
+    })
         .catch(err => {
             res.status(400).send('ACCESS DENIED; Invalid Request')
         })
@@ -218,8 +218,8 @@ router.delete('/sides/:id', (req, res, next) => {
 
 router.put('/sides/:id', (req, res, next) => {
     Sides.findByIdAndUpdate({
-            _id: req.params.id
-        }, req.body)
+        _id: req.params.id
+    }, req.body)
         .then(side => {
             res.send(req.body)
         }).catch(err => {
@@ -255,10 +255,10 @@ router.post('/comments/', (req, res, next) => {
 })
 router.delete('/comments/:id', (req, res, next) => {
     Comments.findByIdAndRemove({
-            _id: req.params.id
-        }).then(comment => {
-            res.send('Comment Successfully Deleted')
-        })
+        _id: req.params.id
+    }).then(comment => {
+        res.send('Comment Successfully Deleted')
+    })
         .catch(err => {
             res.status(400).send('ACCESS DENIED; Invalid Request')
         })

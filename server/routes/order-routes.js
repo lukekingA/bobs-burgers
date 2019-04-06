@@ -13,13 +13,15 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/meals', (req, res, next) => {
-  Meals.find({}).then(meals => {  
+  Meals.find({}).then(meals => {
     res.send(meals)
   })
 })
 
-router.get('/meals/:id', (req , res , next) => {
-  Meals.find({orderId: req.params.id})
+router.get('/meals/:id', (req, res, next) => {
+  Meals.find({
+      orderId: req.params.id
+    })
     .then(meals => {
       res.send(meals)
     })
@@ -40,6 +42,36 @@ router.get('/drink', (req, res, next) => {
 router.get('/side', (req, res, next) => {
   Sides.find({}).then(sides => {
     res.send(sides)
+  })
+})
+
+router.get('/side/:id', (req, res, next) => {
+  Sides.find({
+    orderId: req.params.id
+  }).then(data => {
+    res.send(data)
+  }).catch(err => {
+    res.status(400).send("side not found")
+  })
+})
+
+router.get('/drink/:id', (req, res, next) => {
+  Drinks.find({
+    orderId: req.params.id
+  }).then(data => {
+    res.send(data)
+  }).catch(err => {
+    res.status(400).send("drink not found")
+  })
+})
+
+router.get('/entree/:id', (req, res, next) => {
+  Entrees.find({
+    orderId: req.params.id
+  }).then(data => {
+    res.send(data)
+  }).catch(err => {
+    res.status(400).send("entree not found")
   })
 })
 
@@ -66,6 +98,16 @@ router.put('/:id', (req, res, next) => {
     })
   }).catch(err => {
     res.status(400).send("Couldn't update order")
+  })
+})
+
+router.get('/active/', (req, res, next) => {
+  Orders.find({
+    'activeOrder': true
+  }).then(orders => {
+    res.send(orders)
+  }).catch(err => {
+    res.status(400).send("No active orders")
   })
 })
 //make empty meal associated with order

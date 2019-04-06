@@ -33,6 +33,7 @@ export default new Vuex.Store({
     orders: [],
     currentOrder: [],
     buildingOrder: {},
+    activeOrders: [],
     buildingMeal: [],
     buildingMealItems: [],
     mealsByOrderId: [],
@@ -79,6 +80,9 @@ export default new Vuex.Store({
     },
     setOrders(state, data) {
       state.orders = data
+    },
+    setActiveOrders(state) {
+      state.activeOrders = []
     },
     employeeRegister(state, data) {
       state.employee = data;
@@ -307,7 +311,10 @@ export default new Vuex.Store({
       });
     },
 
-    editSide({}, newData) {
+    editSide({
+      commit,
+      dispatch
+    }, newData) {
       api
         .put('/menu/sides/' + newData._id, newData)
         .then(res => {
@@ -455,6 +462,15 @@ export default new Vuex.Store({
       api.get('menu/tax').then(res => {
         commit('setRate', res.data)
       })
+    }
+
+    getActiveOrders({
+      commit,
+      dispatch
+    }) {
+      api.get('/active/').then(res => {
+        commit('setActiveOrders', res.data);
+      });
     }
 
     //#endregion

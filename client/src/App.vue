@@ -2,7 +2,7 @@
   <div id="logo" class="sticky-bottom">
     <nav class="navbar sticky-top">
       <a class="navbar-brand">
-        <img src="./assets/bob_logo_sm.png" width="65" height="65" alt>
+        <img class="mt-1 mb-1" src="./assets/bob_logo_sm.png" width="65" height="65" alt>
       </a>
       <p class="time">{{time}}</p>
       <div class="btn-group">
@@ -69,8 +69,7 @@
             </button>
           </div>
           <div class="modal-body text-center">00:00</div>
-          <div class="modal-footer d-flex justify-content-center">
-          </div>
+          <div class="modal-footer d-flex justify-content-center"></div>
         </div>
       </div>
     </div>
@@ -103,38 +102,38 @@
     },
     computed: {
       user() {
-        return this.$store.state.user
+        return this.$store.state.user;
       },
       loginModalComputed() {
-        return this.$store.state.loginModal
+        return this.$store.state.loginModal;
       }
     },
     watch: {
       user: function () {
-        $("#loginModal").modal("show")
+        $("#loginModal").modal("show");
       }
     },
     methods: {
       register() {
+        console.log(this.newAccount);
         let data = this.newAccount;
         data.manager = false;
-        this.$store.dispatch("register", this.newAccount)
-        this.newAdmin = {}
+        this.$store.dispatch("register", this.newAccount);
+        this.newAdmin = {};
       },
       login() {
-        this.showLogin = false
-        this.$store.dispatch("login", this.creds)
+        this.showLogin = false;
+        this.$store.dispatch("login", this.creds);
       },
       logout() {
-        this.$store.dispatch("logout")
+        this.$store.dispatch("logout");
       },
       formatTime() {
-
-        this.time = Moment().format("MMMM DD YYYY, h:mm:ss a")
-        setTimeout(this.formatTime, 1000)
+        this.time = Moment().format("MMMM DD YYYY, h:mm:ss a");
+        setTimeout(this.formatTime, 1000);
       }
     }
-  };
+  }
 </script>
 
 <style>
@@ -194,6 +193,6 @@
   }
 
   .app-height {
-    height: calc(100vh - 95px)
+    height: calc(100vh -91px);
   }
 </style>

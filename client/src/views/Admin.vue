@@ -68,53 +68,52 @@
 
 
 <script>
-  import MenuEditor from "@/components/MenuEditor.vue";
-  import MenuMaker from "@/components/MenuMaker.vue";
-  import ManageCreds from "@/components/ManageCreds.vue";
-  import Reports from "@/components/Reports.vue";
+import MenuEditor from "@/components/MenuEditor.vue";
+import MenuMaker from "@/components/MenuMaker.vue";
+import ManageCreds from "@/components/ManageCreds.vue";
+import Reports from "@/components/Reports.vue";
 
-  export default {
-    name: "admin",
-    data() {
-      return {
-        editMenu: true,
-        menuMaker: false,
-        menuBook: false,
-        manageCreds: false,
-        reports: false
-      };
-    },
-    computed: {},
-    methods: {
-      switchView(selection) {
-        let shows = [
-          "editMenu",
-          "menuMaker",
-          "menuBook",
-          "manageCreds",
-          "reports"
-        ];
-        let newthis = this;
-        shows.forEach(j => (newthis[j] = false));
-        this[selection] = true;
-      }
-    },
-    components: {
-      MenuEditor,
-      MenuMaker,
-      ManageCreds,
-      Reports,
-
+export default {
+  name: "admin",
+  data() {
+    return {
+      editMenu: true,
+      menuMaker: false,
+      menuBook: false,
+      manageCreds: false,
+      reports: false
+    };
+  },
+  computed: {},
+  methods: {
+    switchView(selection) {
+      let shows = [
+        "editMenu",
+        "menuMaker",
+        "menuBook",
+        "manageCreds",
+        "reports"
+      ];
+      let newthis = this;
+      shows.forEach(j => (newthis[j] = false));
+      this[selection] = true;
     }
   },
   components: {
     MenuEditor,
     MenuMaker,
     ManageCreds,
-    Reports,
-    MenuBook
+    Reports
   }
 };
+//   components: {
+//     MenuEditor,
+//     MenuMaker,
+//     ManageCreds,
+//     Reports,
+//     MenuBook
+//   }
+// };
 </script>
 
 

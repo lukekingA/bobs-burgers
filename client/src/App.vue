@@ -169,32 +169,32 @@ export default {
       this.$store.dispatch("login", this.creds);
     },
     watch: {
-      user: function () {
-        $("#loginModal").modal("show")
+      user: function() {
+        $("#loginModal").modal("show");
       }
     },
     methods: {
       register() {
-        console.log(this.newAccount)
+        console.log(this.newAccount);
         let data = this.newAccount;
         data.manager = false;
-        this.$store.dispatch("register", this.newAccount)
-        this.newAdmin = {}
+        this.$store.dispatch("register", this.newAccount);
+        this.newAdmin = {};
       },
       login() {
-        this.showLogin = false
-        this.$store.dispatch("login", this.creds)
+        this.showLogin = false;
+        this.$store.dispatch("login", this.creds);
       },
       logout() {
-        this.$store.dispatch("logout")
+        this.$store.dispatch("logout");
       },
       formatTime() {
-
-        this.time = Moment().format("MMMM DD YYYY, h:mm:ss a")
-        setTimeout(this.formatTime, 1000)
+        this.time = Moment().format("MMMM DD YYYY, h:mm:ss a");
+        setTimeout(this.formatTime, 1000);
       }
     }
-  };
+  }
+};
 </script>
 
 <style>

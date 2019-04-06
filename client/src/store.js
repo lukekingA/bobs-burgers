@@ -98,8 +98,7 @@ export default new Vuex.Store({
     //USER
     //#region --Login --
     login({
-      commit,
-      dispatch
+      commit
     }, creds) {
       auth
         .post('login', creds)
@@ -111,8 +110,7 @@ export default new Vuex.Store({
         });
     },
     logout({
-      commit,
-      dispatch
+      commit
     }) {
       auth.delete('logout').then(res => {
         commit('setUser', {});
@@ -251,9 +249,7 @@ export default new Vuex.Store({
     }) {
       commit('clearNewEntree');
     },
-    editEntree({
-      commit
-    }, newData) {
+    editEntree({}, newData) {
       console.log(newData);
       api.put('menu/entrees/' + newData._id, newData);
     },
@@ -262,8 +258,7 @@ export default new Vuex.Store({
     //#region --drinks--
 
     getDrinks({
-      commit,
-      dispatch
+      commit
     }) {
       api.get('/menu/drinks').then(res => {
         commit('setDrinks', res.data);
@@ -271,7 +266,6 @@ export default new Vuex.Store({
     },
 
     addDrink({
-      commit,
       dispatch
     }, data) {
       api.post('/menu/drinks', data).then(res => {
@@ -280,8 +274,7 @@ export default new Vuex.Store({
     },
 
     editDrink({
-      commit,
-      dispatch
+
     }, newData) {
       console.log(newData);
       api.put('/menu/drinks/' + newData._id, newData).then(res => {
@@ -294,8 +287,7 @@ export default new Vuex.Store({
     //#region --sides--
 
     getSides({
-      commit,
-      dispatch
+      commit
     }) {
       api.get('/menu/sides').then(res => {
         commit('setSides', res.data);
@@ -303,7 +295,6 @@ export default new Vuex.Store({
     },
 
     addSide({
-      commit,
       dispatch
     }, data) {
       api.post('/menu/sides', data).then(res => {
@@ -311,10 +302,7 @@ export default new Vuex.Store({
       });
     },
 
-    editSide({
-      commit,
-      dipatch
-    }, newData) {
+    editSide({}, newData) {
       api
         .put('/menu/sides/' + newData._id, newData)
         .then(res => {
@@ -329,8 +317,7 @@ export default new Vuex.Store({
     //#region --COMMENTS--
 
     getComments({
-      commit,
-      dispatch
+      commit
     }) {
       api.get('/menu/comments').then(res => {
         commit('setComments', res.data);
@@ -367,7 +354,6 @@ export default new Vuex.Store({
 
     makeMeal({
       commit,
-      dispatch,
       state
     }, data) {
       Object.keys(data).forEach(key => {
@@ -383,12 +369,7 @@ export default new Vuex.Store({
           };
           api.post(`orders/${dict[key]}`, data[key]).then(res => {
             commit('buildingMealItems', res.data.data);
-            // debugger;
-            // if (data[key].components) {
-            //   api.put('orders/entree/' + res.data.data._id).then(res => {
-            //     console.log(res);
-            //   });
-            // }
+
           });
         }
 
@@ -396,18 +377,16 @@ export default new Vuex.Store({
     },
 
     deleteMeal({
-      commit,
-      dispatch,
-      state
+      commit
     }, data) {
       api.delete('orders/meals/' + data.id).then(() => {
         commit('removeMeal', data.index);
+
       });
     },
 
     makeOrder({
       commit,
-      dispatch,
       state
     }, data) {
       data.managerId = state.user._id;
@@ -421,23 +400,20 @@ export default new Vuex.Store({
       state
     }, data) {
       api.put('orders/' + state.buildingOrder._id, data).then(res => {
-        debugger
         commit('buildingOrder', res.data.data);
         dispatch('clearOrder');
       });
     },
 
     clearOrder({
-      commit,
-      state
+      commit
     }) {
       commit('clearOrder');
       commit('clearBuildingOrder')
     },
 
     changeTax({
-      commit,
-      dispatch
+      commit
     }, data) {
       api.delete('menu/tax').then(res => {
         api.post('menu/tax', data).then(rate => {

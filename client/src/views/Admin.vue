@@ -16,13 +16,6 @@
         </small>
       </button>
       <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-        @click="switchView('menuBook')">
-        <small>
-          Menu
-          Book
-        </small>
-      </button>
-      <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('manageCreds')">
         <small>
           Manage
@@ -43,8 +36,8 @@
     <div class="col mt-2" v-if="reports">
       <reports></reports>
     </div>
-    <div class="col mt-2" v-if="menuBook">
-      <menu-book></menu-book>
+    <div class="col mt-2" v-if="menuMaker">
+      <menu-maker></menu-maker>
     </div>
   </div>
 </template>

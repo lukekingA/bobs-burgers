@@ -81,24 +81,6 @@
           </div>
         </div>
       </div>
-      <!-- DETAILS CARD -->
-      <div class="col-4 mt-3">
-        <div class="card text-center">
-          <div class="card-header tab-card-header">
-            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-              <li class="nav-item">
-                  <a class="nav-link" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true">Details</a>
-              </li>
-            </ul>
-          </div>
-            <div class="card-body scrollingBox">
-              <h6 class="card-text d-flex"></h6>
-            </div>
-          <div class="card-footer text-muted">
-            <!-- 2 days ago -->
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>

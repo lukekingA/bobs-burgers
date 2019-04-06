@@ -13,9 +13,16 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/meals', (req, res, next) => {
-  Meals.find({}).then(meals => {
+  Meals.find({}).then(meals => {  
     res.send(meals)
   })
+})
+
+router.get('/meals/:id', (req , res , next) => {
+  Meals.find({orderId: req.params.id})
+    .then(meals => {
+      res.send(meals)
+    })
 })
 
 router.get('/entree', (req, res, next) => {
@@ -35,6 +42,7 @@ router.get('/side', (req, res, next) => {
     res.send(sides)
   })
 })
+
 //POST
 //make empty order
 router.post('/', (req, res, next) => {

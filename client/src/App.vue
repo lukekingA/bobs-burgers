@@ -113,7 +113,6 @@
     },
     methods: {
       register() {
-        console.log(this.newAccount)
         let data = this.newAccount;
         data.manager = false;
         this.$store.dispatch("register", this.newAccount)

@@ -29,10 +29,12 @@ export default new Vuex.Store({
     drinks: [],
     sides: [],
     comments: [],
+    orders: [],
     currentOrder: [],
     buildingOrder: {},
     buildingMeal: [],
-    buildingMealItems: []
+    buildingMealItems: [],
+    mealsByOrderId: [],
   },
   mutations: {
     setUser(state, data) {
@@ -71,6 +73,9 @@ export default new Vuex.Store({
     clearOrder(state) {
       state.currentOrder = []
     },
+    setOrders(state , data) {
+      state.orders = data
+    },
     employeeRegister(state, data) {
       state.employee = data;
     },
@@ -85,6 +90,9 @@ export default new Vuex.Store({
     },
     removeMeal(state, index) {
       state.currentOrder.splice(index, 1)
+    } ,
+    setMealsByOrderId(state , data) {
+      state.mealsByOrderId = data
     }
   },
   actions: {
@@ -423,7 +431,29 @@ export default new Vuex.Store({
       state
     }) {
       commit('clearOrder')
+    },
+    //#endregion
+
+    //#region --Reports Relevant--
+    getOrders({commit, dispatch}) {
+      api.get('orders/')
+      .then(res => {
+        commit('setOrders', res.data)
+      })
+    },
+
+    getMealsByOrderId({commit , dispatch} , orderId) {
+      api.get('orders/meals/' + orderId)
+        .then(res => {
+          console.log(res.data)
+          commit("setMealsByOrderId" , res.data)
+        })
     }
+
+  
+
+
+
 
     //#endregion
   }

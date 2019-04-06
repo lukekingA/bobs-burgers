@@ -128,7 +128,7 @@ router.post('/drink', (req, res, next) => {
     res.status(400).send(err)
   })
 })
-
+//add side
 router.post('/side', (req, res, next) => {
   Sides.create(req.body).then(side => {
     res.send({
@@ -139,18 +139,22 @@ router.post('/side', (req, res, next) => {
     res.status(400).send(err)
   })
 })
-//PUT
+
 
 //DELETE MANY Cleanup
 router.delete('/', (req, res, next) => {
   Orders.deleteMany({}).then((data) => {
     res.send(data)
+  }).catch(err => {
+    res.status(400).send(err)
   })
 })
 
 router.delete('/meal', (req, res, next) => {
   Meals.deleteMany({}).then((data) => {
     res.send(data)
+  }).catch(err => {
+    res.status(400).send(err)
   })
 })
 
@@ -158,19 +162,58 @@ router.delete('/meal', (req, res, next) => {
 router.delete('/entree', (req, res, next) => {
   Entrees.deleteMany({}).then((data) => {
     res.send(data)
+  }).catch(err => {
+    res.status(400).send(err)
   })
 })
 
 router.delete('/side', (req, res, next) => {
   Sides.deleteMany({}).then((data) => {
     res.send(data)
+  }).catch(err => {
+    res.status(400).send(err)
   })
 })
 
 router.delete('/drink', (req, res, next) => {
   Drinks.deleteMany({}).then((data) => {
     res.send(data)
+  }).catch(err => {
+    res.status(400).send(err)
   })
 })
 
+router.delete('/side/meal/:id', (req, res) => {
+  Sides.deleteMany({
+    'mealId': req.params.id
+  }).then(data => {
+    res.send("Deleted the side form the meal")
+  }).catch(err => {
+    res.status(400).send(err)
+  })
+})
+
+router.delete('/entree/meal/:id', (req, res) => {
+  Entrees.deleteMany({
+    'mealId': req.params.id
+  }).then(data => {
+    res.send("Deleted the entree form the meal")
+  }).catch(err => {
+    res.status(400).send(err)
+  })
+})
+
+router.delete('/drink/meal/:id', (req, res) => {
+  Drinks.deleteMany({
+    'mealId': req.params.id
+  }).then(data => {
+    res.send("Deleted the drink form the meal")
+  }).catch(err => {
+    res.status(400).send(err)
+  })
+})
+
+// router.delete('/order/meal/items/:id', (req, res) => {
+
+// })
 module.exports = router

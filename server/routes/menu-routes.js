@@ -4,6 +4,7 @@ let Drinks = require('../menuModels/drinkM')
 let Sides = require('../menuModels/sideM')
 let EntreeItems = require('../menuModels/entreeItem')
 let Comments = require('../menuModels/commentM')
+let Tax = require('../menuModels/tax')
 
 // #region --entree item
 router.get('/item', (req, res, next) => {
@@ -15,12 +16,37 @@ router.get('/item', (req, res, next) => {
     })
 })
 
+router.post('/tax', (req, res, next) => {
+    Tax.create(req.body).then(tax => {
+        res.send(tax)
+    }).catch(err => {
+        res.status(400).send("Couldn't set tax")
+    })
+})
+
+router.get('/tax', (req, res, next) => {
+    Tax.find({}).then(tax => {
+        res.send(tax)
+    }).catch(err => {
+        res.status(400).send("Couldn't find tax rate")
+    })
+})
+
+//router.put('/tax',)
+
+router.delete('/tax', (req, res, next) => {
+    Tax.deleteMany({}).then(tax => {
+        res.send('taxes deleted')
+    }).catch(err => {
+        res.status(400).send("Couldn't delete taxes")
+    })
+})
+
 router.post('/item', (req, res, next) => {
     EntreeItems.create(req.body).then(item => {
         res.send(item)
     }).catch(err => {
-        console.log(err)
-        next()
+        res.status(400).send("Couldn't make item")
     })
 })
 

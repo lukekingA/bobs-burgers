@@ -123,7 +123,7 @@
           <div class="col-6">
             <div class="mb-3">
               <button @click="addIngredient = !addIngredient"
-                class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-3">
+                class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-3 button-width">
                 Add
                 Ingredient
               </button>
@@ -140,7 +140,7 @@
             </div>
             <div>
               <button @click="addComments = !addComments"
-                class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-4">
+                class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-4 button-width">
                 Add
                 Comments
               </button>
@@ -149,6 +149,21 @@
                 <form class="mt-2" @submit.prevent="addComment">
                   <div class="d-flex flex-column">
                     <input class="rounded pl-3 mb-2" type="text" placeholder="comment" v-model="commentName">
+                  </div>
+                  <button type="submit" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
+                </form>
+              </div>
+            </div>
+            <div>
+              <button @click="changeTax = !changeTax"
+                class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-4 button-width">
+                Change Tax
+              </button>
+              <div v-show="changeTax">
+                <h6>Tax Rate</h6>
+                <form class="mt-2" @submit.prevent="changeTaxRate">
+                  <div class="d-flex flex-column">
+                    <input class="rounded pl-3 mb-2" type="text" placeholder="tax rate" v-model="taxRate">
                   </div>
                   <button type="submit" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
                 </form>
@@ -170,6 +185,8 @@
     name: "menu-maker",
     data() {
       return {
+        changeTax: false,
+        taxRate: '',
         addIngredient: false,
         addComments: false,
         commentName: '',
@@ -285,6 +302,14 @@
         this.$store.dispatch("addComment", data);
 
         this.commentName = "";
+      },
+      changeTaxRate() {
+        let data = {
+          tax: parseInt(this.taxRate)
+        }
+        this.$store.dispatch('changeTax', data)
+        this.changeTaxRate = false
+        this.taxRate = ''
       }
     },
 
@@ -296,6 +321,10 @@
 <style scoped>
   .dropdown-item:hover {
     cursor: pointer;
+  }
+
+  .button-width {
+    width: 10rem;
   }
 
   input[type="number"] {

@@ -50,15 +50,19 @@ router.put('/:id', (req, res, next) => {
   Orders.findByIdAndUpdate({
     _id: req.params.id
   }, req.body, {
-    new: true
-  }).then(doc => {
-    res.send({
-      data: doc,
-      message: "Successfully updated order"
+      new: true
+    }).then(doc => {
+      res.send({
+        data: doc,
+        message: "Successfully updated order"
+      })
+    }).catch(err => {
+      res.status(400).send("Couldn't update order")
     })
-  }).catch(err => {
-    res.status(400).send("Couldn't update order")
-  })
+})
+
+router.get('/active/', (req, res, next) => {
+  Orders.find({ "activeOrders": { $exists: true, $ne: true } })
 })
 //make empty meal associated with order
 router.post('/meals', (req, res, next) => {

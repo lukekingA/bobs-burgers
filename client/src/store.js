@@ -31,6 +31,7 @@ export default new Vuex.Store({
     comments: [],
     currentOrder: [],
     buildingOrder: {},
+    allOrders: [],
     buildingMeal: [],
     buildingMealItems: []
   },
@@ -70,6 +71,9 @@ export default new Vuex.Store({
     },
     clearOrder(state) {
       state.currentOrder = []
+    },
+    setAllOrders(state) {
+      state.allOrders = []
     },
     employeeRegister(state, data) {
       state.employee = data;
@@ -423,6 +427,14 @@ export default new Vuex.Store({
       state
     }) {
       commit('clearOrder')
+    },
+
+    getActiveOrder({
+      commit,
+      dispatch }) {
+      api.get('orders/active/').then(res => {
+        commit('allOrders', res.data)
+      })
     }
 
     //#endregion

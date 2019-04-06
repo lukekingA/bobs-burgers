@@ -37,7 +37,7 @@
         <form v-if="showRegister" class="form-inline" @submit.prevent="register">
           <input
             v-model="newAccount.email"
-            class="form-control rounded pl-3 mr-1 mb-2"
+            class="form-control rounded pl-3 mr-1"
             type="search"
             placeholder="Email"
             aria-label="Search"
@@ -88,21 +88,20 @@
               @click="$router.push({name: 'order'})"
               type="button"
               class="btn btn-primary"
-            >
-              <i class="fas fa-cash-register"></i>
-            </button>
-            <button data-dismiss="modal" type="button" class="btn btn-primary">
-              <i class="fas fa-calendar-alt"></i>
-            </button>
+            >Register</button>
+            <button
+              data-dismiss="modal"
+              @click="$router.push({name: 'kitchen'})"
+              type="button"
+              class="btn btn-primary"
+            >Kitchen</button>
             <button
               data-dismiss="modal"
               @click="$router.push({name: 'admin'})"
               v-if="user.manager"
               type="button"
               class="btn btn-primary"
-            >
-              <i class="fas fa-chart-bar"></i>
-            </button>
+            >Admin Tools</button>
           </div>
         </div>
         <!-- content 2 -->
@@ -114,11 +113,7 @@
             </button>
           </div>
           <div class="modal-body text-center">00:00</div>
-          <div class="modal-footer d-flex justify-content-center">
-            <button type="button" class="btn btn-primary">
-              <i class="fas fa-calendar-alt"></i>
-            </button>
-          </div>
+          <div class="modal-footer d-flex justify-content-center"></div>
         </div>
       </div>
     </div>
@@ -173,27 +168,39 @@ export default {
       this.showLogin = false;
       this.$store.dispatch("login", this.creds);
     },
-    logout() {
-      this.$store.dispatch("logout");
+    watch: {
+      user: function () {
+        $("#loginModal").modal("show")
+      }
     },
-    formatTime() {
-      this.time = Moment().format("MMMM DD YYYY, h:mm:ss a");
-      setTimeout(this.formatTime, 1000);
-    }
-  }
-};
+    methods: {
+      register() {
+        console.log(this.newAccount)
+        let data = this.newAccount;
+        data.manager = false;
+        this.$store.dispatch("register", this.newAccount)
+        this.newAdmin = {}
+      },
+      login() {
+        this.showLogin = false
+        this.$store.dispatch("login", this.creds)
+      },
+      logout() {
+        this.$store.dispatch("logout")
+      },
+      formatTime() {
 
-//   filters: {
-//     formatTime(date) {
-//       return Moment(String(date)).format("MM/DD/YYYY, LT");
-//     }
-//   }
-// };
+        this.time = Moment().format("MMMM DD YYYY, h:mm:ss a")
+        setTimeout(this.formatTime, 1000)
+      }
+    }
+  };
 </script>
 
 <style>
 .time {
   font-weight: 700;
+
   font-size: 20px;
   color: rgb(54, 54, 54);
 }
@@ -232,7 +239,6 @@ li {
   position: fixed;
   top: 0;
   width: 100%;
-  margin-bottom: 20px;
 }
 
 .fas {

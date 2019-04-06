@@ -97,9 +97,9 @@
                       <div class="d-flex justify-content-between">
                         <span>subtotal</span><span>{{orderTotal.toFixed(2)}}</span></div>
                       <div class="d-flex justify-content-between">
-                        <span>tax</span><span>{{(orderTotal * .06).toFixed(2)}}</span></div>
+                        <span>tax</span><span>{{(orderTotal * taxRate).toFixed(2)}}</span></div>
                       <div class="d-flex justify-content-between"><span
-                          class="font-weight-bold">total</span><span>{{(orderTotal * 1.06).toFixed(2)}}</span>
+                          class="font-weight-bold">total</span><span>{{(orderTotal * (1 + taxRate)).toFixed(2)}}</span>
                       </div>
                       <div class="mt-2 d-flex justify-content-between">
                         <button @click="submitOrder" class="btn btn-secondary shadow border-dark">Submit Order</button>
@@ -147,7 +147,13 @@
 
       };
     },
+    mounted() {
+      this.$store.dispatch('getTaxRate')
+    },
     computed: {
+      taxRate() {
+        return this.$store.state.taxRate / 100
+      },
       curMealFilter() {
         let out = {}
         for (let key in this.currentMeal) {
@@ -192,6 +198,9 @@
           total += m.price
         })
         return total
+      },
+      taxTotal() {
+        return this.orderTotal + (this.orderTotal * this.taxRate)
       },
       employeeLogedIn() {
         return this.$store.state.employee
@@ -275,7 +284,7 @@
       },
       submitOrder() {
         let data = {
-          price: this.orderTotal,
+          price: this.taxTotal,
           orderIdentifer: this.orderIdentifer
         }
         this.$store.dispatch('editOrder', data)
@@ -291,7 +300,6 @@
         this.employeeCode = ''
       },
     },
-    watch: {},
     components: {
       DropdownSandwiches,
       DropdownSides,

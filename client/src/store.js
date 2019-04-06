@@ -19,6 +19,7 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
+    taxRate: 0,
     user: {},
     employee: {},
     employees: [],
@@ -89,7 +90,9 @@ export default new Vuex.Store({
     removeMeal(state, index) {
       state.currentOrder.splice(index, 1);
     },
-
+    setRate(state, data) {
+      state.taxRate = data
+    }
   },
   actions: {
     //USER
@@ -430,6 +433,24 @@ export default new Vuex.Store({
     }) {
       commit('clearOrder');
       commit('clearBuildingOrder')
+    },
+
+    changeTax({
+      commit,
+      dispatch
+    }, data) {
+      api.delete('menu/tax').then(res => {
+        api.post('menu/tax', data).then(rate => {
+          commit('setRate', rate)
+        })
+      })
+    },
+    getTaxRate({
+      commit
+    }) {
+      api.get('menu/tax').then(res => {
+        commit('setRate', res.data)
+      })
     }
 
     //#endregion

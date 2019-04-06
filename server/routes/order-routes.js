@@ -62,8 +62,10 @@ router.put('/:id', (req, res, next) => {
 })
 
 router.get('/active/', (req, res, next) => {
-  Orders.find({ "activeOrder": { $exists: true, $ne: true } }).then(orders => {
+  Orders.find({ 'activeOrder': true }).then(orders => {
     res.send(orders)
+  }).catch(err => {
+    res.status(400).send("No active orders")
   })
 })
 //make empty meal associated with order

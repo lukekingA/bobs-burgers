@@ -314,7 +314,7 @@ export default new Vuex.Store({
 
     editSide({
       commit,
-      dipatch
+      dispatch
     }, newData) {
       api
         .put('/menu/sides/' + newData._id, newData)

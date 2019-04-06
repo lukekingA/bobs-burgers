@@ -93,18 +93,17 @@
       MenuEditor,
       MenuMaker,
       ManageCreds,
-      Reports,
-
+      Reports
     }
-    // }
-    // components: {
-    //   MenuEditor,
-    //     MenuMaker,
-    //     ManageCreds,
-    //     Reports,
-    //     MenuBook
-  }
-
+  };
+//   components: {
+//     MenuEditor,
+//     MenuMaker,
+//     ManageCreds,
+//     Reports,
+//     MenuBook
+//   }
+// };
 </script>
 
 

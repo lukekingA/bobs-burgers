@@ -13,12 +13,7 @@
                 <ul class="pl-1">
                   <li class="pl-1" v-for="(item,index) in activeOrder" :key="activeOrder +index">
                     <div class="text-left">
-                      <input
-                        class="rounded pl-1"
-                        type="text"
-                        v-model="activeOrder"
-                        placeholder="customer name"
-                      >
+                      <input class="rounded pl-1" type="text" v-model="activeOrder" placeholder="customer name">
 
                       <p class="mb-1">{{item.sandwich.name}}</p>
                       <p class="mb-1">{{item.side.name}}</p>
@@ -29,10 +24,7 @@
                 </ul>
               </div>
               <!-- break point -->
-              <button
-                @click="submitOrder"
-                class="btn btn-secondary shadow border-dark"
-              >Order Complete</button>
+              <button @click="deactivateOrder" class="btn btn-secondary shadow border-dark">Order Complete</button>
             </div>
           </div>
         </div>
@@ -42,22 +34,33 @@
 </template>
 
 <script>
-export default {
-  name: "kitchen",
-  props: [],
-  data() {
-    return {
-      AllOrders: {
-        sandwich: {},
-        drink: {},
-        side: {},
-        comment: ""
-      },
-      orderIdentifier: ""
-    };
-  },
-  computed: {},
-  methods: {},
-  components: {}
-};
+  export default {
+    name: "kitchen",
+    props: [],
+    data() {
+      return {
+        AllOrders: {
+          sandwich: {},
+          drink: {},
+          side: {},
+          comment: ""
+        },
+        orderIdentifier: ""
+      };
+    },
+    mounted() {
+      this.$store.dispatch('getActiveOrders')
+    },
+    computed: {
+      activeOrder() {
+        return this.$store.state.activeOrders
+      }
+    },
+    methods: {
+      deactivateOrder() {
+
+      }
+    },
+    components: {}
+  };
 </script>

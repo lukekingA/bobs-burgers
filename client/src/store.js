@@ -34,6 +34,7 @@ export default new Vuex.Store({
     currentOrder: [],
     buildingOrder: {},
     activeOrders: [],
+    activeOrderItems: [],
     buildingMeal: [],
     buildingMealItems: [],
     mealsByOrderId: [],
@@ -81,8 +82,14 @@ export default new Vuex.Store({
     setOrders(state, data) {
       state.orders = data
     },
-    setActiveOrders(state) {
-      state.activeOrders = []
+    setActiveOrders(state, data) {
+      state.activeOrders = data
+    },
+    activeOrderItems(state, data) {
+      state.activeOrderItems.push(data)
+    },
+    clearActOrdItems(state) {
+      state.activeOrderItems = []
     },
     employeeRegister(state, data) {
       state.employee = data;
@@ -415,6 +422,7 @@ export default new Vuex.Store({
         commit('buildingOrder', res.data.data);
         dispatch('clearOrder');
       });
+      dispatch('getActiveOrders')
     },
 
     clearOrder({
@@ -468,11 +476,67 @@ export default new Vuex.Store({
       commit,
       dispatch
     }) {
-      api.get('/active/').then(res => {
+      commit('clearActOrdItems')
+      api.get('orders/active/').then(res => {
         commit('setActiveOrders', res.data);
-      });
-    }
+        dispatch('setActOrdItems')
+      })
+    },
 
+    setActOrdItems({
+      commit,
+      dispatch,
+      state
+    }) {
+      state.activeOrders.forEach(o => {
+        api.get('orders/side/' + o._id).then(res => {
+          if (res.data.length) {
+            commit('activeOrderItems', res.data)
+          }
+        })
+        api.get('orders/drink/' + o._id).then(res => {
+          if (res.data.length) {
+            commit('activeOrderItems', res.data)
+          }
+        })
+        api.get('orders/entree/' + o._id).then(res => {
+          if (res.data.length) {
+            commit('activeOrderItems', res.data)
+          }
+        })
+      })
+    }
     //#endregion
   }
 });
+
+// responce.data.forEach(o => {
+
+
+//   api.get('orders/side/' + o._id).then(res => {
+//     let data = {
+//       id: o._id,
+//       data: {
+//         sides: res.data
+//       }
+//     }
+//     commit('setActiveOrders', data)
+//     //dict[o._id].side = res.data
+//   })
+//   api.get('orders/drink/' + o._id).then(res => {
+//     let data = {
+//       id: o._id,
+//       data: {
+//         drinks: res.data
+//       }
+//     }
+//     commit('setActiveOrders', data)
+//     //dict[o._id].drink = res.data
+//   })
+//   api.get('orders/entree/' + o._id).then(res => {
+//     let data = {
+//       id: o._id,
+//       data: {
+//         entrees: res.data
+//       }
+//     }

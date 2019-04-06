@@ -25,8 +25,8 @@
           <i class="fas fa-user-plus"></i>
         </button>
         <form v-if="showRegister" class="form-inline" @submit.prevent="register">
-          <input v-model="newAccount.email" class="form-control rounded pl-3 mr-1" type="search"
-            placeholder="Email" aria-label="Search">
+          <input v-model="newAccount.email" class="form-control rounded pl-3 mr-1" type="search" placeholder="Email"
+            aria-label="Search">
           <input v-model="newAccount.name" class="form-control mr-sm-2" type="search" placeholder="Username"
             aria-label="Search">
           <input v-model="newAccount.password" class="form-control mr-sm-2" type="search" placeholder="Password"
@@ -52,9 +52,12 @@
           </div>
           <div class="modal-body">Where do you want to go?</div>
           <div class="modal-footer d-flex justify-content-center">
-            <button data-dismiss="modal" @click="$router.push({name: 'order'})" type="button" class="btn btn-primary">Register</button>
-            <button data-dismiss="modal" @click="$router.push({name: 'kitchen'})"  type="button" class="btn btn-primary">Kitchen</button>
-            <button data-dismiss="modal" @click="$router.push({name: 'admin'})" v-if="user.manager" type="button" class="btn btn-primary">Admin Tools</button>
+            <button data-dismiss="modal" @click="$router.push({name: 'order'})" type="button"
+              class="btn btn-primary">Register</button>
+            <button data-dismiss="modal" @click="$router.push({name: 'kitchen'})" type="button"
+              class="btn btn-primary">Kitchen</button>
+            <button data-dismiss="modal" @click="$router.push({name: 'admin'})" v-if="user.manager" type="button"
+              class="btn btn-primary">Admin Tools</button>
           </div>
         </div>
         <!-- content 2 -->
@@ -126,25 +129,18 @@
         this.$store.dispatch("logout")
       },
       formatTime() {
-         
+
         this.time = Moment().format("MMMM DD YYYY, h:mm:ss a")
         setTimeout(this.formatTime, 1000)
       }
     }
   };
-
-  //   filters: {
-  //     formatTime(date) {
-  //       return Moment(String(date)).format("MM/DD/YYYY, LT");
-  //     }
-  //   }
-  // };
 </script>
 
 <style>
   .time {
     font-weight: 700;
-    
+
     font-size: 20px;
     color: rgb(54, 54, 54);
   }

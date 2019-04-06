@@ -37,9 +37,6 @@
     <div class="col mt-2" v-if="editMenu">
       <menu-editor></menu-editor>
     </div>
-    <div class="col mt-2" v-if="menuMaker">
-      <menu-maker></menu-maker>
-    </div>
     <div class="col mt-2" v-if="manageCreds">
       <manage-creds></manage-creds>
     </div>
@@ -58,7 +55,7 @@
   import MenuMaker from "@/components/MenuMaker.vue";
   import ManageCreds from "@/components/ManageCreds.vue";
   import Reports from "@/components/Reports.vue";
-  import MenuBook from "@/components/MenuBook.vue"
+
   export default {
     name: "admin",
     data() {
@@ -90,7 +87,7 @@
       MenuMaker,
       ManageCreds,
       Reports,
-      MenuBook
+
     }
   };
 </script>

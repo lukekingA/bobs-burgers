@@ -87,7 +87,7 @@ router.delete('/meals/:id', (req, res, next) => {
         message: 'Successfully deleted meal',
         data: meal
       })
-      res.status(400).send('Bad request no meal found')
+      res.status(400).send('Bad request no meal foundcd')
     }
   })
 })

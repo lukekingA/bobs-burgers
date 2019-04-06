@@ -422,7 +422,6 @@ export default new Vuex.Store({
       state
     }, data) {
       api.put('orders/' + state.buildingOrder._id, data).then(res => {
-        debugger
         commit('buildingOrder', res.data.data);
         dispatch('clearOrder');
       });

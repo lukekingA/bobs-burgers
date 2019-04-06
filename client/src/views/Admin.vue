@@ -1,19 +1,15 @@
 <template>
   <div class="admin row">
     <div class="col-1 d-flex flex-column">
-      <button
-        class="mb-2 mt-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-        @click="switchView('editMenu')"
-      >
+      <button class="mb-2 mt-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
+        @click="switchView('editMenu')">
         <small>
           Edit
           Menu
         </small>
       </button>
-      <button
-        class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-        @click="switchView('menuMaker')"
-      >
+      <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
+        @click="switchView('menuMaker')">
         <small>
           Menu
           Maker
@@ -26,25 +22,19 @@
           Book
         </small>
       </button>-->
-      <button
-        class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-        @click="switchView('manageCreds')"
-      >
+      <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
+        @click="switchView('manageCreds')">
         <small>
           Manage
           Creds
         </small>
       </button>
-      <button
-        class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-        @click="switchView('reports')"
-      >
+      <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
+        @click="switchView('reports')">
         <small>Reports</small>
       </button>
-      <button
-        class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-        @click="location.href='https://patatap.com/';"
-      >
+      <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
+        @click="location.href='https://patatap.com/';">
         <small>
           Productive
           Button
@@ -106,27 +96,27 @@
       Reports,
 
     }
-  },
-  components: {
-    MenuEditor,
-    MenuMaker,
-    ManageCreds,
-    Reports,
-    MenuBook
+    // }
+    // components: {
+    //   MenuEditor,
+    //     MenuMaker,
+    //     ManageCreds,
+    //     Reports,
+    //     MenuBook
   }
-};
+
 </script>
 
 
 <style scoped>
-.tab-height {
-  height: 5rem;
-}
+  .tab-height {
+    height: 5rem;
+  }
 
-.right-rounded {
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-}
+  .right-rounded {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
 </style>
 
 <!-- <form v-else @submit.prevent="register">

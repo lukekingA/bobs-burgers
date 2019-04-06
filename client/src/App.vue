@@ -14,20 +14,10 @@
           <i class="fas fa-door-closed"></i>
         </button>
         <form v-if="showLogin" class="form-inline" @submit.prevent="login">
-          <input
-            v-model="creds.email"
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Email"
-            aria-label="Search"
-          >
-          <input
-            v-model="creds.password"
-            class="form-control mr-sm-2"
-            type="password"
-            placeholder="Password"
-            aria-label="Search"
-          >
+          <input v-model="creds.email" class="form-control mr-sm-2" type="search" placeholder="Email"
+            aria-label="Search">
+          <input v-model="creds.password" class="form-control mr-sm-2" type="password" placeholder="Password"
+            aria-label="Search">
           <button class="btn my-2 my-sm-0" type="submit">GO!</button>
         </form>
 
@@ -35,27 +25,12 @@
           <i class="fas fa-user-plus"></i>
         </button>
         <form v-if="showRegister" class="form-inline" @submit.prevent="register">
-          <input
-            v-model="newAccount.email"
-            class="form-control rounded pl-3 mr-1"
-            type="search"
-            placeholder="Email"
-            aria-label="Search"
-          >
-          <input
-            v-model="newAccount.name"
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Username"
-            aria-label="Search"
-          >
-          <input
-            v-model="newAccount.password"
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Password"
-            aria-label="Search"
-          >
+          <input v-model="newAccount.email" class="form-control rounded pl-3 mr-1" type="search" placeholder="Email"
+            aria-label="Search">
+          <input v-model="newAccount.name" class="form-control mr-sm-2" type="search" placeholder="Username"
+            aria-label="Search">
+          <input v-model="newAccount.password" class="form-control mr-sm-2" type="search" placeholder="Password"
+            aria-label="Search">
           <button class="btn my-2 my-sm-0" type="submit">GO!</button>
         </form>
       </div>
@@ -64,14 +39,8 @@
       <router-view></router-view>
     </div>
     <!-- Modal -->
-    <div
-      class="modal fade"
-      id="loginModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <!-- Content -->
         <div v-if="user._id" class="modal-content">
@@ -83,25 +52,12 @@
           </div>
           <div class="modal-body">Where do you want to go?</div>
           <div class="modal-footer d-flex justify-content-center">
-            <button
-              data-dismiss="modal"
-              @click="$router.push({name: 'order'})"
-              type="button"
-              class="btn btn-primary"
-            >Register</button>
-            <button
-              data-dismiss="modal"
-              @click="$router.push({name: 'kitchen'})"
-              type="button"
-              class="btn btn-primary"
-            >Kitchen</button>
-            <button
-              data-dismiss="modal"
-              @click="$router.push({name: 'admin'})"
-              v-if="user.manager"
-              type="button"
-              class="btn btn-primary"
-            >Admin Tools</button>
+            <button data-dismiss="modal" @click="$router.push({name: 'order'})" type="button"
+              class="btn btn-primary">Register</button>
+            <button data-dismiss="modal" @click="$router.push({name: 'kitchen'})" type="button"
+              class="btn btn-primary">Kitchen</button>
+            <button data-dismiss="modal" @click="$router.push({name: 'admin'})" v-if="user.manager" type="button"
+              class="btn btn-primary">Admin Tools</button>
           </div>
         </div>
         <!-- content 2 -->
@@ -124,136 +80,137 @@
 
 
 <script>
-import $ from "jquery";
-import Moment from "moment";
+  import $ from "jquery";
+  import Moment from "moment";
 
-export default {
-  name: "app",
-  data() {
-    return {
-      showAdminLogin: false,
-      loginForm: true,
-      creds: {},
-      showLogin: false,
-      showRegister: false,
-      newAccount: {},
-      time: ""
-    };
-  },
-  mounted() {
-    this.$store.dispatch("authenticate");
-    this.formatTime();
-  },
-  computed: {
-    user() {
-      return this.$store.state.user;
+  export default {
+    name: "app",
+    data() {
+      return {
+        showAdminLogin: false,
+        loginForm: true,
+        creds: {},
+        showLogin: false,
+        showRegister: false,
+        newAccount: {},
+        time: ""
+      };
     },
-    loginModalComputed() {
-      return this.$store.state.loginModal;
-    }
-  },
-  watch: {
-    user: function(val) {
-      $("#loginModal").modal("show");
-    }
-  },
-  methods: {
-    register() {
-      let data = this.newAccount;
-      data.manager = false;
-      this.$store.dispatch("register", this.newAccount);
-      this.newAdmin = {};
+    mounted() {
+      this.$store.dispatch("authenticate");
+      this.formatTime();
     },
-    login() {
-      this.showLogin = false;
-      this.$store.dispatch("login", this.creds);
+    computed: {
+      user() {
+        return this.$store.state.user;
+      },
+      loginModalComputed() {
+        return this.$store.state.loginModal;
+      }
     },
     watch: {
-      user: function () {
-        $("#loginModal").modal("show")
+      user: function (val) {
+        $("#loginModal").modal("show");
       }
     },
     methods: {
       register() {
-        console.log(this.newAccount)
         let data = this.newAccount;
         data.manager = false;
-        this.$store.dispatch("register", this.newAccount)
-        this.newAdmin = {}
+        this.$store.dispatch("register", this.newAccount);
+        this.newAdmin = {};
       },
       login() {
-        this.showLogin = false
-        this.$store.dispatch("login", this.creds)
+        this.showLogin = false;
+        this.$store.dispatch("login", this.creds);
       },
-      logout() {
-        this.$store.dispatch("logout")
+      watch: {
+        user: function () {
+          $("#loginModal").modal("show")
+        }
       },
-      formatTime() {
+      methods: {
+        register() {
+          console.log(this.newAccount)
+          let data = this.newAccount;
+          data.manager = false;
+          this.$store.dispatch("register", this.newAccount)
+          this.newAdmin = {}
+        },
+        login() {
+          this.showLogin = false
+          this.$store.dispatch("login", this.creds)
+        },
+        logout() {
+          this.$store.dispatch("logout")
+        },
+        formatTime() {
 
-        this.time = Moment().format("MMMM DD YYYY, h:mm:ss a")
-        setTimeout(this.formatTime, 1000)
+          this.time = Moment().format("MMMM DD YYYY, h:mm:ss a")
+          setTimeout(this.formatTime, 1000)
+        }
       }
     }
-  };
+  }
 </script>
 
 <style>
-.time {
-  font-weight: 700;
+  .time {
+    font-weight: 700;
 
-  font-size: 20px;
-  color: rgb(54, 54, 54);
-}
+    font-size: 20px;
+    color: rgb(54, 54, 54);
+  }
 
-img {
-  margin-top: -10px;
-  margin-bottom: -30px;
-  padding-top: -20px;
-  padding-bottom: -20px;
-}
+  img {
+    margin-top: -10px;
+    margin-bottom: -30px;
+    padding-top: -20px;
+    padding-bottom: -20px;
+  }
 
-html,
-body {
-  height: 100vh;
-}
+  html,
+  body {
+    height: 100vh;
+  }
 
-li {
-  list-style: none;
-}
+  li {
+    list-style: none;
+  }
 
-#logo {
-  background: url("assets/bobs-backgroundArtboard 1-100.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: fixed;
-  height: 100%;
-  width: auto;
+  #logo {
+    background: url("assets/bobs-backgroundArtboard 1-100.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: fixed;
+    height: 100%;
+    width: auto;
 
-  top: 0;
-  left: 0;
-}
+    top: 0;
+    left: 0;
+  }
 
-.navbar {
-  background-color: rgb(0, 198, 215);
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
+  .navbar {
+    background-color: rgb(0, 198, 215);
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
 
-.fas {
-  font-size: 3vh;
-}
+  .fas {
+    font-size: 3vh;
+  }
 
-.drop-shadow {
-  filter: drop-shadow(3px 5px 5px rgb(53, 52, 52));
-}
+  .drop-shadow {
+    filter: drop-shadow(3px 5px 5px rgb(53, 52, 52));
+  }
 
-.dropdown-item:hover {
-  cursor: pointer;
-}
+  .dropdown-item:hover {
+    cursor: pointer;
+  }
 
-.app-height {
-  height: calc(100vh - 95px);
-}
+  .app-height {
+    height: calc(100vh - 95px);
+  }
 </style>

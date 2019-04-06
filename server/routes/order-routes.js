@@ -12,6 +12,7 @@ router.get('/', (req, res, next) => {
   })
 })
 
+
 router.get('/meals', (req, res, next) => {
   Meals.find({}).then(meals => {  
     res.send(meals)
@@ -25,22 +26,55 @@ router.get('/meals/:id', (req , res , next) => {
     })
 })
 
+
+
+
+
+
+
+//GET ENTREES
 router.get('/entree', (req, res, next) => {
   Entrees.find({}).then(entrees => {
     res.send(entrees)
   })
 })
 
+//GET ENTREES BY ORDER ID
+router.get('/entrees/:id', (req , res , next) => {
+  Entrees.find({orderId: req.params.id})
+    .then(entrees => {
+      res.send(entrees)
+    })
+})
+
+//GET DRINKS BY ORDER ID
+router.get('/drinks/:id', (req , res , next) => {
+  Drinks.find({orderId: req.params.id})
+    .then(drinks => {
+      res.send(drinks)
+    })
+})
+
+//GET DRINKS
 router.get('/drink', (req, res, next) => {
   Drinks.find({}).then(drinks => {
     res.send(drinks)
   })
 })
 
+//GET SIDES
 router.get('/side', (req, res, next) => {
   Sides.find({}).then(sides => {
     res.send(sides)
   })
+})
+
+//GET SIDES BY ORDER ID
+router.get('/sides/:id', (req , res , next) => {
+  Sides.find({orderId: req.params.id})
+    .then(sides => {
+      res.send(sides)
+    })
 })
 
 //POST

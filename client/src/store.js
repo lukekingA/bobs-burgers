@@ -35,6 +35,10 @@ export default new Vuex.Store({
     buildingMeal: [],
     buildingMealItems: [],
     mealsByOrderId: [],
+    drinksByOrderId: [],
+    entreesByOrderId: [],
+    sidesByOrderId: []
+
   },
   mutations: {
     setUser(state, data) {
@@ -96,6 +100,15 @@ export default new Vuex.Store({
     },
     setMealsByOrderID(state , data){
       state.mealsByOrderId = data
+    },
+    setDrinksByOrderID(state , data){
+      state.drinksByOrderId = data
+    },
+    setEntreesByOrderID(state , data){
+      state.entreesByOrderId = data
+    },
+    setSidesByOrderID(state , data){
+      state.sidesByOrderId = data
     }
 
   },
@@ -452,8 +465,25 @@ export default new Vuex.Store({
     getMealsByOrderId({commit , dispatch} , orderId) {
       api.get('orders/meals/' + orderId)
         .then(res => {
-          console.log(res.data)
           commit("setMealsByOrderID" , res.data)
+        })
+    },
+    getDrinksByOrderId({commit , dispatch} , orderId) {
+      api.get('orders/drinks/' + orderId)
+        .then(res => {
+          commit("setDrinksByOrderID" , res.data)
+        })
+    },
+    getEntreesByOrderId({commit , dispatch} , orderId) {
+      api.get('orders/entrees/' + orderId)
+        .then(res => {
+          commit("setEntreesByOrderID" , res.data)
+        })
+    },
+    getSidesByOrderId({commit , dispatch} , orderId) {
+      api.get('orders/sides/' + orderId)
+        .then(res => {
+          commit("setSidesByOrderID" , res.data)
         })
     }
 

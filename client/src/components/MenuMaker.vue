@@ -122,45 +122,37 @@
         <div class="add-entree-item row">
           <div class="col-6">
             <div class="mb-3">
-              <<<<<<< HEAD <button @click="addIngredient = !addIngredient"
+              <button @click="addIngredient = !addIngredient"
                 class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-3 button-width">
-                =======
-                <button @click="addIngredient = !addIngredient"
-                  class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-3">
-                  >>>>>>> ae2c0922c87ee14c6a8ee8b28b85fad9ce2c5a04
-                  Add
-                  Ingredient
-                </button>
-                <div v-show="addIngredient">
-                  <h6>Ingredients</h6>
-                  <form class="mt-2" @submit.prevent="addEntreeItem">
-                    <div class="d-flex flex-column">
-                      <input class="rounded pl-3 mb-2" type="text" placeholder="name" v-model="entreeItemName">
-                      <input class="rounded pl-3 mb-2" type="text" placeholder="cost" v-model="entreeItemCost">
-                    </div>
-                    <button type="submit" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
-                  </form>
-                </div>
+                Add
+                Ingredient
+              </button>
+              <div v-show="addIngredient">
+                <h6>Ingredients</h6>
+                <form class="mt-2" @submit.prevent="addEntreeItem">
+                  <div class="d-flex flex-column">
+                    <input class="rounded pl-3 mb-2" type="text" placeholder="name" v-model="entreeItemName">
+                    <input class="rounded pl-3 mb-2" type="text" placeholder="cost" v-model="entreeItemCost">
+                  </div>
+                  <button type="submit" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
+                </form>
+              </div>
             </div>
             <div>
-              <<<<<<< HEAD <button @click="addComments = !addComments"
+              <button @click="addComments = !addComments"
                 class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-4 button-width">
-                =======
-                <button @click="addComments = !addComments"
-                  class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-4">
-                  >>>>>>> ae2c0922c87ee14c6a8ee8b28b85fad9ce2c5a04
-                  Add
-                  Comments
-                </button>
-                <div v-show="addComments">
-                  <h6>Comments</h6>
-                  <form class="mt-2" @submit.prevent="addComment">
-                    <div class="d-flex flex-column">
-                      <input class="rounded pl-3 mb-2" type="text" placeholder="comment" v-model="commentName">
-                    </div>
-                    <button type="submit" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
-                  </form>
-                </div>
+                Add
+                Comments
+              </button>
+              <div v-show="addComments">
+                <h6>Comments</h6>
+                <form class="mt-2" @submit.prevent="addComment">
+                  <div class="d-flex flex-column">
+                    <input class="rounded pl-3 mb-2" type="text" placeholder="comment" v-model="commentName">
+                  </div>
+                  <button type="submit" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
+                </form>
+              </div>
             </div>
             <div>
               <button @click="changeTax = !changeTax"
@@ -211,11 +203,18 @@
         currentEntreeItemsCount: []
       };
     },
-    comments() {
-      return this.$store.state.comments;
-    }
-  },
-  mounted() {
+    computed: {
+      entreeItems() {
+        return this.$store.state.entreeItems;
+      },
+      newEntree() {
+        return this.$store.state.newEntree;
+      },
+      comments() {
+        return this.$store.state.comments;
+      }
+    },
+    mounted() {
       this.$store.dispatch("getEntreeItems");
       this.$store.dispatch("getComments");
     },
@@ -268,59 +267,55 @@
         this.menuType = "";
       },
 
-      <<
-      << << < HEAD
-      this.commentName = "";
-    },
-    changeTaxRate() {
-      let data = {
-        tax: parseInt(this.taxRate)
+
+
+      changeTaxRate() {
+        let data = {
+          tax: parseInt(this.taxRate)
+        }
+        this.$store.dispatch('changeTax', data)
+        this.changeTaxRate = false
+        this.taxRate = ''
+      },
+      clearNewEntree() {
+        this.$store.dispatch("clearNewEntree");
+        this.menuType = "";
+      },
+      addDrink() {
+        let data = {
+          name: this.menuItemName,
+          size: this.menuItemSize,
+          price: parseFloat(this.menuItemPrice).toFixed(2),
+          active: this.entreeItemActive
+        };
+        this.$store.dispatch("addDrink", data);
+        this.fieldReset();
+        this.menuItemSize = "";
+        this.entreeItemActive = false;
+      },
+      addSide() {
+        let data = {
+          name: this.menuItemName,
+          size: this.menuItemSize,
+          price: parseFloat(this.menuItemPrice).toFixed(2),
+          active: this.entreeItemActive
+        };
+        this.$store.dispatch("addSide", data);
+        this.fieldReset();
+        this.menuItemSize = "";
+        this.entreeItemActive = false;
+      },
+      addComment() {
+        let data = {
+          comment: this.commentName
+        };
+        this.$store.dispatch("addComment", data);
+
+        this.commentName = "";
       }
-      this.$store.dispatch('changeTax', data)
-      this.changeTaxRate = false
-      this.taxRate = ''
-    } ===
-    === =
-    clearNewEntree() {
-      this.$store.dispatch("clearNewEntree");
-      this.menuType = "";
     },
-    addDrink() {
-      let data = {
-        name: this.menuItemName,
-        size: this.menuItemSize,
-        price: parseFloat(this.menuItemPrice).toFixed(2),
-        active: this.entreeItemActive
-      };
-      this.$store.dispatch("addDrink", data);
-      this.fieldReset();
-      this.menuItemSize = "";
-      this.entreeItemActive = false; >>>
-      >>> > ae2c0922c87ee14c6a8ee8b28b85fad9ce2c5a04
-    },
-    addSide() {
-      let data = {
-        name: this.menuItemName,
-        size: this.menuItemSize,
-        price: parseFloat(this.menuItemPrice).toFixed(2),
-        active: this.entreeItemActive
-      };
-      this.$store.dispatch("addSide", data);
-      this.fieldReset();
-      this.menuItemSize = "";
-      this.entreeItemActive = false;
-    },
-    addComment() {
-      let data = {
-        comment: this.commentName
-      };
-      this.$store.dispatch("addComment", data);
 
-      this.commentName = "";
-    }
-  },
-
-  components: {}
+    components: {}
   };
 </script>
 
@@ -330,7 +325,7 @@
     cursor: pointer;
   }
 
-  <<<<<<< HEAD .button-width {
+  .button-width {
     width: 10rem;
   }
 
@@ -348,7 +343,7 @@
     padding-bottom: 10px;
   }
 
-  >>>>>>>ae2c0922c87ee14c6a8ee8b28b85fad9ce2c5a04 li {
+  li {
     list-style: none;
   }
 </style>

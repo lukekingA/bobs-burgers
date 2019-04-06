@@ -462,7 +462,7 @@ export default new Vuex.Store({
       api.get('menu/tax').then(res => {
         commit('setRate', res.data)
       })
-    }
+    },
 
     getActiveOrders({
       commit,

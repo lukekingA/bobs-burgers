@@ -11,12 +11,12 @@
               <!-- break point -->
               <div class="mt-1">
                 <ul class="pl-1">
-                  <li class="pl-1" v-for="(item,index) in currentOrder" :key="currentOrder +index">
+                  <li class="pl-1" v-for="(item,index) in activeOrder" :key="activeOrder +index">
                     <div class="text-left">
                       <input
                         class="rounded pl-1"
                         type="text"
-                        v-model="currentOrder"
+                        v-model="activeOrder"
                         placeholder="customer name"
                       >
 

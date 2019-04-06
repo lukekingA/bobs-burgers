@@ -2,7 +2,7 @@
   <div id="logo" class="sticky-bottom">
     <nav class="navbar sticky-top">
       <a class="navbar-brand">
-        <img class src="./assets/bob_logo_sm.png" width="65" height="65" alt>
+        <img class="mt-1 mb-1" src="./assets/bob_logo_sm.png" width="65" height="65" alt>
       </a>
       <p class="time">{{time}}</p>
       <div class="btn-group">
@@ -254,6 +254,6 @@ li {
 }
 
 .app-height {
-  height: calc(100vh - 95px);
+  height: calc(100vh -91px);
 }
 </style>

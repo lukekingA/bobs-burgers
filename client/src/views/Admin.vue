@@ -43,7 +43,7 @@
       </button>
       <button
         class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-        @click="location.href='https://patatap.com/';"
+        @click="switchView('productive')"
       >
         <small>
           Productive
@@ -63,6 +63,9 @@
     <div class="col mt-2" v-if="menuBook">
       <menu-book></menu-book>
     </div>
+    <div class="col mt-2" v-if="productive">
+      <productive></productive>
+    </div>
   </div>
 </template>
 
@@ -72,6 +75,7 @@ import MenuEditor from "@/components/MenuEditor.vue";
 import MenuMaker from "@/components/MenuMaker.vue";
 import ManageCreds from "@/components/ManageCreds.vue";
 import Reports from "@/components/Reports.vue";
+import Productive from "@/components/Productive.vue";
 
 export default {
   name: "admin",
@@ -81,7 +85,8 @@ export default {
       menuMaker: false,
       menuBook: false,
       manageCreds: false,
-      reports: false
+      reports: false,
+      productive: false
     };
   },
   computed: {},
@@ -92,7 +97,8 @@ export default {
         "menuMaker",
         "menuBook",
         "manageCreds",
-        "reports"
+        "reports",
+        "productive"
       ];
       let newthis = this;
       shows.forEach(j => (newthis[j] = false));
@@ -103,7 +109,8 @@ export default {
     MenuEditor,
     MenuMaker,
     ManageCreds,
-    Reports
+    Reports,
+    Productive
   }
 };
 //   components: {

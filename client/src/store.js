@@ -94,6 +94,9 @@ export default new Vuex.Store({
     removeMeal(state, index) {
       state.currentOrder.splice(index, 1);
     },
+    setMealsByOrderID(state , data){
+      state.mealsByOrderId = data
+    }
 
   },
   actions: {
@@ -450,7 +453,7 @@ export default new Vuex.Store({
       api.get('orders/meals/' + orderId)
         .then(res => {
           console.log(res.data)
-          commit("setMealsByOrderId" , res.data)
+          commit("setMealsByOrderID" , res.data)
         })
     }
 

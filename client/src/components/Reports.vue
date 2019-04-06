@@ -1,5 +1,9 @@
 <template>
-  <order-navigator></order-navigator>
+  <div>
+    <div>
+      <order-navigator :passedOrders="orders"></order-navigator>
+    </div>
+  </div>
 </template>
 
 
@@ -16,17 +20,13 @@
         return this.$store.state.orders
       },
       meals(){
-        return this.$store.state.activeReportMeals
+        return this.$store.state.mealsByOrderId
       }
     },
     mounted(){
       this.$store.dispatch('getOrders')
     },
-    methods: {
-      getMealsByOrderId(orderId){
-            this.$store.dispatch('getMealsByOrderId' , orderId)
-      }
-    },
+    methods: {},
     components: {
       OrderNavigator
     },

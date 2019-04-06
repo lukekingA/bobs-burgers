@@ -35,6 +35,37 @@ router.get('/side', (req, res, next) => {
     res.send(sides)
   })
 })
+
+router.get('/side/:id', (req, res, next) => {
+  Sides.find({
+    orderId: req.params.id
+  }).then(data => {
+    res.send(data)
+  }).catch(err => {
+    res.status(400).send("side not found")
+  })
+})
+
+router.get('/drink/:id', (req, res, next) => {
+  Drinks.find({
+    orderId: req.params.id
+  }).then(data => {
+    res.send(data)
+  }).catch(err => {
+    res.status(400).send("drink not found")
+  })
+})
+
+router.get('/entree/:id', (req, res, next) => {
+  Entrees.find({
+    orderId: req.params.id
+  }).then(data => {
+    res.send(data)
+  }).catch(err => {
+    res.status(400).send("entree not found")
+  })
+})
+
 //POST
 //make empty order
 router.post('/', (req, res, next) => {

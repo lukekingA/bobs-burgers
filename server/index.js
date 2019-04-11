@@ -2,6 +2,7 @@ var express = require('express')
 var bp = require('body-parser')
 var server = express()
 var cors = require('cors')
+var io = require('socket.io')
 
 
 //Sets the port to Heroku's, and the files to the built project 

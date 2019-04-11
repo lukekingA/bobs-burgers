@@ -290,7 +290,7 @@ export default new Vuex.Store({
     },
 
     editDrink({
-
+      commit
     }, newData) {
       console.log(newData);
       api.put('/menu/drinks/' + newData._id, newData).then(res => {

@@ -101,7 +101,7 @@ router.put('/:id', (req, res, next) => {
   })
 })
 
-router.get('/active/', (req, res, next) => {
+router.get('/active', (req, res, next) => {
   Orders.find({
     'activeOrder': true
   }).then(orders => {

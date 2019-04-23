@@ -9,27 +9,21 @@ let schema = new Schema({
     ref: 'Order',
     required: true
   },
-  managerId: {
+  mealId: {
     type: ObjectId,
-    ref: 'User',
-    required: true
-  },
-  employeeId: {
-    type: ObjectId,
-    ref: 'User',
+    ref: 'Meal',
     required: true
   },
   name: {
     type: String,
     required: true
   },
-  // size is either -1,0,1
   size: {
-    type: Number,
+    type: String,
     required: true,
     default: 0
   },
-  cost: {
+  price: {
     type: Number,
     required: true
   },

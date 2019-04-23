@@ -1,16 +1,14 @@
 <template>
-  <div id="logo">
-    <nav class="navbar">
+  <div id="logo" class="sticky-bottom">
+    <nav class="navbar sticky-top">
       <a class="navbar-brand">
         <img src="./assets/bob_logo_sm.png" width="65" height="65" alt>
-        <!-- <i class="fas fa-hamburger"></i>BOBS BURGERS -->
       </a>
+      <p class="time">{{time}}</p>
       <div class="btn-group">
         <button @click="logout" v-if="user._id" class="btn my-2 my-sm-0">
           <i class="fas fa-door-open"></i>
         </button>
-
-
 
         <button v-if="!user._id" @click="showLogin = !showLogin" class="btn my-2 my-sm-0">
           <i class="fas fa-door-closed"></i>
@@ -23,14 +21,11 @@
           <button class="btn my-2 my-sm-0" type="submit">GO!</button>
         </form>
 
-
-
-
         <button v-if="!user._id" @click="showRegister = !showRegister" class="btn my-2 my-sm-0">
           <i class="fas fa-user-plus"></i>
         </button>
         <form v-if="showRegister" class="form-inline" @submit.prevent="register">
-          <input v-model="newAccount.email" class="form-control mr-sm-2" type="search" placeholder="Email"
+          <input v-model="newAccount.email" class="form-control rounded pl-3 mr-1" type="search" placeholder="Email"
             aria-label="Search">
           <input v-model="newAccount.name" class="form-control mr-sm-2" type="search" placeholder="Username"
             aria-label="Search">
@@ -40,7 +35,7 @@
         </form>
       </div>
     </nav>
-    <div id="app" class="container-fluid">
+    <div id="app" class="container-fluid app-height">
       <router-view></router-view>
     </div>
     <!-- Modal -->
@@ -55,15 +50,14 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            Where do you want to go?
-          </div>
+          <div class="modal-body">Where do you want to go?</div>
           <div class="modal-footer d-flex justify-content-center">
-            <button @click="$router.push({name: 'order'})" type="button" class="btn btn-primary"><i
-                class="fas fa-cash-register"></i></button>
-            <button type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i></button>
-            <button @click="$router.push({name: 'admin'})" v-if="user.manager" type="button" class="btn btn-primary"><i
-                class="fas fa-chart-bar"></i></button>
+            <button data-dismiss="modal" @click="$router.push({name: 'order'})" type="button"
+              class="btn btn-primary">Register</button>
+            <button data-dismiss="modal" @click="$router.push({name: 'kitchen'})" type="button"
+              class="btn btn-primary">Kitchen</button>
+            <button data-dismiss="modal" @click="$router.push({name: 'admin'})" v-if="user.manager" type="button"
+              class="btn btn-primary">Admin Tools</button>
           </div>
         </div>
         <!-- content 2 -->
@@ -74,14 +68,13 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body text-center">
-            00:00
-          </div>
+          <div class="modal-body text-center">00:00</div>
           <div class="modal-footer d-flex justify-content-center">
-            <button type="button" class="btn btn-primary"><i class="fas fa-calendar-alt"></i></button>
           </div>
         </div>
-
+        <div>
+          <p>Please Login</p>
+        </div>
       </div>
     </div>
   </div>
@@ -91,7 +84,9 @@
 
 
 <script>
-  import $ from 'jquery'
+  import $ from "jquery";
+  import Moment from "moment";
+
   export default {
     name: "app",
     data() {
@@ -102,48 +97,62 @@
         showLogin: false,
         showRegister: false,
         newAccount: {},
+        time: ""
       };
     },
     mounted() {
-      this.$store.dispatch('authenticate')
+      this.$store.dispatch("authenticate");
+      this.formatTime();
     },
     computed: {
       user() {
-        return this.$store.state.user;
+        return this.$store.state.user
       },
       loginModalComputed() {
         return this.$store.state.loginModal
-      },
+      }
     },
     watch: {
-      user: function (val) {
-        $('#loginModal').modal('show')
+      user: function () {
+        $("#loginModal").modal("show")
       }
     },
     methods: {
       register() {
         let data = this.newAccount;
         data.manager = false;
-        this.$store.dispatch("register", this.newAccount);
-        this.newAdmin = {};
+        this.$store.dispatch("register", this.newAccount)
+        this.newAdmin = {}
       },
       login() {
-        this.showLogin = false;
+        this.showLogin = false
         this.$store.dispatch("login", this.creds)
       },
       logout() {
-        this.$store.dispatch("logout");
+        this.$store.dispatch("logout")
       },
+      formatTime() {
+
+        this.time = Moment().format("MMMM DD YYYY, h:mm:ss a")
+        setTimeout(this.formatTime, 1000)
+      }
     }
-  }
+  };
 </script>
 
 <style>
+  .time {
+    font-weight: 700;
+
+    font-size: 20px;
+    color: rgb(54, 54, 54);
+  }
+
   img {
-    margin-top: -10;
-    margin-bottom: -30;
-    padding-top: -20;
-    padding-bottom: -20;
+    margin-top: -20px;
+    margin-bottom: -30px;
+    padding-top: -20px;
+    padding-bottom: -20px;
   }
 
   html,
@@ -151,10 +160,15 @@
     height: 100vh;
   }
 
+  li {
+    list-style: none;
+  }
+
   #logo {
     background: url("assets/bobs-backgroundArtboard 1-100.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: fixed;
     height: 100%;
     width: auto;
 
@@ -164,18 +178,25 @@
 
   .navbar {
     background-color: rgb(0, 198, 215);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 90px;
   }
 
   .fas {
-    font-size: 3vh
+    font-size: 3vh;
   }
 
   .drop-shadow {
     filter: drop-shadow(3px 5px 5px rgb(53, 52, 52));
   }
 
-  /* #app {
-  background-color: lightskyblue;
-  height: 100vh;
-} */
+  .dropdown-item:hover {
+    cursor: pointer;
+  }
+
+  .app-height {
+    height: calc(100vh - 95px)
+  }
 </style>

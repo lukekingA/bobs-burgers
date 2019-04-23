@@ -23,6 +23,11 @@ let schema = new Schema({
     required: true,
     default: false
   },
+  employmentStatus: {
+    type: Boolean,
+    required: true,
+    default: true
+  },
   hash: {
     type: String,
     required: true

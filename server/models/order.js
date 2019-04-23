@@ -7,6 +7,7 @@ let schemaName = 'Order'
 let schema = new Schema({
   price: {
     type: Number,
+    default: 0,
     required: true
   },
   managerId: {
@@ -15,14 +16,18 @@ let schema = new Schema({
     required: true
   },
   employeeId: {
-    type: ObjectId,
-    ref: 'User',
+    type: String,
     required: true
   },
-  meals: [{
-    type: ObjectId,
-    ref: 'OrderId'
-  }]
+  activeOrder: {
+    type: Boolean,
+    required: true,
+    default: true
+  },
+  orderIdentifer: {
+    type: String,
+  },
+
 }, {
   timestamps: true
 })

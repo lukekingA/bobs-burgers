@@ -5,23 +5,36 @@ import Kitchen from './views/Kitchen.vue'
 import webApp from './views/Web-App.vue'
 import Login from './views/Login.vue'
 import Admin from './views/Admin.vue'
+import Store from './store'
 
 Vue.use(Router)
 
+
+function guard(to, from, next) {
+  if (Store.state.user._id) {
+
+    next(); // allow to enter route
+  } else {
+    next('/'); // go to '/login';
+  }
+}
+
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/admin',
+      beforeEnter: guard,
       name: 'admin',
       component: Admin,
     },
     {
       path: '/kitchen',
+      beforeEnter: guard,
       name: 'kitchen',
       component: Kitchen
     },
     {
       path: '/order',
+      beforeEnter: guard,
       name: 'order',
       props: true,
       component: Order

@@ -48,14 +48,16 @@
                     <li v-for="item in newEntree.components">{{item.name}} for $ {{item.cost}}</li>
                   </ul>
                   <div class="d-flex justify-content-around border-top pt-2">
-                    <button @click="clearNewEntree" class="btn btn-sm text-success bg-light border-dark mr-3 shadow"><i
-                        class="fas fa-check"></i></button>
+                    <button @click="clearNewEntree" class="btn btn-sm text-success bg-light border-dark mr-3 shadow">
+                      <i class="fas fa-check"></i>
+                    </button>
                     <button @click="deleteEntree(newEntree._id)"
-                      class="btn btn-sm text-danger bg-light border-dark shadow"><i class="fas fa-times"></i></button>
+                      class="btn btn-sm text-danger bg-light border-dark shadow">
+                      <i class="fas fa-times"></i>
+                    </button>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -63,20 +65,18 @@
         <div v-show="menuType == 'drink'" class="row">
           <div class="col-6">
             <H6 class="ml-2">Drinks</H6>
-            <div class="d-flex flex-column">
-              <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
-              <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
-            </div>
+            <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
+            <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
             <div>
-              <input type="radio" id="sizes" value="-1" v-model="menuItemSize">
+              <input type="radio" id="sizes" value="Small" v-model="menuItemSize">
               <label class="ml-1" for="sizes">Small</label>
             </div>
             <div>
-              <input type="radio" id="sizem" value="0" v-model="menuItemSize">
+              <input type="radio" id="sizem" value="Medium" v-model="menuItemSize">
               <label class="ml-1" for="sizem">Medium</label>
             </div>
             <div>
-              <input type="radio" id="sizel" value="1" v-model="menuItemSize">
+              <input type="radio" id="sizel" value="Large" v-model="menuItemSize">
               <label class="ml-1" for="sizel">Large</label>
             </div>
             <input type="checkbox" id="activateDrink" value="true" v-model="entreeItemActive">
@@ -92,20 +92,18 @@
         <div v-show="menuType == 'side'" class="row">
           <div class="col-6">
             <H6 class="ml-2">Sides</H6>
-            <div class="d-flex flex-column">
-              <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
-              <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
-            </div>
+            <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemName" placeholder="name">
+            <input class="rounded pl-3 mr-1 mb-2" type="text" v-model="menuItemPrice" placeholder="price">
             <div>
-              <input type="radio" id="sizeS" value="-1" v-model="menuItemSize">
+              <input type="radio" id="sizeS" value="Small" v-model="menuItemSize">
               <label class="ml-1" for="sizeS">Small</label>
             </div>
             <div>
-              <input type="radio" id="sizeM" value="0" v-model="menuItemSize">
+              <input type="radio" id="sizeM" value="Medium" v-model="menuItemSize">
               <label class="ml-1" for="sizeM">Medium</label>
             </div>
             <div>
-              <input type="radio" id="sizeL" value="1" v-model="menuItemSize">
+              <input type="radio" id="sizeL" value="Large" v-model="menuItemSize">
               <label class="ml-1" for="sizeL">Large</label>
             </div>
             <input type="checkbox" id="activateSide" value="true" v-model="entreeItemActive">
@@ -116,28 +114,67 @@
             <button @click="addSide" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
           </div>
         </div>
+        <!-- Sides Ends -->
+        <!-- Add Ingredient -->
       </div>
       <!-- Sides Ends -->
       <div class="col-6">
         <div class="add-entree-item row">
           <div class="col-6">
-
-            <button @click="addIngredient = !addIngredient"
-              class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-3">Add
-              Ingredient</button>
-            <div v-show="addIngredient">
-              <h6>Ingredients</h6>
-              <form class="mt-2" @submit.prevent="addEntreeItem">
-                <div class="d-flex flex-column">
-                  <input class="rounded pl-3 mb-2" type="text" placeholder="name" v-model="entreeItemName">
-                  <input class="rounded pl-3 mb-2" type="text" placeholder="cost" v-model="entreeItemCost">
-                </div>
-                <button type="submit" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
-              </form>
+            <div class="mb-3">
+              <button @click="addIngredient = !addIngredient"
+                class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-3 button-width">
+                Add
+                Ingredient
+              </button>
+              <div v-show="addIngredient">
+                <h6>Ingredients</h6>
+                <form class="mt-2" @submit.prevent="addEntreeItem">
+                  <div class="d-flex flex-column">
+                    <input class="rounded pl-3 mb-2" type="text" placeholder="name" v-model="entreeItemName">
+                    <input class="rounded pl-3 mb-2" type="text" placeholder="cost" v-model="entreeItemCost">
+                  </div>
+                  <button type="submit" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
+                </form>
+              </div>
+            </div>
+            <div>
+              <button @click="addComments = !addComments"
+                class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-4 button-width">
+                Add
+                Comments
+              </button>
+              <div v-show="addComments">
+                <h6>Comments</h6>
+                <form class="mt-2" @submit.prevent="addComment">
+                  <div class="d-flex flex-column">
+                    <input class="rounded pl-3 mb-2" type="text" placeholder="comment" v-model="commentName">
+                  </div>
+                  <button type="submit" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
+                </form>
+              </div>
+            </div>
+            <div>
+              <button @click="changeTax = !changeTax"
+                class="btn rounded drop-shadow bg-secondary dropdown-toggle text-light border border-light mb-4 button-width">
+                Change Tax
+              </button>
+              <div v-show="changeTax">
+                <h6>Tax Rate</h6>
+                <form class="mt-2" @submit.prevent="changeTaxRate">
+                  <div class="d-flex flex-column">
+                    <input class="rounded pl-3 mb-2" type="text" placeholder="tax rate" v-model="taxRate">
+                  </div>
+                  <button type="submit" class="btn bg-dark border-dark text-light btn-sm ml-2 mt-1">Submit</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- new comments -->
+
+      <!-- end of comments -->
     </div>
   </div>
 </template>
@@ -148,7 +185,11 @@
     name: "menu-maker",
     data() {
       return {
+        changeTax: false,
+        taxRate: '',
         addIngredient: false,
+        addComments: false,
+        commentName: '',
         menuType: "",
         menuItemName: "",
         menuItemSize: "",
@@ -167,11 +208,15 @@
         return this.$store.state.entreeItems;
       },
       newEntree() {
-        return this.$store.state.newEntree
+        return this.$store.state.newEntree;
+      },
+      comments() {
+        return this.$store.state.comments;
       }
     },
     mounted() {
       this.$store.dispatch("getEntreeItems");
+      this.$store.dispatch("getComments");
     },
     methods: {
       fieldReset() {
@@ -185,29 +230,26 @@
           cost: this.entreeItemCost
         };
         this.$store.dispatch("addEntreeItem", data);
-
-        this.entreedItemName = "";
+        this.entreeItemName = "";
         this.entreeItemCost = 0;
       },
       addEntree() {
-        let comp = []
+        let comp = [];
         this.entreeItems.forEach((item, index) => {
           if (this.currentEntreeItems[index]) {
-            let loop = this.currentEntreeItemsCount[index]
+            let loop = this.currentEntreeItemsCount[index];
             if (!loop) {
-              loop = 1
+              loop = 1;
             }
             for (let i = 0; i < loop; i++) {
               comp.push(item);
             }
-
           }
         });
-
         let data = {
           entree: {
             name: this.menuItemName,
-            price: this.menuItemPrice,
+            price: parseFloat(this.menuItemPrice).toFixed(2),
             active: this.entreeItemActive
           },
           entreeItems: {
@@ -215,29 +257,29 @@
           }
         };
         this.$store.dispatch("addEntree", data);
-        this.fieldReset()
+        this.fieldReset();
         this.currentEntreeItems = [];
         this.currentEntreeItemsCount = [];
         this.entreeItemActive = false;
       },
       deleteEntree(id) {
-        this.$store.dispatch('deleteEntree', id)
-        this.menuType = ''
+        this.$store.dispatch("deleteEntree", id);
+        this.menuType = "";
       },
 
       clearNewEntree() {
-        this.$store.dispatch('clearNewEntree')
-        this.menuType = ''
+        this.$store.dispatch("clearNewEntree");
+        this.menuType = "";
       },
       addDrink() {
         let data = {
           name: this.menuItemName,
           size: this.menuItemSize,
-          price: this.menuItemPrice,
+          price: parseFloat(this.menuItemPrice).toFixed(2),
           active: this.entreeItemActive
         };
         this.$store.dispatch("addDrink", data);
-        this.fieldReset()
+        this.fieldReset();
         this.menuItemSize = "";
         this.entreeItemActive = false;
       },
@@ -245,15 +287,32 @@
         let data = {
           name: this.menuItemName,
           size: this.menuItemSize,
-          price: this.menuItemPrice,
+          price: parseFloat(this.menuItemPrice).toFixed(2),
           active: this.entreeItemActive
         };
         this.$store.dispatch("addSide", data);
-        this.fieldReset()
+        this.fieldReset();
         this.menuItemSize = "";
         this.entreeItemActive = false;
+      },
+      addComment() {
+        let data = {
+          comment: this.commentName
+        };
+        this.$store.dispatch("addComment", data);
+
+        this.commentName = "";
+      },
+      changeTaxRate() {
+        let data = {
+          tax: parseInt(this.taxRate)
+        }
+        this.$store.dispatch('changeTax', data)
+        this.changeTaxRate = false
+        this.taxRate = ''
       }
     },
+
     components: {}
   };
 </script>
@@ -262,6 +321,10 @@
 <style scoped>
   .dropdown-item:hover {
     cursor: pointer;
+  }
+
+  .button-width {
+    width: 10rem;
   }
 
   input[type="number"] {

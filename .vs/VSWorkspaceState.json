@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\client",
+    "\\client\\src",
+    "\\client\\src\\components",
+    "\\client\\src\\components\\Dropdowns",
+    "\\client\\src\\views",
+    "\\server",
+    "\\server\\auth",
+    "\\server\\db",
+    "\\server\\menuModels",
+    "\\testdb"
+  ],
+  "SelectedNode": "\\server\\routes\\menu-routes.js",
+  "PreviewInSolutionExplorer": false
+}

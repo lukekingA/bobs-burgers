@@ -22,17 +22,21 @@
           Book
         </small>
       </button>
-      <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
+      <<<<<<< HEAD <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('manageCreds')">
-        <small>
-          Manage
-          Creds
-        </small>
-      </button>
-      <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-        @click="switchView('reports')">
-        <small>Reports</small>
-      </button>
+        =======
+        <button class="mb-2 right-rounded bg-dark text-light border border-light tab-height"
+          @click="switchView('manageCreds')">
+          >>>>>>> 28a7d04902e9745542a3b3b07313007358703799
+          <small>
+            Manage
+            Creds
+          </small>
+        </button>
+        <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
+          @click="switchView('reports')">
+          <small>Reports</small>
+        </button>
     </div>
     <div class="col mt-2" v-if="editMenu">
       <menu-editor></menu-editor>

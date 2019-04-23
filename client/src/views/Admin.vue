@@ -1,42 +1,45 @@
 <template>
   <div class="admin row">
     <div class="col-1 d-flex flex-column">
-      <button class="mb-2 mt-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-        @click="switchView('editMenu')">
+      <button
+        class="mb-2 mt-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
+        @click="switchView('editMenu')"
+      >
         <small>
-          Edit
-          Menu
+          Edit Menu
         </small>
       </button>
-      <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-        @click="switchView('menuMaker')">
+      <button
+        class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
+        @click="switchView('menuMaker')"
+      >
         <small>
-          Menu
-          Maker
+          Menu Maker
         </small>
       </button>
-      <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-        @click="switchView('menuBook')">
+      <button
+        class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
+        @click="switchView('menuBook')"
+      >
         <small>
-          Menu
-          Book
+          Menu Book
         </small>
       </button>
-      <<<<<<< HEAD <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-        @click="switchView('manageCreds')">
-        =======
-        <button class="mb-2 right-rounded bg-dark text-light border border-light tab-height"
-          @click="switchView('manageCreds')">
-          >>>>>>> 28a7d04902e9745542a3b3b07313007358703799
-          <small>
-            Manage
-            Creds
-          </small>
-        </button>
-        <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-          @click="switchView('reports')">
-          <small>Reports</small>
-        </button>
+
+      <button
+        class="mb-2 right-rounded bg-dark text-light border border-light tab-height"
+        @click="switchView('manageCreds')"
+      >
+        <small>
+          Manage Creds
+        </small>
+      </button>
+      <button
+        class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
+        @click="switchView('reports')"
+      >
+        <small>Reports</small>
+      </button>
     </div>
     <div class="col mt-2" v-if="editMenu">
       <menu-editor></menu-editor>
@@ -53,15 +56,14 @@
   </div>
 </template>
 
-
 <script>
-  import MenuEditor from "@/components/MenuEditor.vue";
-  import MenuMaker from "@/components/MenuMaker.vue";
-  import ManageCreds from "@/components/ManageCreds.vue";
-  import Reports from "@/components/Reports.vue";
+  import MenuEditor from '@/components/MenuEditor.vue';
+  import MenuMaker from '@/components/MenuMaker.vue';
+  import ManageCreds from '@/components/ManageCreds.vue';
+  import Reports from '@/components/Reports.vue';
 
   export default {
-    name: "admin",
+    name: 'admin',
     data() {
       return {
         editMenu: true,
@@ -75,11 +77,11 @@
     methods: {
       switchView(selection) {
         let shows = [
-          "editMenu",
-          "menuMaker",
-          "menuBook",
-          "manageCreds",
-          "reports"
+          'editMenu',
+          'menuMaker',
+          'menuBook',
+          'manageCreds',
+          'reports'
         ];
         let newthis = this;
         shows.forEach(j => (newthis[j] = false));
@@ -90,12 +92,10 @@
       MenuEditor,
       MenuMaker,
       ManageCreds,
-      Reports,
-
+      Reports
     }
   };
 </script>
-
 
 <style scoped>
   .tab-height {

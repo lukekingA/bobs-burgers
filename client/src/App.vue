@@ -197,6 +197,7 @@
   }
 
   .app-height {
-    height: calc(100vh - 95px)
+    height: calc(100vh - 95px);
+    margin-top: 90px;
   }
 </style>

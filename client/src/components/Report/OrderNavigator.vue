@@ -11,37 +11,19 @@
       <div class="col-4 mt-3">
         <div class="card text-center">
           <div class="card-header tab-card-header">
-            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-              <li class="nav-item">
-                  <a class="nav-link" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true">Orders</a>
-              </li>
-            </ul>
+            <h4>Orders</h4>
           </div>
           <div class="card-body scrollingBox">
-            <h5 @click="getMealsByOrderId(order._id)" v-for="order in passedOrders" class="card-text d-flex">{{order.price}}</h5>
-          </div>
-          <div class="card-footer text-muted">
+            <p @click="getMealsByOrderId(order._id)" v-for="order in passedOrders"
+              class="card-text d-flex justify-content-between order">
+              <span>{{order.orderIdentifer}}</span>
+              <span>{{order.updatedAt | dateFormat}}</span>
+              <span>{{order.price.toFixed(2)}}</span>
+            </p>
           </div>
         </div>
         <!-- SEARCHBAR -->
-        <form class="pt-3">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-            <!-- PREPEND -->
-              <div class="input-group-prepend">
-                <button class="btn dropdown-toggler colorMe" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-sort-down"></i></button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Employee Id</a>
-                  <a class="dropdown-item" href="#">Manager Id</a>
-                  <!-- <div role="separator" class="dropdown-divider"></div> -->
-                  <!-- <a class="dropdown-item" href="#">Separated link</a> -->
-                </div>
-              </div>
-            </div>
-            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-            <button><i class="fas fa-search"></i></button>
-          </div>
-        </form>
+
       </div>
       <!-- MEALS CARD -->
       <div class="col-4">
@@ -49,35 +31,64 @@
           <div class="card-header tab-card-header">
             <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
               <li class="nav-item">
-                  <a class="nav-link" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true">Meals</a>
+                <a class="nav-link" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One"
+                  aria-selected="true">Meals</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false">Drinks</a>
+                <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two"
+                  aria-selected="false">Drinks</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="Three" aria-selected="false">Entrees</a>
+                <a class="nav-link" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="Three"
+                  aria-selected="false">Entrees</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" id="four-tab" data-toggle="tab" href="#four" role="tab" aria-controls="Four" aria-selected="false">Sides</a>
+                <a class="nav-link" id="four-tab" data-toggle="tab" href="#four" role="tab" aria-controls="Four"
+                  aria-selected="false">Sides</a>
               </li>
             </ul>
           </div>
           <div class="tab-content" id="myTabContent">
             <div class="scrollingBox tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
-              <h5 v-for="meal in meals" class="card-text d-flex">{{meal.price}}</h5>
+              <h5>Meals in Order</h5>
+              <div v-for="(meal, index) in meals"
+                class="card-text p-1 mt-2 border-bottom border-right border-secondary rounded">
+                <p class="mb-0">{{index + 1}}.</p>
+                <ul class="mb-0">
+                  <li v-for="drink in drinks" v-if="drink.mealId == meal._id"><small>{{drink.name}}</small></li>
+                </ul>
+                <ul class="mb-0">
+                  <li v-for="side in sides" v-if="side.mealId == meal._id"><small>{{side.name}}</small></li>
+                </ul>
+                <ul class="mb-0">
+                  <li v-for="entree in entrees" v-if="entree.mealId == meal._id"><small>{{entree.name}}</small></li>
+                </ul>
+
+                <div class="d-flex justify-content-between border-top border-secondary">
+                  <small>Meal total:</small>
+                  <span>${{meal.price.toFixed(2)}}</span>
+                </div>
+              </div>
             </div>
             <div class="scrollingBox tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
-              <h5 v-for="drink in drinks" class="card-text d-flex">{{drink.name}} ({{drink.price}})</h5>
+              <div v-for="(drink, index) in drinks" class="card-text d-flex justify-content-between mt-2">
+                <span>{{index + 1}}. {{drink.name}}</span>
+                <span>${{drink.price.toFixed(2)}}</span></div>
             </div>
             <div class="scrollingBox tab-pane fade p-3" id="three" role="tabpanel" aria-labelledby="three-tab">
-              <h5 v-for="entree in entrees" class="card-text d-flex">{{entree.name}} ({{entree.price}})</h5>
+              <div v-for="(entree, index) in entrees" class="card-text d-flex justify-content-between mt-2">
+                <span>{{index + 1}}. {{entree.name}}</span>
+                <span>${{entree.price.toFixed(2)}}</span></div>
             </div>
             <div class="scrollingBox tab-pane fade p-3" id="four" role="tabpanel" aria-labelledby="four-tab">
-              <h5 v-for="side in sides" class="card-text d-flex">{{side.name}} ({{side.price}})</h5>
+              <div v-for="(side, index) in sides" class="card-text d-flex justify-content-between mt-2">
+                <span>{{index + 1}}.
+                  {{side.name}}</span>
+                <span>${{side.price.toFixed(2)}}</span></div>
             </div>
             <div class="card-footer text-muted">
-            <!-- 2 days ago -->
-          </div>
+
+            </div>
           </div>
         </div>
       </div>
@@ -87,6 +98,7 @@
 
 
 <script>
+  import Moment from 'moment'
   export default {
     name: 'order-navigator',
     props: [
@@ -96,49 +108,59 @@
       return {}
     },
     computed: {
-      meals(){
+      meals() {
         return this.$store.state.mealsByOrderId
       },
-      drinks(){
+      drinks() {
         return this.$store.state.drinksByOrderId
       },
-      entrees(){
+      entrees() {
         return this.$store.state.entreesByOrderId
       },
-      sides(){
+      sides() {
         return this.$store.state.sidesByOrderId
       }
     },
-    mounted(){},
+    mounted() {},
     methods: {
-      getMealsByOrderId(orderId){
-        this.$store.dispatch('getMealsByOrderId' , orderId)
-        this.$store.dispatch('getDrinksByOrderId' , orderId)
-        this.$store.dispatch('getEntreesByOrderId' , orderId)
-        this.$store.dispatch('getSidesByOrderId' , orderId)
+      getMealsByOrderId(orderId) {
+        this.$store.dispatch('getMealsByOrderId', orderId)
+        this.$store.dispatch('getDrinksByOrderId', orderId)
+        this.$store.dispatch('getEntreesByOrderId', orderId)
+        this.$store.dispatch('getSidesByOrderId', orderId)
+      }
+    },
+    filters: {
+      dateFormat: function (date) {
+        return Moment(date).format('MM-DD-YY hh:mm')
       }
     },
     components: {},
   }
 </script>
-  
+
 
 <style scoped>
-  .scrollingBox{
+  .scrollingBox {
     height: 40vh;
-    overflow-y:auto;
+    overflow-y: auto;
   }
- 
-  h6:hover {
+
+  .order {
+    cursor: pointer;
+    color: blue;
+  }
+
+  .order:hover {
     color: #00c6d7;
 
   }
-  .colorMe{
+
+  .colorMe {
     background-color: #e3e3e3;
   }
-  .fas{
+
+  .fas {
     font-size: 20px
   }
-  
-
 </style>

@@ -152,7 +152,7 @@
     },
     computed: {
       taxRate() {
-        return this.$store.state.taxRate / 100
+        return this.$store.state.taxRate[0].tax / 100
       },
       curMealFilter() {
         let out = {}

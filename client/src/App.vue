@@ -71,6 +71,9 @@
           <div class="modal-body text-center">00:00</div>
           <div class="modal-footer d-flex justify-content-center"></div>
         </div>
+        <div>
+          <p>Please Login</p>
+        </div>
       </div>
     </div>
   </div>
@@ -145,7 +148,7 @@
   }
 
   img {
-    margin-top: -10px;
+    margin-top: -20px;
     margin-bottom: -30px;
     padding-top: -20px;
     padding-bottom: -20px;
@@ -174,10 +177,10 @@
 
   .navbar {
     background-color: rgb(0, 198, 215);
-    overflow: hidden;
     position: fixed;
     top: 0;
     width: 100%;
+    height: 90px;
   }
 
   .fas {
@@ -193,6 +196,7 @@
   }
 
   .app-height {
-    height: calc(100vh -91px);
+    height: calc(100vh - 95px);
+    margin-top: 90px;
   }
 </style>

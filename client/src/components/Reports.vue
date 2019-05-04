@@ -1,6 +1,9 @@
 <template>
-  <order-navigator></order-navigator>
-
+  <div>
+    <div>
+      <order-navigator :passedOrders="orders"></order-navigator>
+    </div>
+  </div>
 </template>
 
 
@@ -8,17 +11,38 @@
   export default {
     name: "reports",
     data() {
-      return {
-        showTo: false,
-        showFrom: false
-      };
+      return {}
     },
-    computed: {},
+    computed: {
+      orders() {
+        const orders = this.$store.state.orders
+        return orders.filter(o => o.price)
+      },
+      meals() {
+        return this.$store.state.mealsByOrderId
+      }
+    },
+    mounted() {
+      this.$store.dispatch('getOrders')
+    },
     methods: {},
-    components: {}
-  };
+    components: {
+      OrderNavigator
+    },
+  }
 </script>
 
 
 <style scoped>
+  .scrollingBox {
+    background-color: white;
+    height: 40vh;
+    overflow-y: auto;
+    border-radius: 2.5pt;
+  }
+
+  p:hover {
+    color: #00c6d7;
+
+  }
 </style>

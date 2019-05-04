@@ -4,16 +4,19 @@ import Axios from 'axios';
 import router from './router';
 
 Vue.use(Vuex);
+let base = window.location.host.includes('localhost:8080') ?
+  'http://localhost:3000/' :
+  '/';
 
 let auth = Axios.create({
-  baseURL: '//localhost:3000/auth/',
-  // timeout: 3000,
+  baseURL: base + 'auth/',
+  timeout: 6000,
   withCredentials: true
 });
 
 let api = Axios.create({
-  baseURL: '//localhost:3000/api/',
-  //timeout: 6000,
+  baseURL: base + 'api/',
+  timeout: 6000,
   withCredentials: true
 });
 
@@ -38,6 +41,10 @@ export default new Vuex.Store({
     buildingMeal: [],
     buildingMealItems: [],
     mealsByOrderId: [],
+    drinksByOrderId: [],
+    entreesByOrderId: [],
+    sidesByOrderId: []
+
   },
   mutations: {
     setUser(state, data) {
@@ -108,7 +115,21 @@ export default new Vuex.Store({
     },
     setRate(state, data) {
       state.taxRate = data
+    },
+    setSidesByOrderID(state, data) {
+      state.sidesByOrderId = data
+    },
+    setEntreesByOrderID(state, data) {
+      state.entreesByOrderId = data
+    },
+    setDrinksByOrderID(state, data) {
+      state.drinksByOrderId = data
+    },
+    setMealsByOrderID(state, data) {
+      state.mealsByOrderId = data
     }
+
+
   },
   actions: {
     //USER
@@ -450,8 +471,34 @@ export default new Vuex.Store({
     }, orderId) {
       api.get('orders/meals/' + orderId)
         .then(res => {
-          console.log(res.data)
-          commit("setMealsByOrderId", res.data)
+          commit("setMealsByOrderID", res.data)
+        })
+    },
+    getDrinksByOrderId({
+      commit,
+      dispatch
+    }, orderId) {
+      api.get('orders/drinks/' + orderId)
+        .then(res => {
+          commit("setDrinksByOrderID", res.data)
+        })
+    },
+    getEntreesByOrderId({
+      commit,
+      dispatch
+    }, orderId) {
+      api.get('orders/entrees/' + orderId)
+        .then(res => {
+          commit("setEntreesByOrderID", res.data)
+        })
+    },
+    getSidesByOrderId({
+      commit,
+      dispatch
+    }, orderId) {
+      api.get('orders/sides/' + orderId)
+        .then(res => {
+          commit("setSidesByOrderID", res.data)
         })
     },
 

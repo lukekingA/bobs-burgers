@@ -4,29 +4,26 @@
       <button class="mb-2 mt-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('editMenu')">
         <small>
-          Edit
-          Menu
+          Edit Menu
         </small>
       </button>
       <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('menuMaker')">
         <small>
-          Menu
-          Maker
+          Menu Maker
         </small>
       </button>
-      <!-- <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
+      <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('menuBook')">
         <small>
-          Menu
-          Book
+          Menu Book
         </small>
-      </button>-->
-      <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
+      </button>
+
+      <button class="mb-2 right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('manageCreds')">
         <small>
-          Manage
-          Creds
+          Manage Creds
         </small>
       </button>
       <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
@@ -59,7 +56,6 @@
   </div>
 </template>
 
-
 <script>
   import MenuEditor from "@/components/MenuEditor.vue";
   import MenuMaker from "@/components/MenuMaker.vue";
@@ -67,8 +63,9 @@
   import Reports from "@/components/Reports.vue";
   import Productive from "@/components/Productive.vue";
 
+
   export default {
-    name: "admin",
+    name: 'admin',
     data() {
       return {
         editMenu: true,
@@ -103,16 +100,7 @@
       Productive
     }
   };
-  //   components: {
-  //     MenuEditor,
-  //     MenuMaker,
-  //     ManageCreds,
-  //     Reports,
-  //     MenuBook
-  //   }
-  // };
 </script>
-
 
 <style scoped>
   .tab-height {
@@ -124,10 +112,3 @@
     border-bottom-right-radius: 20px;
   }
 </style>
-
-<!-- <form v-else @submit.prevent="register">
-      <input type="text" v-model="newUser.name" placeholder="name">
-      <input type="email" v-model="newUser.email" placeholder="email">
-      <input type="password" v-model="newUser.password" placeholder="password">
-      <button type="submit">Create Account</button>
-    </form> -->

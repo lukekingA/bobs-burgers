@@ -12,18 +12,18 @@
   export default {
     name: 'reports',
     data() {
-      return {
-      }
+      return {}
     },
     computed: {
-      orders(){
-        return this.$store.state.orders
+      orders() {
+        const orders = this.$store.state.orders
+        return orders.filter(o => o.price)
       },
-      meals(){
+      meals() {
         return this.$store.state.mealsByOrderId
       }
     },
-    mounted(){
+    mounted() {
       this.$store.dispatch('getOrders')
     },
     methods: {},
@@ -32,19 +32,18 @@
     },
   }
 </script>
-  
+
 
 <style scoped>
-  .scrollingBox{
+  .scrollingBox {
     background-color: white;
     height: 40vh;
-    overflow-y:auto;
+    overflow-y: auto;
     border-radius: 2.5pt;
   }
- 
+
   p:hover {
     color: #00c6d7;
 
   }
-
 </style>

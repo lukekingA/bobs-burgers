@@ -2,38 +2,21 @@
   <div class="kitchen">
     <h1></h1>
     <div class="row">
-      <div class="col-3">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex flex-column justify-content-between h-300 overflow-auto">
-              <h5 class="card-title">Kitchen View</h5>
-              <p class="card-text">Now we are cooking with grease.</p>
-              <!-- break point -->
-              <div class="mt-1">
-                <ul class="pl-1">
-                  <li class="pl-1" v-for="(item,index) in activeOrder" :key="activeOrder +index">
-                    <div class="text-left">
-                      <input class="rounded pl-1" type="text" v-model="activeOrder" placeholder="customer name">
+      <div v-for="order in activeOrders" class="col col-sm-3">
 
-                      <p class="mb-1">{{item.sandwich.name}}</p>
-                      <p class="mb-1">{{item.side.name}}</p>
-                      <p class="mb-1">{{item.drink.name}}</p>
-                      <p class="mb-1">{{item.comment}}</p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <!-- break point -->
-              <button @click="deactivateOrder" class="btn btn-secondary shadow border-dark">Order Complete</button>
-            </div>
-          </div>
-        </div>
+        <active-order :order="order"></active-order>
+
+        <!-- <button @click="deactivateOrder" class="btn btn-secondary shadow border-dark">Order Complete</button>
+        <button @click="sendMessage">message</button> -->
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
+  import io from 'socket.io-client'
+  import ActiveOrder from '@/components/ActiveOrder.vue'
   export default {
     name: "kitchen",
     props: [],
@@ -45,22 +28,35 @@
           side: {},
           comment: ""
         },
-        orderIdentifier: ""
+        orderIdentifier: "",
+        // message: {message: 'message', count: 0},
+        // socket: io('localhost:8080')
       };
     },
     mounted() {
       this.$store.dispatch('getActiveOrders')
     },
     computed: {
-      activeOrder() {
-        return this.$store.state.activeOrders
+      activeOrders() {
+        return this.$store.state.activeOrders.filter(o => o.price)
+      },
+      message() {
+        return this.$store.state.message
       }
     },
     methods: {
       deactivateOrder() {
 
+      },
+      sendMessage() {
+        let data = {
+          val: this.message
+        }
+        this.$store.dispatch('setMessage', data)
       }
     },
-    components: {}
+    components: {
+      ActiveOrder
+    }
   };
 </script>

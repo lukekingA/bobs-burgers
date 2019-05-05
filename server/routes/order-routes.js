@@ -116,6 +116,11 @@ router.post('/', (req, res, next) => {
   })
 })
 
+router.post('/message', (req, res) => {
+  req.body.val++
+  res.send(req.body)
+})
+
 router.put('/:id', (req, res, next) => {
   Orders.findByIdAndUpdate({
     _id: req.params.id

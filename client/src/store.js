@@ -43,7 +43,8 @@ export default new Vuex.Store({
     mealsByOrderId: [],
     drinksByOrderId: [],
     entreesByOrderId: [],
-    sidesByOrderId: []
+    sidesByOrderId: [],
+    message: 0
 
   },
   mutations: {
@@ -127,6 +128,9 @@ export default new Vuex.Store({
     },
     setMealsByOrderID(state, data) {
       state.mealsByOrderId = data
+    },
+    setMessage(state, message) {
+      state.message = message
     }
 
 
@@ -552,8 +556,18 @@ export default new Vuex.Store({
           }
         })
       })
-    }
+    },
     //#endregion
+
+    setMessage({
+      commit
+    }, data) {
+      api.post('orders/message', data).then(res => {
+        commit('setMessage', res.data.val)
+      }).catch(err => {
+        console.log('setMessage error: ' + err)
+      })
+    }
   }
 });
 

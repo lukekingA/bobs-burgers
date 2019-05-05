@@ -2,7 +2,7 @@ var express = require('express')
 var bp = require('body-parser')
 var server = express()
 var cors = require('cors')
-var io = require('socket.io')
+
 
 
 //Sets the port to Heroku's, and the files to the built project 
@@ -64,3 +64,18 @@ server.use('*', (req, res, next) => {
 server.listen(port, () => {
   console.log('server running on port', port)
 })
+
+// const http = require('http')
+// const socServer = http.createServer()
+// const io = require('socket.io')(server);
+
+
+
+// io.on('connection', function (socket) {
+//   debugger
+//   console.log(socket.id)
+//   socket.on('SEND_MESSAGE', function (data) {
+//     console.log(data)
+//     io.emit('MESSAGE', data)
+//   });
+// });

@@ -8,6 +8,7 @@
 
 
 <script>
+  import OrderNavigator from '@/components/Report/OrderNavigator.vue'
   export default {
     name: "reports",
     data() {

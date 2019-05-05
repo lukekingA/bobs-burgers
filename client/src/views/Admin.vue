@@ -13,13 +13,6 @@
           Menu Maker
         </small>
       </button>
-      <button class="mb-2 drop-shadow right-rounded bg-dark text-light border border-light tab-height"
-        @click="switchView('menuBook')">
-        <small>
-          Menu Book
-        </small>
-      </button>
-
       <button class="mb-2 right-rounded bg-dark text-light border border-light tab-height"
         @click="switchView('manageCreds')">
         <small>

@@ -4,15 +4,15 @@
       <a class="navbar-brand">
         <img class="mt-1 mb-1" src="./assets/bob_logo_sm.png" width="65" height="65" alt>
       </a>
-      <div v-if="user">
+      <div v-if="user.name">
         <router-link to="kitchen" v-if="this.$route.name != 'kitchen'"
           class="btn btn-sm bg-dark text-light drop-shadow m-1 border-light"><small>Kitchen</small></router-link>
-        <router-link to="admin" v-if="this.$route.name != 'admin'"
+        <router-link to="admin" v-if="this.$route.name != 'admin' && user.manager"
           class="btn btn-sm bg-dark text-light drop-shadow m-1 border-light"><small>Admin</small></router-link>
         <router-link to="order" v-if="this.$route.name != 'order'"
           class="btn btn-sm bg-dark text-light drop-shadow m-1 border-light"><small>Register</small></router-link>
       </div>
-      <p class="time">{{time}}</p>
+      <p class="time">{{curTime | date}}</p>
       <div class="btn-group">
         <button @click="logout" v-if="user._id" class="btn my-2 my-sm-0">
           <i class="fas fa-door-open"></i>
@@ -34,11 +34,11 @@
         </button>
         <form v-if="showRegister" class="form-inline" @submit.prevent="register">
           <input v-model="newAccount.email" class="form-control rounded pl-3 mr-1" type="search" placeholder="Email"
-            aria-label="Search">
+            autofocus aria-label="Search">
           <input v-model="newAccount.name" class="form-control mr-sm-2" type="search" placeholder="Username"
             aria-label="Search">
           <input v-model="newAccount.password" class="form-control mr-sm-2" type="search" placeholder="Password"
-            aria-label="Search">
+            minlength="5" aria-label="Search">
           <button class="btn my-2 my-sm-0" type="submit">GO!</button>
         </form>
       </div>
@@ -76,7 +76,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body text-center">00:00</div>
+          <div class="modal-body text-center">{{new Date() | time}}</div>
           <div class="modal-footer d-flex justify-content-center"></div>
         </div>
         <!-- <div>
@@ -104,12 +104,12 @@
         showLogin: false,
         showRegister: false,
         newAccount: {},
-        time: ""
+        curTime: Date.now()
       };
     },
     mounted() {
       this.$store.dispatch("authenticate");
-      this.formatTime();
+      this.setCurTime();
     },
     computed: {
       user() {
@@ -124,24 +124,38 @@
         $("#loginModal").modal("show");
       }
     },
+    filters: {
+      time: function (val) {
+        return Moment(val).format('hh:mm:ss')
+      },
+      date: function (val) {
+        return Moment(val).format("MMMM DD YYYY, h:mm a")
+      }
+    },
     methods: {
       register() {
-        console.log(this.newAccount);
         let data = this.newAccount;
         data.manager = false;
         this.$store.dispatch("register", this.newAccount);
-        this.newAdmin = {};
+        this.newAccount = {};
+        this.showRegister = !this.showRegister
+        this.showLogin = !this.showLogin
       },
       login() {
         this.showLogin = false;
         this.$store.dispatch("login", this.creds);
+        this.creds = {}
       },
       logout() {
         this.$store.dispatch("logout");
       },
-      formatTime() {
-        this.time = Moment().format("MMMM DD YYYY, h:mm:ss a");
-        setTimeout(this.formatTime, 1000);
+      setCurTime() {
+        let newThis = this
+        let timeInterval = setInterval(
+          function () {
+            newThis.curTime = Date.now()
+          }, 60000
+        )
       }
     }
   }

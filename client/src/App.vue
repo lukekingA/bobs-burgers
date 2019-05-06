@@ -4,7 +4,7 @@
       <a class="navbar-brand">
         <img class="mt-1 mb-1" src="./assets/bob_logo_sm.png" width="65" height="65" alt>
       </a>
-      <div v-if="!user">
+      <div v-if="user">
         <router-link to="kitchen" v-if="this.$route.name != 'kitchen'"
           class="btn btn-sm bg-dark text-light drop-shadow m-1 border-light"><small>Kitchen</small></router-link>
         <router-link to="admin" v-if="this.$route.name != 'admin'"

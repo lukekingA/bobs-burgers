@@ -1,13 +1,14 @@
 <template>
   <div class="active-order">
     <div class="bg-light rounded p-2 m-2 shadow">
-      <h5>{{order.orderIdentifer}}</h5>
+      <h5 class="border-bottom">{{order.orderIdentifer}}</h5>
       <ul>
         <li v-for="item in orderItems">
           <p class="mb-0"><small>{{item.name}}</small></p>
         </li>
       </ul>
-      <p>{{order.price.toFixed(2)}}</p>
+      <p class="text-right mb-1">$ {{order.price.toFixed(2)}}</p>
+      <slot></slot>
     </div>
 
   </div>

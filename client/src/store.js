@@ -45,7 +45,6 @@ export default new Vuex.Store({
     entreesByOrderId: [],
     sidesByOrderId: [],
     message: 0
-
   },
   mutations: {
     setUser(state, data) {
@@ -88,16 +87,16 @@ export default new Vuex.Store({
       state.buildingOrder = {};
     },
     setOrders(state, data) {
-      state.orders = data
+      state.orders = data;
     },
     setActiveOrders(state, data) {
-      state.activeOrders = data
+      state.activeOrders = data;
     },
     activeOrderItems(state, data) {
-      state.activeOrderItems.push(data)
+      state.activeOrderItems.push(data);
     },
     clearActOrdItems(state) {
-      state.activeOrderItems = []
+      state.activeOrderItems = [];
     },
     employeeRegister(state, data) {
       state.employee = data;
@@ -115,25 +114,23 @@ export default new Vuex.Store({
       state.currentOrder.splice(index, 1);
     },
     setRate(state, data) {
-      state.taxRate = data
+      state.taxRate = data;
     },
     setSidesByOrderID(state, data) {
-      state.sidesByOrderId = data
+      state.sidesByOrderId = data;
     },
     setEntreesByOrderID(state, data) {
-      state.entreesByOrderId = data
+      state.entreesByOrderId = data;
     },
     setDrinksByOrderID(state, data) {
-      state.drinksByOrderId = data
+      state.drinksByOrderId = data;
     },
     setMealsByOrderID(state, data) {
-      state.mealsByOrderId = data
+      state.mealsByOrderId = data;
     },
     setMessage(state, message) {
-      state.message = message
+      state.message = message;
     }
-
-
   },
   actions: {
     //USER
@@ -153,7 +150,7 @@ export default new Vuex.Store({
     logout({
       commit
     }) {
-      auth.delete('logout').then(res => {
+      auth.delete('logout').then(() => {
         commit('setUser', {});
         router.push({
           name: 'login'
@@ -171,7 +168,7 @@ export default new Vuex.Store({
           //   name: 'boards'
           // })
         })
-        .catch(res => {
+        .catch(() => {
           router.push({
             name: 'login'
           });
@@ -226,7 +223,7 @@ export default new Vuex.Store({
     }, newCreds) {
       auth
         .put('edit', newCreds)
-        .then(res => {
+        .then(() => {
           dispatch('getAllEmployees');
         })
         .catch(err => {
@@ -254,7 +251,7 @@ export default new Vuex.Store({
     addEntreeItem({
       dispatch
     }, data) {
-      api.post('menu/item', data).then(res => {
+      api.post('menu/item', data).then(() => {
         dispatch('getEntreeItems');
       });
     },
@@ -280,7 +277,7 @@ export default new Vuex.Store({
     deleteEntree({
       dispatch
     }, id) {
-      api.delete('menu/entrees/' + id).then(res => {
+      api.delete('menu/entrees/' + id).then(() => {
         dispatch('clearNewEntree');
       });
     },
@@ -290,7 +287,7 @@ export default new Vuex.Store({
     }) {
       commit('clearNewEntree');
     },
-    editEntree({}, newData) {
+    editEntree(newData) {
       console.log(newData);
       api.put('menu/entrees/' + newData._id, newData);
     },
@@ -309,14 +306,12 @@ export default new Vuex.Store({
     addDrink({
       dispatch
     }, data) {
-      api.post('/menu/drinks', data).then(res => {
+      api.post('/menu/drinks', data).then(() => {
         dispatch('getDrinks');
       });
     },
 
-    editDrink({
-      commit
-    }, newData) {
+    editDrink(newData) {
       console.log(newData);
       api.put('/menu/drinks/' + newData._id, newData).then(res => {
         console.log(res);
@@ -338,15 +333,12 @@ export default new Vuex.Store({
     addSide({
       dispatch
     }, data) {
-      api.post('/menu/sides', data).then(res => {
+      api.post('/menu/sides', data).then(() => {
         dispatch('getSides');
       });
     },
 
-    editSide({
-      commit,
-      dispatch
-    }, newData) {
+    editSide(newData) {
       api
         .put('/menu/sides/' + newData._id, newData)
         .then(res => {
@@ -371,7 +363,7 @@ export default new Vuex.Store({
     addComment({
       dispatch
     }, data) {
-      api.post('/menu/comments', data).then(res => {
+      api.post('/menu/comments', data).then(() => {
         dispatch('getComments');
       });
     },
@@ -413,10 +405,8 @@ export default new Vuex.Store({
           };
           api.post(`orders/${dict[key]}`, data[key]).then(res => {
             commit('buildingMealItems', res.data.data);
-
           });
         }
-
       });
     },
 
@@ -425,7 +415,6 @@ export default new Vuex.Store({
     }, data) {
       api.delete('orders/meals/' + data.id).then(() => {
         commit('removeMeal', data.index);
-
       });
     },
 
@@ -440,164 +429,136 @@ export default new Vuex.Store({
     },
     editOrder({
       commit,
-      dispatch,
-      state
+      dispatch
     }, data) {
-      api.put('orders/' + state.buildingOrder._id, data).then(res => {
+      api.put('orders/' + data.orderId, data).then(res => {
         commit('buildingOrder', res.data.data);
         dispatch('clearOrder');
       });
-      dispatch('getActiveOrders')
+      dispatch('getActiveOrders');
+      dispatch('setMessage')
     },
 
     clearOrder({
       commit
     }) {
       commit('clearOrder');
-      commit('clearBuildingOrder')
+      commit('clearBuildingOrder');
     },
     //#endregion
 
     //#region --Reports Relevant--
     getOrders({
-      commit,
-      dispatch
+      commit
     }) {
-      api.get('orders/')
-        .then(res => {
-          commit('setOrders', res.data)
-        })
+      api.get('orders/').then(res => {
+        commit('setOrders', res.data);
+      });
     },
 
     getMealsByOrderId({
-      commit,
-      dispatch
+      commit
     }, orderId) {
-      api.get('orders/meals/' + orderId)
-        .then(res => {
-          commit("setMealsByOrderID", res.data)
-        })
+      api.get('orders/meals/' + orderId).then(res => {
+        commit('setMealsByOrderID', res.data);
+      });
     },
     getDrinksByOrderId({
-      commit,
-      dispatch
+      commit
     }, orderId) {
-      api.get('orders/drinks/' + orderId)
-        .then(res => {
-          commit("setDrinksByOrderID", res.data)
-        })
+      api.get('orders/drinks/' + orderId).then(res => {
+        commit('setDrinksByOrderID', res.data);
+      });
     },
     getEntreesByOrderId({
-      commit,
-      dispatch
+      commit
     }, orderId) {
-      api.get('orders/entrees/' + orderId)
-        .then(res => {
-          commit("setEntreesByOrderID", res.data)
-        })
+      api.get('orders/entrees/' + orderId).then(res => {
+        commit('setEntreesByOrderID', res.data);
+      });
     },
     getSidesByOrderId({
-      commit,
-      dispatch
+      commit
     }, orderId) {
-      api.get('orders/sides/' + orderId)
-        .then(res => {
-          commit("setSidesByOrderID", res.data)
-        })
+      api.get('orders/sides/' + orderId).then(res => {
+        commit('setSidesByOrderID', res.data);
+      });
     },
 
     changeTax({
       commit
     }, data) {
-      api.delete('menu/tax').then(res => {
+      api.delete('menu/tax').then(() => {
         api.post('menu/tax', data).then(rate => {
-          commit('setRate', rate)
-        })
-      })
+          commit('setRate', rate);
+        });
+      });
     },
     getTaxRate({
       commit
     }) {
       api.get('menu/tax').then(res => {
-        commit('setRate', res.data)
-      })
+        commit('setRate', res.data);
+      });
     },
 
     getActiveOrders({
       commit,
       dispatch
     }) {
-      commit('clearActOrdItems')
+      commit('clearActOrdItems');
       api.get('orders/active/').then(res => {
         commit('setActiveOrders', res.data);
-        dispatch('setActOrdItems')
-      })
+        dispatch('setActOrdItems');
+      });
     },
 
     setActOrdItems({
       commit,
-      dispatch,
       state
     }) {
       state.activeOrders.forEach(o => {
         api.get('orders/side/' + o._id).then(res => {
           if (res.data.length) {
-            commit('activeOrderItems', res.data)
+            commit('activeOrderItems', res.data);
           }
-        })
+        });
         api.get('orders/drink/' + o._id).then(res => {
           if (res.data.length) {
-            commit('activeOrderItems', res.data)
+            commit('activeOrderItems', res.data);
           }
-        })
+        });
         api.get('orders/entree/' + o._id).then(res => {
           if (res.data.length) {
-            commit('activeOrderItems', res.data)
+            commit('activeOrderItems', res.data);
           }
-        })
-      })
+        });
+      });
     },
     //#endregion
 
     setMessage({
       commit
-    }, data) {
-      api.post('orders/message', data).then(res => {
-        commit('setMessage', res.data.val)
-      }).catch(err => {
-        console.log('setMessage error: ' + err)
-      })
+    }) {
+      api
+        .get('orders/message/inc')
+        .then(res => {
+          commit('setMessage', res.data);
+        })
+        .catch(err => {
+          console.log('setMessage error: ' + err);
+        });
+    },
+
+    getMessage({
+      commit,
+      state
+    }) {
+      api.get('orders/message').then(res => {
+        if (state.message != res.data) {
+          commit('setMessage', res.data);
+        }
+      });
     }
   }
 });
-
-// responce.data.forEach(o => {
-
-
-//   api.get('orders/side/' + o._id).then(res => {
-//     let data = {
-//       id: o._id,
-//       data: {
-//         sides: res.data
-//       }
-//     }
-//     commit('setActiveOrders', data)
-//     //dict[o._id].side = res.data
-//   })
-//   api.get('orders/drink/' + o._id).then(res => {
-//     let data = {
-//       id: o._id,
-//       data: {
-//         drinks: res.data
-//       }
-//     }
-//     commit('setActiveOrders', data)
-//     //dict[o._id].drink = res.data
-//   })
-//   api.get('orders/entree/' + o._id).then(res => {
-//     let data = {
-//       id: o._id,
-//       data: {
-//         entrees: res.data
-//       }
-//     }

@@ -102,7 +102,8 @@
                           class="font-weight-bold">total</span><span>{{(orderTotal * (1 + taxRate)).toFixed(2)}}</span>
                       </div>
                       <div class="mt-2 d-flex justify-content-between">
-                        <button @click="submitOrder" class="btn btn-secondary shadow border-dark">Submit Order</button>
+                        <button @click="submitOrder" class="btn btn-secondary shadow border-dark"
+                          :disabled="!orderIdentifer.length > 0">Submit Order</button>
                       </div>
                     </div>
                   </div>
@@ -293,7 +294,8 @@
       employeeRegister() {
         let data = {
           name: this.employeeName,
-          code: this.employeeCode
+          code: this.employeeCode,
+          orderId: this.buildingOrder._id
         }
         this.$store.dispatch('employeeRegister', data)
         this.employeeName = ''

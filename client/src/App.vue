@@ -1,9 +1,17 @@
 <template>
-  <div id="logo" class="sticky-bottom">
-    <nav class="navbar sticky-top">
+  <div id="logo" class="">
+    <nav class="navbar fixed-top">
       <a class="navbar-brand">
         <img class="mt-1 mb-1" src="./assets/bob_logo_sm.png" width="65" height="65" alt>
       </a>
+      <div v-if="!user">
+        <router-link to="kitchen" v-if="this.$route.name != 'kitchen'"
+          class="btn btn-sm bg-dark text-light drop-shadow m-1 border-light"><small>Kitchen</small></router-link>
+        <router-link to="admin" v-if="this.$route.name != 'admin'"
+          class="btn btn-sm bg-dark text-light drop-shadow m-1 border-light"><small>Admin</small></router-link>
+        <router-link to="order" v-if="this.$route.name != 'order'"
+          class="btn btn-sm bg-dark text-light drop-shadow m-1 border-light"><small>Register</small></router-link>
+      </div>
       <p class="time">{{time}}</p>
       <div class="btn-group">
         <button @click="logout" v-if="user._id" class="btn my-2 my-sm-0">
@@ -71,9 +79,9 @@
           <div class="modal-body text-center">00:00</div>
           <div class="modal-footer d-flex justify-content-center"></div>
         </div>
-        <div>
+        <!-- <div>
           <p>Please Login</p>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -167,8 +175,8 @@
     background: url("assets/bobs-backgroundArtboard 1-100.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: fixed;
-    height: 100%;
+    background-attachment: fixed;
+    height: 100vh;
     width: auto;
 
     top: 0;

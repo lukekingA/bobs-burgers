@@ -13,11 +13,8 @@
     "jquery": "^3.4.0",
     "moment": "^2.24.0",
     "popper.js": "^1.14.7",
-    "socket.io-client": "^2.2.0",
     "vue": "^2.6.6",
-    "vue-drag-drop": "^1.1.4",
     "vue-router": "^3.0.2",
-    "vue-socket.io": "^3.0.7",
     "vuex": "^3.1.0"
   },
   "devDependencies": {

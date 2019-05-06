@@ -287,8 +287,8 @@ export default new Vuex.Store({
     }) {
       commit('clearNewEntree');
     },
-    editEntree(newData) {
-      console.log(newData);
+    editEntree({}, newData) {
+      debugger
       api.put('menu/entrees/' + newData._id, newData);
     },
     //#endregion
@@ -311,8 +311,7 @@ export default new Vuex.Store({
       });
     },
 
-    editDrink(newData) {
-      console.log(newData);
+    editDrink({}, newData) {
       api.put('/menu/drinks/' + newData._id, newData).then(res => {
         console.log(res);
       });
@@ -338,7 +337,7 @@ export default new Vuex.Store({
       });
     },
 
-    editSide(newData) {
+    editSide({}, newData) {
       api
         .put('/menu/sides/' + newData._id, newData)
         .then(res => {

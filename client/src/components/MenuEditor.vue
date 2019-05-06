@@ -12,7 +12,7 @@
           </tr>
           <tr v-for="entree in entrees">
             <td class="pt-2 btn my-2 my-sm-0">{{entree.name}}</td>
-            <td class="pl-3 pt-2">${{entree.price}}</td>
+            <td class="pl-3 pt-2">${{entree.price.toFixed(2)}}</td>
             <td @click="toggleEntreeActive(entree)" class="pl-3 pt-2 editable">{{entree.active}}</td>
             <td @click="toggleEntreeSpecial(entree)" class="pl-3 pt-2 editable">{{entree.special}}</td>
           </tr>
@@ -29,7 +29,7 @@
           </tr>
           <tr v-for="side in sides">
             <td class="pt-2 btn my-2 my-sm-0">{{side.name}}</td>
-            <td class="pl-3 pt-2">${{side.price}}</td>
+            <td class="pl-3 pt-2">${{side.price.toFixed(2)}}</td>
             <td class="pl-3 pt-2">{{side.size}}</td>
             <td @click="toggleSideActive(side)" class="pl-3 pt-2 editable">{{side.active}}</td>
           </tr>
@@ -47,7 +47,7 @@
           </tr>
           <tr v-for="drink in drinks">
             <td class="pt-2 btn my-2 my-sm-0">{{drink.name}}</td>
-            <td class="pl-3 pt-2">${{drink.price}}</td>
+            <td class="pl-3 pt-2">${{drink.price.toFixed(2)}}</td>
             <td class="pl-3 pt-2">{{drink.size}}</td>
             <td @click="toggleDrinkActive(drink)" class="pl-3 pt-2 editable">{{drink.active}}</td>
           </tr>
@@ -89,6 +89,7 @@
     },
     methods: {
       toggleEntreeActive(data) {
+        debugger
         let newData = data
         newData.active = !newData.active
         this.$store.dispatch('editEntree', newData)

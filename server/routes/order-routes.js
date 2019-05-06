@@ -1,4 +1,5 @@
 let router = require('express').Router()
+let hash = require('object-hash')
 let Orders = require('../models/order')
 let Meals = require('../models/meal')
 let Entrees = require('../models/entree')
@@ -116,9 +117,21 @@ router.post('/', (req, res, next) => {
   })
 })
 
-router.post('/message', (req, res) => {
-  req.body.val++
-  res.send(req.body)
+let message = hash(Date.now())
+
+function updateMessage() {
+  message = hash(Date.now())
+}
+
+
+router.get('/message', (req, res) => {
+  res.send(message)
+})
+
+router.get('/message/inc', (req, res) => {
+  updateMessage()
+  message
+  res.send(message)
 })
 
 router.put('/:id', (req, res, next) => {
